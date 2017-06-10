@@ -5,14 +5,14 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 
-namespace RetroMud.Instance.Tcp
+namespace RetroMud.TcpClient.Server
 {
     public class TcpServer
     {
-        private TcpListener _tcpListener;
+        private readonly TcpListener _tcpListener;
         private Thread _serverThread;
         private bool _stopServer;
-        private List<SocketHandler> _listeners = new List<SocketHandler>();
+        private readonly List<SocketHandler> _listeners = new List<SocketHandler>();
 
         public TcpServer()
         {
@@ -43,10 +43,12 @@ namespace RetroMud.Instance.Tcp
                 try
                 {
                     //blocking method
-                    var clientSocket = _tcpListener.AcceptSocket();
+                    var socket = _tcpListener.AcceptSocket();
                     
-                    var socketListener = new SocketHandler(clientSocket);
+                    var socketListener = new SocketHandler(socket);
                     socketListener.StartSocketListener();
+
+                    _listeners.Add(socketListener);
                 }
                 catch (SocketException se)
                 {

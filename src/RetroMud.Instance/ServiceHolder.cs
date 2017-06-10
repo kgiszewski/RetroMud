@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using RetroMud.Instance.Tcp;
+using RetroMud.TcpClient.Server;
 
 namespace RetroMud.Instance
 {

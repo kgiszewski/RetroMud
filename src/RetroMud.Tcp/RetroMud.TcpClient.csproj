@@ -7,8 +7,8 @@
     <ProjectGuid>{FDE208F7-55A9-4B9D-9D1C-4357B31C6F31}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>RetroMud.Tcp</RootNamespace>
-    <AssemblyName>RetroMud.Tcp</AssemblyName>
+    <RootNamespace>RetroMud.TcpClient</RootNamespace>
+    <AssemblyName>RetroMud.TcpClient</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -41,8 +41,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Tcp\SocketHandler.cs" />
-    <Compile Include="Tcp\TcpServer.cs" />
+    <Compile Include="Server\SocketHandler.cs" />
+    <Compile Include="Server\TcpServer.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

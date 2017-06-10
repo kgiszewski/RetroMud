@@ -3,7 +3,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 
-namespace RetroMud.Instance.Tcp
+namespace RetroMud.TcpClient.Server
 {
     public class SocketHandler
     {
@@ -11,9 +11,9 @@ namespace RetroMud.Instance.Tcp
         private Thread _workerThread;
         public bool Completed;
 
-        public SocketHandler(Socket clientSocket)
+        public SocketHandler(Socket socket)
         {
-            _socket = clientSocket;
+            _socket = socket;
         }
 
         //Let us see the 'StartSocketListener' method.
@@ -32,9 +32,9 @@ namespace RetroMud.Instance.Tcp
             try
             {
                 Console.WriteLine("Dispatching...");
-                var buffer = new byte[128];
-                _socket.Receive(buffer);
-                Console.WriteLine(Encoding.ASCII.GetString(buffer));
+                var buffer = new byte[8192];
+                var numberBytes = _socket.Receive(buffer);
+                Console.WriteLine(Encoding.ASCII.GetString(buffer, 0, numberBytes));
 
                 _socket.Send(Encoding.ASCII.GetBytes("My response to you!"));
             }
