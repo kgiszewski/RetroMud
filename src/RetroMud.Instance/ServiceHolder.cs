@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using RetroMud.Core.Handlers;
 using RetroMud.Tcp.Server;
 
 namespace RetroMud.Instance
@@ -9,6 +10,9 @@ namespace RetroMud.Instance
 
         public void Start()
         {
+            //this is to trick the linker to include the core assembly. can remove later
+            var foo = typeof(FooHandler);
+
             _tcpServer = new TcpServer();
 
             Task.Run(() => _tcpServer.StartServer());

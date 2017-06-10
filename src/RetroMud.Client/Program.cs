@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
-using RetroMud.Tcp.Messaging;
+using RetroMud.Tcp.Messaging.Publishing;
+using RetroMud.Core.Messages;
 
 namespace RetroMud
 {
@@ -24,16 +25,10 @@ namespace RetroMud
 
                 Thread.Sleep(10);
                 
-                var response = tcpMessenger.Send(new TestClass {ClientId = clientId});
+                var response = tcpMessenger.Send(new FooMessage{Id = clientId});
 
                 Console.WriteLine(response);
             }
         }
-    }
-
-    public class TestClass : ITcpMessage
-    {
-        public string MessageType => "Foo";
-        public int ClientId { get; set; }
     }
 }

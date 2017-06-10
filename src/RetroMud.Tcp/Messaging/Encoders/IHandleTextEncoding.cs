@@ -1,4 +1,4 @@
-﻿namespace RetroMud.Tcp.Messaging
+﻿namespace RetroMud.Tcp.Messaging.Encoders
 {
     public interface IHandleTextEncoding
     {

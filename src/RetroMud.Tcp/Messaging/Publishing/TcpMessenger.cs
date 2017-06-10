@@ -2,8 +2,10 @@
 using System.Net.Sockets;
 using Newtonsoft.Json;
 using RetroMud.Tcp.Config;
+using RetroMud.Tcp.Messaging.Dispatching;
+using RetroMud.Tcp.Messaging.Encoders;
 
-namespace RetroMud.Tcp.Messaging
+namespace RetroMud.Tcp.Messaging.Publishing
 {
     public class TcpMessenger : ISendTcpMessages
     {

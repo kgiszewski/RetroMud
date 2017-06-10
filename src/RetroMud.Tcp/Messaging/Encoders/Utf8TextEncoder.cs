@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace RetroMud.Tcp.Messaging
+namespace RetroMud.Tcp.Messaging.Encoders
 {
     public class Utf8TextEncoder : IHandleTextEncoding
     {
