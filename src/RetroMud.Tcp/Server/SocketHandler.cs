@@ -1,8 +1,6 @@
-﻿using System;
-using System.Net.Sockets;
-using System.Text;
+﻿using System.Net.Sockets;
 using System.Threading;
-using RetroMud.Tcp.Config;
+using RetroMud.Tcp.Messaging;
 
 namespace RetroMud.Tcp.Server
 {
@@ -11,18 +9,18 @@ namespace RetroMud.Tcp.Server
         private readonly Socket _socket;
         private Thread _workerThread;
         public bool Completed;
-        private readonly ITcpConfiguration _tcpConfiguration;
+        private readonly IDispatchMessages _messageDispatcher;
 
         public SocketHandler(Socket socket)
-            :this(socket, new TcpConfiguration())
+            :this(socket, new MessageDispatcher())
         {
             
         }
 
-        public SocketHandler(Socket socket, ITcpConfiguration tcpConfiguration)
+        public SocketHandler(Socket socket, IDispatchMessages messageDispatcher)
         {
             _socket = socket;
-            _tcpConfiguration = tcpConfiguration;
+            _messageDispatcher = messageDispatcher;
         }
 
         public void StartSocketListener()
@@ -39,15 +37,7 @@ namespace RetroMud.Tcp.Server
         {
             try
             {
-                Console.WriteLine("Dispatching...");
-                var buffer = new byte[_tcpConfiguration.ReadBufferSizeInBytes];
-                var numberBytes = _socket.Receive(buffer);
-
-                var message = Encoding.UTF8.GetString(buffer, 0, numberBytes);
-
-                Console.WriteLine();
-
-                _socket.Send(Encoding.UTF8.GetBytes("My response to you!" + message));
+                _messageDispatcher.Dispatch(_socket);
             }
             catch (SocketException se)
             {

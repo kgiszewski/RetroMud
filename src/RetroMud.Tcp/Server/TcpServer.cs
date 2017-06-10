@@ -15,6 +15,7 @@ namespace RetroMud.Tcp.Server
         private bool _stopServer;
         private readonly List<SocketHandler> _listeners = new List<SocketHandler>();
         private readonly ITcpConfiguration _tcpConfiguration;
+        private readonly object _cleanupLock = new Object();
 
         public TcpServer()
             : this(new TcpConfiguration())
@@ -59,17 +60,19 @@ namespace RetroMud.Tcp.Server
                     //blocking method
                     var socket = _tcpListener.AcceptSocket();
                     
-                    var socketListener = new SocketHandler(socket, _tcpConfiguration);
+                    var socketListener = new SocketHandler(socket);
                     socketListener.StartSocketListener();
 
-                    _listeners.Add(socketListener);
+                    lock(_cleanupLock)
+                    {
+                        _purgeCompletedListeners();
+                        _listeners.Add(socketListener);
+                    }
                 }
                 catch (SocketException se)
                 {
                     _stopServer = true;
                 }
-
-                _purgeCompletedListeners();
             }
         }
 
@@ -83,10 +86,19 @@ namespace RetroMud.Tcp.Server
 
         private void _purgeCompletedListeners()
         {
-            foreach (var listener in _listeners.Where(x => x.Completed).ToList())
+            Console.WriteLine(_listeners.Count);
+
+            var completedListeners = _listeners.Where(x => x.Completed).ToList();
+
+            Console.WriteLine("Completed:" + completedListeners.Count);
+
+            foreach (var listener in completedListeners)
             {
                 listener.Cleanup();
+                _listeners.Remove(listener);
             }
+
+            completedListeners = null;
         }
     }
 }

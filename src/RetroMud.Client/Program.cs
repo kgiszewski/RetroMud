@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Net;
-using System.Net.Sockets;
-using System.Text;
-using RetroMud.Tcp.Config;
+using System.Threading;
 using RetroMud.Tcp.Messaging;
 
 namespace RetroMud
@@ -17,16 +14,26 @@ namespace RetroMud
 
             var tcpMessenger = new TcpMessenger();
 
+            Thread.Sleep(1000);
+
             Console.WriteLine("My client Id: " + clientId);
 
             while (true)
             {
-                Console.ReadKey();
+                //Console.ReadKey();
+
+                Thread.Sleep(10);
                 
-                var response = tcpMessenger.Send("Hello world! " + clientId);
+                var response = tcpMessenger.Send(new TestClass {ClientId = clientId});
 
                 Console.WriteLine(response);
             }
         }
+    }
+
+    public class TestClass : ITcpMessage
+    {
+        public string MessageType => "Foo";
+        public int ClientId { get; set; }
     }
 }

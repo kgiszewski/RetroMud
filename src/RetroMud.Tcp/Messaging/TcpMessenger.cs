@@ -1,6 +1,6 @@
 ﻿using System.Net;
 using System.Net.Sockets;
-using System.Text;
+using Newtonsoft.Json;
 using RetroMud.Tcp.Config;
 
 namespace RetroMud.Tcp.Messaging
@@ -8,16 +8,18 @@ namespace RetroMud.Tcp.Messaging
     public class TcpMessenger : ISendTcpMessages
     {
         private readonly ITcpConfiguration _tcpConfiguration;
+        private readonly IHandleTextEncoding _textEncoder;
 
         public TcpMessenger()
-            : this(new TcpConfiguration())
+            : this(new TcpConfiguration(), new Utf8TextEncoder())
         {
             
         }
 
-        public TcpMessenger(ITcpConfiguration tcpConfiguration)
+        public TcpMessenger(ITcpConfiguration tcpConfiguration, IHandleTextEncoding textEncoder)
         {
             _tcpConfiguration = tcpConfiguration;
+            _textEncoder = textEncoder;
         }
 
         internal Socket GetSocket()
@@ -28,16 +30,17 @@ namespace RetroMud.Tcp.Messaging
             return socket;
         }
 
-        public string Send(string message)
+        public string Send(ITcpMessage message)
         {
             var socket = GetSocket();
 
-            socket.Send(Encoding.UTF8.GetBytes(message));
+            socket.Send(_textEncoder.GetBytes(JsonConvert.SerializeObject(message)));
 
             var buffer = new byte[_tcpConfiguration.ReadBufferSizeInBytes];
 
             var numberBytes = socket.Receive(buffer);
-            return Encoding.UTF8.GetString(buffer, 0, numberBytes);
+
+            return _textEncoder.GetString(buffer, numberBytes);
         }
     }
 }

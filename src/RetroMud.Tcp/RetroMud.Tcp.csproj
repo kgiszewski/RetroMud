@@ -30,6 +30,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -42,11 +46,19 @@
   <ItemGroup>
     <Compile Include="Config\ITcpConfiguration.cs" />
     <Compile Include="Config\TcpConfiguration.cs" />
+    <Compile Include="Messaging\IDispatchMessages.cs" />
+    <Compile Include="Messaging\IHandleTextEncoding.cs" />
     <Compile Include="Messaging\ISendTcpMessages.cs" />
+    <Compile Include="Messaging\ITcpMessage.cs" />
+    <Compile Include="Messaging\MessageDispatcher.cs" />
     <Compile Include="Messaging\TcpMessenger.cs" />
+    <Compile Include="Messaging\Utf8TextEncoder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Server\SocketHandler.cs" />
     <Compile Include="Server\TcpServer.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
