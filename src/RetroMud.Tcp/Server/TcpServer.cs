@@ -4,30 +4,44 @@ using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
+using RetroMud.Tcp.Config;
 
 namespace RetroMud.Tcp.Server
 {
     public class TcpServer
     {
-        private readonly TcpListener _tcpListener;
+        private TcpListener _tcpListener;
         private Thread _serverThread;
         private bool _stopServer;
         private readonly List<SocketHandler> _listeners = new List<SocketHandler>();
+        private readonly ITcpConfiguration _tcpConfiguration;
 
         public TcpServer()
+            : this(new TcpConfiguration())
+        {
+            
+        }
+
+        public TcpServer(ITcpConfiguration tcpConfiguration)
+        {
+            _tcpConfiguration = tcpConfiguration;
+        }
+
+        public void StartServer()
         {
             try
             {
-                _tcpListener = new TcpListener(new IPEndPoint(IPAddress.Parse("127.0.0.1"),  30001));
+                _tcpListener = new TcpListener(
+                    new IPEndPoint(
+                        IPAddress.Parse(_tcpConfiguration.IpAddress
+                    ), _tcpConfiguration.Port)
+                );
             }
             catch (Exception ex)
             {
                 _tcpListener = null;
             }
-        }
 
-        public void StartServer()
-        {
             if (_tcpListener != null)
             {
                 _tcpListener.Start();
@@ -45,7 +59,7 @@ namespace RetroMud.Tcp.Server
                     //blocking method
                     var socket = _tcpListener.AcceptSocket();
                     
-                    var socketListener = new SocketHandler(socket);
+                    var socketListener = new SocketHandler(socket, _tcpConfiguration);
                     socketListener.StartSocketListener();
 
                     _listeners.Add(socketListener);
@@ -61,11 +75,10 @@ namespace RetroMud.Tcp.Server
 
         public void StopServer()
         {
-            if (_tcpListener != null)
-            {
-                _stopServer = true;
-                _tcpListener.Stop();
-            }
+            if (_tcpListener == null) return;
+
+            _stopServer = true;
+            _tcpListener.Stop();
         }
 
         private void _purgeCompletedListeners()

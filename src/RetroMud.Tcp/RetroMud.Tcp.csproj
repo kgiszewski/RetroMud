@@ -40,6 +40,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Config\ITcpConfiguration.cs" />
+    <Compile Include="Config\TcpConfiguration.cs" />
+    <Compile Include="Messaging\ISendTcpMessages.cs" />
+    <Compile Include="Messaging\TcpMessenger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Server\SocketHandler.cs" />
     <Compile Include="Server\TcpServer.cs" />

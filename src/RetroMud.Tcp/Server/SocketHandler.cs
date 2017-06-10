@@ -2,6 +2,7 @@
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
+using RetroMud.Tcp.Config;
 
 namespace RetroMud.Tcp.Server
 {
@@ -10,13 +11,20 @@ namespace RetroMud.Tcp.Server
         private readonly Socket _socket;
         private Thread _workerThread;
         public bool Completed;
+        private readonly ITcpConfiguration _tcpConfiguration;
 
         public SocketHandler(Socket socket)
+            :this(socket, new TcpConfiguration())
         {
-            _socket = socket;
+            
         }
 
-        //Let us see the 'StartSocketListener' method.
+        public SocketHandler(Socket socket, ITcpConfiguration tcpConfiguration)
+        {
+            _socket = socket;
+            _tcpConfiguration = tcpConfiguration;
+        }
+
         public void StartSocketListener()
         {
             if (_socket == null) return;
@@ -32,11 +40,14 @@ namespace RetroMud.Tcp.Server
             try
             {
                 Console.WriteLine("Dispatching...");
-                var buffer = new byte[8192];
+                var buffer = new byte[_tcpConfiguration.ReadBufferSizeInBytes];
                 var numberBytes = _socket.Receive(buffer);
-                Console.WriteLine(Encoding.ASCII.GetString(buffer, 0, numberBytes));
 
-                _socket.Send(Encoding.ASCII.GetBytes("My response to you!"));
+                var message = Encoding.UTF8.GetString(buffer, 0, numberBytes);
+
+                Console.WriteLine();
+
+                _socket.Send(Encoding.UTF8.GetBytes("My response to you!" + message));
             }
             catch (SocketException se)
             {
