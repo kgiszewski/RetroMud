@@ -7,8 +7,8 @@
     <ProjectGuid>{FDE208F7-55A9-4B9D-9D1C-4357B31C6F31}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>RetroMud.TcpClient</RootNamespace>
-    <AssemblyName>RetroMud.TcpClient</AssemblyName>
+    <RootNamespace>RetroMud.Tcp</RootNamespace>
+    <AssemblyName>RetroMud.Tcp</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

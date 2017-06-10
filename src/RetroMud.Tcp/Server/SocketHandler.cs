@@ -3,7 +3,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 
-namespace RetroMud.TcpClient.Server
+namespace RetroMud.Tcp.Server
 {
     public class SocketHandler
     {

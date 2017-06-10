@@ -57,9 +57,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\RetroMud.Tcp\RetroMud.TcpClient.csproj">
+    <ProjectReference Include="..\RetroMud.Tcp\RetroMud.Tcp.csproj">
       <Project>{fde208f7-55a9-4b9d-9d1c-4357b31c6f31}</Project>
-      <Name>RetroMud.TcpClient</Name>
+      <Name>RetroMud.Tcp</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

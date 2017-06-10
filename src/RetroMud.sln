@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RetroMud.Api", "RetroMud.Ap
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RetroMud.Instance", "RetroMud.Instance\RetroMud.Instance.csproj", "{D941A41D-E3DC-41EC-B45D-17F780A3FC87}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RetroMud.TcpClient", "RetroMud.Tcp\RetroMud.TcpClient.csproj", "{FDE208F7-55A9-4B9D-9D1C-4357B31C6F31}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RetroMud.Tcp", "RetroMud.Tcp\RetroMud.Tcp.csproj", "{FDE208F7-55A9-4B9D-9D1C-4357B31C6F31}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
