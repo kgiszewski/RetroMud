@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Drawing;
 using System.Text;
-using RetroMud.Messaging.Messages.Healthchecks;
 using RetroMud.Messaging.Publishing;
-using RetroMud.Rendering;
 
 namespace RetroMud
 {
@@ -34,13 +31,14 @@ namespace RetroMud
 
             var map = System.IO.File.ReadAllLines(@"map1.txt");
 
-            var windowSize = 3;
+            var rowWindowSize = 10;
+            var columnWindowSize = 40;
             var currentColumn = 10;
             var currentRow = 6;
             var mapWidth = map[0].Length;
             var mapHeight = map.Length;
             
-            _renderMap(map, windowSize, ref currentColumn, ref currentRow);
+            _renderMap(map, rowWindowSize, columnWindowSize, ref currentColumn, ref currentRow);
 
             while (true)
             {
@@ -66,11 +64,11 @@ namespace RetroMud
                     currentRow++;
                 }
 
-                _renderMap(map, windowSize, ref currentColumn, ref currentRow);
+                _renderMap(map, rowWindowSize, columnWindowSize, ref currentColumn, ref currentRow);
             }
         }
 
-        private static void _renderMap(string [] map, int windowSize, ref int currentColumn, ref int currentRow)
+        private static void _renderMap(string [] map, int rowWindowSize, int columnWindowSize, ref int currentColumn, ref int currentRow)
         {
             Console.SetCursorPosition(0, 0);
             var mapWidth = map[0].Length;
@@ -85,41 +83,41 @@ namespace RetroMud
 
             var blankRow = sb.ToString();
 
-            var leftLimit = currentColumn - windowSize;
+            var leftLimit = currentColumn - columnWindowSize;
             if (leftLimit < 0)
             {
                 leftLimit = 0;
             }
 
-            var rightLimit = currentColumn + windowSize;
+            var rightLimit = currentColumn + columnWindowSize;
             if (rightLimit > mapWidth)
             {
-                rightLimit = mapWidth - windowSize;
+                rightLimit = mapWidth - columnWindowSize;
             }
 
-            var upperLimit = currentRow - windowSize;
+            var upperLimit = currentRow - rowWindowSize;
             if (upperLimit < 0)
             {
                 upperLimit = 0;
             }
 
-            var lowerLimit = currentRow + windowSize;
+            var lowerLimit = currentRow + rowWindowSize;
             if (lowerLimit > mapHeight)
             {
                 lowerLimit = mapHeight;
             }
 
-            if (lowerLimit < windowSize * 2)
+            if (lowerLimit < rowWindowSize * 2)
             {
-                lowerLimit = windowSize * 2;
+                lowerLimit = rowWindowSize * 2;
             }
 
-            Console.WriteLine($"Current Position: {currentRow.ToString("00")}, {currentColumn.ToString("00")} UpperLimit: {upperLimit.ToString("00")} LowerLimit: {lowerLimit.ToString("00")} LeftLimit: {leftLimit.ToString("00")} LowerLimit: {rightLimit.ToString("00")}");
+            Console.WriteLine($"Current Position: {currentRow.ToString("00")}, {currentColumn.ToString("00")} UpperLimit: {upperLimit.ToString("00")} LowerLimit: {lowerLimit.ToString("00")} LeftLimit: {leftLimit.ToString("00")} RightLimit: {rightLimit.ToString("00")}");
             Console.WriteLine($"Map size {mapHeight.ToString("00")}, {mapWidth.ToString("00")}");
 
             for (var row = upperLimit; row < lowerLimit; row++)
             {
-                var width = windowSize * 2;
+                var width = columnWindowSize * 2;
                 var spaceFiller = string.Empty;
 
                 if (leftLimit + width > mapWidth)
@@ -127,7 +125,7 @@ namespace RetroMud
                     width = mapWidth - leftLimit;
                     sb.Clear();
 
-                    for (var i = 0; i < (windowSize*2) - width; i++)
+                    for (var i = 0; i < (columnWindowSize * 2) - width; i++)
                     {
                         sb.Append(" ");
                     }
@@ -135,12 +133,12 @@ namespace RetroMud
                     spaceFiller = sb.ToString();
                 }
 
-                Console.WriteLine($"{row.ToString("0#")}-{map[row].Substring(leftLimit, width)}{spaceFiller}");
+                Console.WriteLine($"{map[row].Substring(leftLimit, width)}{spaceFiller}");
             }
 
-            if (currentRow > windowSize && (lowerLimit - upperLimit < windowSize * 2))
+            if (currentRow > rowWindowSize && (lowerLimit - upperLimit < rowWindowSize * 2))
             {
-                var blankLineCount = (windowSize*2) - (lowerLimit - upperLimit);
+                var blankLineCount = (rowWindowSize * 2) - (lowerLimit - upperLimit);
 
                 for (var i = 0; i < blankLineCount; i++)
                 {
@@ -148,7 +146,7 @@ namespace RetroMud
                 }
             }
 
-            Console.WriteLine($"Window: {windowSize} {(lowerLimit-upperLimit).ToString("00")}");
+            Console.WriteLine($"RowWindow: {rowWindowSize} ColumnWindow: {columnWindowSize} ");
         }
     }
 }
