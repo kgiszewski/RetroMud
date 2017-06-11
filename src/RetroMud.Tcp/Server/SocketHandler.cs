@@ -9,11 +9,11 @@ using RetroMud.Tcp.Serialization;
 
 namespace RetroMud.Tcp.Server
 {
-    public class SocketHandler
+    public class SocketHandler : ISocketHandler
     {
         private readonly Socket _socket;
         private Thread _workerThread;
-        public bool Completed;
+        public bool Completed { get; set; }
         private readonly IDispatchMessages _messageDispatcher;
         private readonly ITcpConfiguration _tcpConfiguration;
         private readonly IHandleTextEncoding _textEncoder;
@@ -25,7 +25,7 @@ namespace RetroMud.Tcp.Server
                  new MessageDispatcher(), 
                  new TcpConfiguration(), 
                  new Utf8TextEncoder(),
-                 new Serialization.JsonSerializer()
+                 new JsonSerializer()
             )
         {
             
@@ -46,7 +46,7 @@ namespace RetroMud.Tcp.Server
             _serializer = serializer;
         }
 
-        public void StartSocketWorker()
+        public void StartWorker()
         {
             if (_socket == null) return;
 

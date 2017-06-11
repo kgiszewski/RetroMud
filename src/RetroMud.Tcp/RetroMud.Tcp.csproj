@@ -58,8 +58,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Serialization\IHandleSerialization.cs" />
     <Compile Include="Serialization\JsonSerializer.cs" />
+    <Compile Include="Server\ISocketHandler.cs" />
+    <Compile Include="Server\ITcpServer.cs" />
     <Compile Include="Server\SocketHandler.cs" />
     <Compile Include="Server\TcpServer.cs" />
+    <Compile Include="Server\TcpServerFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

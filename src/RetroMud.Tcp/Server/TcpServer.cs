@@ -8,12 +8,12 @@ using RetroMud.Tcp.Config;
 
 namespace RetroMud.Tcp.Server
 {
-    public class TcpServer
+    public class TcpServer : ITcpServer
     {
         private TcpListener _tcpListener;
         private Thread _serverThread;
         private bool _stopServer;
-        private readonly List<SocketHandler> _listeners = new List<SocketHandler>();
+        private readonly List<ISocketHandler> _listeners = new List<ISocketHandler>();
         private readonly ITcpConfiguration _tcpConfiguration;
         private readonly object _cleanupLock = new Object();
 
@@ -28,7 +28,7 @@ namespace RetroMud.Tcp.Server
             _tcpConfiguration = tcpConfiguration;
         }
 
-        public void StartServer()
+        public void Start()
         {
             try
             {
@@ -59,8 +59,8 @@ namespace RetroMud.Tcp.Server
                     //blocking method
                     var socket = _tcpListener.AcceptSocket();
                     
-                    var socketListener = new SocketHandler(socket);
-                    socketListener.StartSocketWorker();
+                    var socketListener = TcpServerFactory.GetSocketHandler(socket);
+                    socketListener.StartWorker();
 
                     lock(_cleanupLock)
                     {
@@ -75,7 +75,7 @@ namespace RetroMud.Tcp.Server
             }
         }
 
-        public void StopServer()
+        public void Stop()
         {
             if (_tcpListener == null) return;
 

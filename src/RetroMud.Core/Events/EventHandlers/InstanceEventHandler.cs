@@ -13,8 +13,8 @@ namespace RetroMud.Core.Events.EventHandlers
 
         private void Instance_OnInstanceStart(object sender, System.EventArgs e)
         {
-            GameContext.Instance.Configuration = new GameContextConfiguration();
-            InstanceContext.Instance.Configuration = new InstanceConfiguration();
+            //GameContext.Instance.Configuration = new GameContextConfiguration();
+            //InstanceContext.Instance.Configuration = new InstanceConfiguration();
         }
     }
 }

@@ -8,14 +8,7 @@ namespace RetroMud.Core.Context
     public class InstanceContext : IInstanceContext, IInstanceContextEvents
     {
         public event InstanceStartHandler OnInstanceStart;
-
-        public void Start()
-        {
-            EventHelper.RegisterAllEventHandlers();
-
-            OnInstanceStart?.Invoke(this, new EventArgs());
-        }
-
+        public event InstanceStopHandler OnInstanceStop;
         private IInstanceConfiguration _configuration;
 
         public IInstanceConfiguration Configuration
@@ -32,7 +25,7 @@ namespace RetroMud.Core.Context
         private static readonly object _padLock = new Object();
 
         //you can create as many properties as you'd like
-        public string Name => _configuration.Name;
+        public string Name => Configuration.Name;
 
         //note that the constructor is private and only the class itself can create a new instance
         private InstanceContext()
@@ -57,6 +50,18 @@ namespace RetroMud.Core.Context
 
                 return _instance;
             }
+        }
+
+        public void Start()
+        {
+            EventHelper.RegisterAllEventHandlers();
+
+            OnInstanceStart?.Invoke(this, new EventArgs());
+        }
+
+        public void Stop()
+        {
+            OnInstanceStop?.Invoke(this, new EventArgs());
         }
     }
 }

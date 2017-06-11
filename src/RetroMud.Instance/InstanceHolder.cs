@@ -6,20 +6,21 @@ namespace RetroMud.Instance
 {
     public class InstanceHolder
     {
-        private TcpServer _tcpServer;
+        private ITcpServer _tcpServer;
 
         public void Start()
         {
             InstanceContext.Instance.Start();
-            
-            _tcpServer = new TcpServer();
 
-            Task.Run(() => _tcpServer.StartServer());
+            _tcpServer = TcpServerFactory.GetServer();
+
+            Task.Run(() => _tcpServer.Start());
         }
 
         public void Stop()
         {
-            _tcpServer.StopServer();
+            _tcpServer.Stop();
+            InstanceContext.Instance.Stop();
         }
     }
 }
