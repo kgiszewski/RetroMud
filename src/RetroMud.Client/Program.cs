@@ -31,10 +31,10 @@ namespace RetroMud
 
             var map = System.IO.File.ReadAllLines(@"map1.txt");
 
-            var rowWindowSize = 10;
-            var columnWindowSize = 40;
-            var currentColumn = 10;
-            var currentRow = 6;
+            var rowWindowSize = 15;
+            var columnWindowSize = 50;
+            var currentColumn = 5;
+            var currentRow = 5;
             var mapWidth = map[0].Length;
             var mapHeight = map.Length;
             
@@ -54,12 +54,12 @@ namespace RetroMud
                     currentRow--;
                 }
 
-                if (input.KeyChar == 'd' && currentColumn < mapWidth)
+                if (input.KeyChar == 'd' && currentColumn < mapWidth - 1)
                 {
                     currentColumn++;
                 }
 
-                if (input.KeyChar == 's' && currentRow < mapHeight)
+                if (input.KeyChar == 's' && currentRow < mapHeight - 1)
                 {
                     currentRow++;
                 }
@@ -133,7 +133,22 @@ namespace RetroMud
                     spaceFiller = sb.ToString();
                 }
 
-                Console.WriteLine($"{map[row].Substring(leftLimit, width)}{spaceFiller}");
+                var renderedRow = $"{map[row].Substring(leftLimit, width)}{spaceFiller}";
+
+                if (row == currentRow)
+                {
+                    var column = columnWindowSize;
+
+                    if (currentColumn < columnWindowSize)
+                    {
+                        column = currentColumn;
+                    }
+
+                    sb = new StringBuilder(renderedRow) {[column] = '@'};
+                    renderedRow = sb.ToString();
+                }
+
+                Console.WriteLine(renderedRow);
             }
 
             if (currentRow > rowWindowSize && (lowerLimit - upperLimit < rowWindowSize * 2))
