@@ -1,9 +1,9 @@
 ﻿using System.Net;
 using System.Net.Sockets;
-using Newtonsoft.Json;
 using RetroMud.Tcp.Config;
 using RetroMud.Tcp.Messaging.Dispatching;
 using RetroMud.Tcp.Messaging.Encoders;
+using RetroMud.Tcp.Serialization;
 
 namespace RetroMud.Tcp.Messaging.Publishing
 {
@@ -11,17 +11,27 @@ namespace RetroMud.Tcp.Messaging.Publishing
     {
         private readonly ITcpConfiguration _tcpConfiguration;
         private readonly IHandleTextEncoding _textEncoder;
+        private readonly IHandleSerialization _serializer;
 
         public TcpMessenger()
-            : this(new TcpConfiguration(), new Utf8TextEncoder())
+            : this(
+                  new TcpConfiguration(), 
+                  new Utf8TextEncoder(),
+                  new Serialization.JsonSerializer()
+                )
         {
             
         }
 
-        public TcpMessenger(ITcpConfiguration tcpConfiguration, IHandleTextEncoding textEncoder)
+        public TcpMessenger(
+            ITcpConfiguration tcpConfiguration, 
+            IHandleTextEncoding textEncoder,
+            IHandleSerialization serializer
+        )
         {
             _tcpConfiguration = tcpConfiguration;
             _textEncoder = textEncoder;
+            _serializer = serializer;
         }
 
         internal Socket GetSocket()
@@ -36,7 +46,7 @@ namespace RetroMud.Tcp.Messaging.Publishing
         {
             var socket = GetSocket();
 
-            socket.Send(_textEncoder.GetBytes(JsonConvert.SerializeObject(message)));
+            socket.Send(_textEncoder.GetBytes(_serializer.Serialize(message)));
 
             var buffer = new byte[_tcpConfiguration.ReadBufferSizeInBytes];
 

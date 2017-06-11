@@ -31,6 +31,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -40,8 +41,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Handlers\FooHandler.cs" />
+    <Compile Include="Config\ConfigConstants.cs" />
+    <Compile Include="Config\InstanceConfiguation.cs" />
+    <Compile Include="Config\GameContextConfiguration.cs" />
+    <Compile Include="Config\IInstanceConfiguation.cs" />
+    <Compile Include="Config\IGameContextConfiguration.cs" />
+    <Compile Include="Context\IInstanceContext.cs" />
+    <Compile Include="Context\IInstanceContextEvents.cs" />
+    <Compile Include="Context\InstanceContext.cs" />
+    <Compile Include="MessageHandlers\FooHandler.cs" />
     <Compile Include="Messages\FooMessage.cs" />
+    <Compile Include="Context\GameContext.cs" />
+    <Compile Include="Context\IGameContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -49,6 +60,9 @@
       <Project>{fde208f7-55a9-4b9d-9d1c-4357b31c6f31}</Project>
       <Name>RetroMud.Tcp</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Models\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

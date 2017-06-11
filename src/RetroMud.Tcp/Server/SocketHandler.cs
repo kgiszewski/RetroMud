@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Net.Sockets;
 using System.Threading;
-using Newtonsoft.Json;
 using RetroMud.Tcp.Config;
 using RetroMud.Tcp.Messaging.Dispatching;
 using RetroMud.Tcp.Messaging.Encoders;
 using RetroMud.Tcp.Messaging.Helpers;
+using RetroMud.Tcp.Serialization;
 
 namespace RetroMud.Tcp.Server
 {
@@ -17,9 +17,16 @@ namespace RetroMud.Tcp.Server
         private readonly IDispatchMessages _messageDispatcher;
         private readonly ITcpConfiguration _tcpConfiguration;
         private readonly IHandleTextEncoding _textEncoder;
+        private readonly IHandleSerialization _serializer;
 
         public SocketHandler(Socket socket)
-            :this(socket, new MessageDispatcher(), new TcpConfiguration(), new Utf8TextEncoder())
+            :this(
+                 socket, 
+                 new MessageDispatcher(), 
+                 new TcpConfiguration(), 
+                 new Utf8TextEncoder(),
+                 new Serialization.JsonSerializer()
+            )
         {
             
         }
@@ -28,16 +35,18 @@ namespace RetroMud.Tcp.Server
             Socket socket, 
             IDispatchMessages messageDispatcher, 
             ITcpConfiguration tcpConfiguration, 
-            IHandleTextEncoding textEncoder
+            IHandleTextEncoding textEncoder,
+            IHandleSerialization serializer
         )
         {
             _socket = socket;
             _messageDispatcher = messageDispatcher;
             _tcpConfiguration = tcpConfiguration;
             _textEncoder = textEncoder;
+            _serializer = serializer;
         }
 
-        public void StartSocketListener()
+        public void StartSocketWorker()
         {
             if (_socket == null) return;
 
@@ -56,15 +65,15 @@ namespace RetroMud.Tcp.Server
 
                 var rawMessage = _textEncoder.GetString(buffer, numberBytes);
 
-                var messageTypeName = ((dynamic) JsonConvert.DeserializeObject(rawMessage)).MessageType.ToString();
+                var messageTypeName = ((dynamic)_serializer.Deserialize(rawMessage)).MessageType.ToString();
 
                 var messageType = MessageHelper.GetMessageTypeByName(messageTypeName);
 
-                var deserialized = JsonConvert.DeserializeObject(rawMessage, messageType);
+                var deserialized = _serializer.Deserialize(rawMessage, messageType) ;
 
                 var response = _messageDispatcher.Dispatch((ITcpMessage)deserialized);
 
-                _socket.Send(_textEncoder.GetBytes(JsonConvert.SerializeObject(response)));
+                _socket.Send(_textEncoder.GetBytes(_serializer.Serialize(response)));
             }
             catch (Exception ex)
             {

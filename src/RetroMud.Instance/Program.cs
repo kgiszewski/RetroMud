@@ -8,9 +8,9 @@ namespace RetroMud.Instance
         {
             HostFactory.Run(configurator =>
             {
-                configurator.Service<ServiceHolder>(s =>
+                configurator.Service<InstanceHolder>(s =>
                 {
-                    s.ConstructUsing(name => new ServiceHolder());
+                    s.ConstructUsing(name => new InstanceHolder());
                     s.WhenStarted(tc => tc.Start());
                     s.WhenStopped(tc => tc.Stop());
                 });

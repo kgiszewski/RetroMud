@@ -7,11 +7,11 @@ namespace RetroMud
 {
     class Program
     {
-        private static readonly Random _rand = new Random();
+        private static readonly Random Rand = new Random();
 
         static void Main(string[] args)
         {
-            var clientId = _rand.Next(123123123);
+            var clientId = Rand.Next(123123123);
 
             var tcpMessenger = new TcpMessenger();
 

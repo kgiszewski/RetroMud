@@ -43,12 +43,11 @@ namespace RetroMud.Tcp.Server
                 _tcpListener = null;
             }
 
-            if (_tcpListener != null)
-            {
-                _tcpListener.Start();
-                _serverThread = new Thread(ServerThreadStart);
-                _serverThread.Start();
-            }
+            if (_tcpListener == null) return;
+
+            _tcpListener.Start();
+            _serverThread = new Thread(ServerThreadStart);
+            _serverThread.Start();
         }
 
         private void ServerThreadStart()
@@ -61,7 +60,7 @@ namespace RetroMud.Tcp.Server
                     var socket = _tcpListener.AcceptSocket();
                     
                     var socketListener = new SocketHandler(socket);
-                    socketListener.StartSocketListener();
+                    socketListener.StartSocketWorker();
 
                     lock(_cleanupLock)
                     {
@@ -82,15 +81,16 @@ namespace RetroMud.Tcp.Server
 
             _stopServer = true;
             _tcpListener.Stop();
+
+            lock (_cleanupLock)
+            {
+                _purgeCompletedListeners();
+            }
         }
 
         private void _purgeCompletedListeners()
         {
-            Console.WriteLine(_listeners.Count);
-
             var completedListeners = _listeners.Where(x => x.Completed).ToList();
-
-            Console.WriteLine("Completed:" + completedListeners.Count);
 
             foreach (var listener in completedListeners)
             {
