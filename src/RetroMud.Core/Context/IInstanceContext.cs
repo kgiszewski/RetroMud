@@ -5,7 +5,7 @@ namespace RetroMud.Core.Context
     public interface IInstanceContext
     {
         string Name { get; }
-        void Starting();
+        void Start();
         IInstanceConfiguration Configuration { get; set; }
     }
 }

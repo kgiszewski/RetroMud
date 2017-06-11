@@ -9,15 +9,7 @@ namespace RetroMud.Core.Context
 
         public IGameContextConfiguration Configuration
         {
-            get
-            {
-                if (_configuration == null)
-                {
-                    _configuration = new GameContextConfiguration();
-                }
-
-                return _configuration;
-            }
+            get { return _configuration ?? (_configuration = new GameContextConfiguration()); }
 
             set { _configuration = value; }
         }

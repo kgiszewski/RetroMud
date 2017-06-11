@@ -46,9 +46,12 @@
     <Compile Include="Config\GameContextConfiguration.cs" />
     <Compile Include="Config\IInstanceConfiguation.cs" />
     <Compile Include="Config\IGameContextConfiguration.cs" />
+    <Compile Include="Events\EventHandlers\InstanceEventHandler.cs" />
     <Compile Include="Context\IInstanceContext.cs" />
-    <Compile Include="Context\IInstanceContextEvents.cs" />
+    <Compile Include="Events\Helpers\EventHelper.cs" />
+    <Compile Include="Events\Instance\IInstanceContextEvents.cs" />
     <Compile Include="Context\InstanceContext.cs" />
+    <Compile Include="Events\Helpers\IRegisterEvents.cs" />
     <Compile Include="MessageHandlers\FooHandler.cs" />
     <Compile Include="Messages\FooMessage.cs" />
     <Compile Include="Context\GameContext.cs" />

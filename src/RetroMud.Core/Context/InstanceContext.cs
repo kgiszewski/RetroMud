@@ -1,30 +1,26 @@
 ﻿using System;
 using RetroMud.Core.Config;
+using RetroMud.Core.Events.Helpers;
+using RetroMud.Core.Events.Instance;
 
 namespace RetroMud.Core.Context
 {
     public class InstanceContext : IInstanceContext, IInstanceContextEvents
     {
-        public event InstanceStartingHandler OnInstanceStarting;
+        public event InstanceStartHandler OnInstanceStart;
 
-        public void Starting()
+        public void Start()
         {
-            OnInstanceStarting?.Invoke(this, new EventArgs());
+            EventHelper.RegisterAllEventHandlers();
+
+            OnInstanceStart?.Invoke(this, new EventArgs());
         }
 
         private IInstanceConfiguration _configuration;
 
         public IInstanceConfiguration Configuration
         {
-            get
-            {
-                if (_configuration == null)
-                {
-                    _configuration = new InstanceConfiguration();
-                }
-
-                return _configuration;
-            }
+            get { return _configuration ?? (_configuration = new InstanceConfiguration()); }
 
             set { _configuration = value; }
         }
