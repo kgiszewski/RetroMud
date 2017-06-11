@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{64ACD832-7568-4FDD-8736-0F920840324C}</ProjectGuid>
+    <ProjectGuid>{E174CAD6-B1D4-4283-A094-3556BB05A1DE}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>RetroMud.Core</RootNamespace>
-    <AssemblyName>RetroMud.Core</AssemblyName>
+    <RootNamespace>RetroMud.Messaging</RootNamespace>
+    <AssemblyName>RetroMud.Messaging</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -31,8 +31,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
-    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -42,30 +45,29 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Config\ConfigConstants.cs" />
-    <Compile Include="Config\InstanceConfiguation.cs" />
-    <Compile Include="Config\GameContextConfiguration.cs" />
-    <Compile Include="Config\IInstanceConfiguation.cs" />
-    <Compile Include="Config\IGameContextConfiguration.cs" />
-    <Compile Include="Events\EventHandlers\InstanceEventHandler.cs" />
-    <Compile Include="Context\IInstanceContext.cs" />
-    <Compile Include="Events\Helpers\EventHelper.cs" />
-    <Compile Include="Events\Instance\IInstanceContextEvents.cs" />
-    <Compile Include="Context\InstanceContext.cs" />
-    <Compile Include="Events\Helpers\IRegisterEvents.cs" />
-    <Compile Include="MessageHandlers\FooHandler.cs" />
-    <Compile Include="Context\GameContext.cs" />
-    <Compile Include="Context\IGameContext.cs" />
+    <Compile Include="Config\ITcpConfiguration.cs" />
+    <Compile Include="Config\TcpConfiguration.cs" />
+    <Compile Include="Dispatching\IDispatchMessages.cs" />
+    <Compile Include="Dispatching\IHandleTcpMessages.cs" />
+    <Compile Include="Dispatching\ITcpMessage.cs" />
+    <Compile Include="Dispatching\MessageDispatcher.cs" />
+    <Compile Include="Encoders\IHandleTextEncoding.cs" />
+    <Compile Include="Encoders\Utf8TextEncoder.cs" />
+    <Compile Include="Helpers\MessageHelper.cs" />
+    <Compile Include="Messages\FooMessage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Publishing\ISendTcpMessages.cs" />
+    <Compile Include="Publishing\TcpMessenger.cs" />
+    <Compile Include="Serialization\IHandleSerialization.cs" />
+    <Compile Include="Serialization\JsonSerializer.cs" />
+    <Compile Include="Server\ISocketHandler.cs" />
+    <Compile Include="Server\ITcpServer.cs" />
+    <Compile Include="Server\SocketHandler.cs" />
+    <Compile Include="Server\TcpServer.cs" />
+    <Compile Include="Server\TcpServerFactory.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\RetroMud.Messages\RetroMud.Messaging.csproj">
-      <Project>{e174cad6-b1d4-4283-a094-3556bb05a1de}</Project>
-      <Name>RetroMud.Messaging</Name>
-    </ProjectReference>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

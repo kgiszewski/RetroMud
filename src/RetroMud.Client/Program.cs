@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
-using RetroMud.Tcp.Messaging.Publishing;
-using RetroMud.Core.Messages;
+using RetroMud.Messaging.Messages;
+using RetroMud.Messaging.Publishing;
 
 namespace RetroMud
 {

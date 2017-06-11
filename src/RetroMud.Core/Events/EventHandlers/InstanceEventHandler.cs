@@ -1,5 +1,4 @@
-﻿using RetroMud.Core.Config;
-using RetroMud.Core.Context;
+﻿using RetroMud.Core.Context;
 using RetroMud.Core.Events.Helpers;
 
 namespace RetroMud.Core.Events.EventHandlers
@@ -13,8 +12,7 @@ namespace RetroMud.Core.Events.EventHandlers
 
         private void Instance_OnInstanceStart(object sender, System.EventArgs e)
         {
-            //GameContext.Instance.Configuration = new GameContextConfiguration();
-            //InstanceContext.Instance.Configuration = new InstanceConfiguration();
+
         }
     }
 }

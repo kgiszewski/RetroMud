@@ -62,9 +62,9 @@
       <Project>{64acd832-7568-4fdd-8736-0f920840324c}</Project>
       <Name>RetroMud.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\RetroMud.Tcp\RetroMud.Tcp.csproj">
-      <Project>{fde208f7-55a9-4b9d-9d1c-4357b31c6f31}</Project>
-      <Name>RetroMud.Tcp</Name>
+    <ProjectReference Include="..\RetroMud.Messages\RetroMud.Messaging.csproj">
+      <Project>{e174cad6-b1d4-4283-a094-3556bb05a1de}</Project>
+      <Name>RetroMud.Messaging</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 using RetroMud.Core.Context;
-using RetroMud.Tcp.Server;
+using RetroMud.Messaging.Server;
 
 namespace RetroMud.Instance
 {

@@ -1,6 +1,6 @@
 ﻿using RetroMud.Core.Context;
-using RetroMud.Core.Messages;
-using RetroMud.Tcp.Messaging.Dispatching;
+using RetroMud.Messaging.Dispatching;
+using RetroMud.Messaging.Messages;
 
 namespace RetroMud.Core.MessageHandlers
 {
