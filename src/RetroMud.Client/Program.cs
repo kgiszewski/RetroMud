@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Threading;
-using RetroMud.Messaging.Messages;
+using RetroMud.Messaging.Messages.Healthchecks;
 using RetroMud.Messaging.Publishing;
 
 namespace RetroMud
@@ -8,27 +7,26 @@ namespace RetroMud
     class Program
     {
         private static readonly Random Rand = new Random();
+        private static ISendTcpMessages _messenger;
 
         static void Main(string[] args)
         {
             var clientId = Rand.Next(123123123);
+            var clientVersion = "0.1.0";
 
-            var tcpMessenger = new TcpMessenger();
+            _messenger = TcpMessengerFactory.GetMessenger();
 
-            Thread.Sleep(1000);
+            Console.WriteLine("Sending healthcheck info...");
 
-            Console.WriteLine("My client Id: " + clientId);
-
-            while (true)
+            var response = ((CurrentClientVersionResponse)_messenger.Send(new CurrentClientVersion
             {
-                //Console.ReadKey();
+                ClientId = clientId,
+                CurrentVersion = clientVersion
+            }));
 
-                Thread.Sleep(10);
-                
-                var response = tcpMessenger.Send(new FooMessage{Id = clientId});
+            Console.WriteLine($"Requires upgrade: {response.RequiresUpgrade}");
 
-                Console.WriteLine(response);
-            }
+            Console.ReadKey();
         }
     }
 }

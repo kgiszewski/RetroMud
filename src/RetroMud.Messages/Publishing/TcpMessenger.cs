@@ -1,8 +1,9 @@
 ﻿using System.Net;
 using System.Net.Sockets;
 using RetroMud.Messaging.Config;
-using RetroMud.Messaging.Dispatching;
 using RetroMud.Messaging.Encoders;
+using RetroMud.Messaging.Helpers;
+using RetroMud.Messaging.Messages;
 using RetroMud.Messaging.Serialization;
 
 namespace RetroMud.Messaging.Publishing
@@ -42,7 +43,7 @@ namespace RetroMud.Messaging.Publishing
             return socket;
         }
 
-        public string Send(ITcpMessage message)
+        public object Send(ITcpMessage message)
         {
             var socket = GetSocket();
 
@@ -52,7 +53,13 @@ namespace RetroMud.Messaging.Publishing
 
             var numberBytes = socket.Receive(buffer);
 
-            return _textEncoder.GetString(buffer, numberBytes);
+            var rawResponse = _textEncoder.GetString(buffer, numberBytes);
+
+            var responseMessageType = MessageHelper.GetMessageResponseTypeByName(message.MessageType);
+
+            var deserialized = _serializer.Deserialize(rawResponse, responseMessageType);
+
+            return deserialized;
         }
     }
 }

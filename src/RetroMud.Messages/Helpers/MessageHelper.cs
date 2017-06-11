@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using RetroMud.Messaging.Dispatching;
+using RetroMud.Messaging.Messages;
 
 namespace RetroMud.Messaging.Helpers
 {
@@ -11,12 +12,13 @@ namespace RetroMud.Messaging.Helpers
         private static IEnumerable<Type> _allMessageTypes;
         private static string _handlerSuffix = "Handler";
         private static string _messageSuffix = "Message";
+        private static string _responseSuffix = "Response";
 
         //based on message name, fine the corresponding handler type
         public static Type GetMessageHandlerByMessageTypeName(string messageType)
         {
             var handler = GetAllMessageHandlers()
-                .FirstOrDefault(x => x.Name.ToHandlerName() == messageType);
+                .FirstOrDefault(x => x.Name.ToHandlerTypeNameWithoutSuffix() == messageType);
 
             return handler;
         }
@@ -26,7 +28,7 @@ namespace RetroMud.Messaging.Helpers
         {
             if (_allHandlerTypes != null) return _allHandlerTypes;
 
-            var openGenericType = typeof(IHandleTcpMessages<>);
+            var openGenericType = typeof(IHandleTcpMessages<,>);
 
             _allHandlerTypes = from x in AppDomain.CurrentDomain.GetAssemblies().SelectMany(x => x.GetTypes())
                                from z in x.GetInterfaces()
@@ -41,7 +43,7 @@ namespace RetroMud.Messaging.Helpers
         }
 
         //given an input, returns the raw message name when given a handler name
-        public static string ToHandlerName(this string input)
+        public static string ToHandlerTypeNameWithoutSuffix(this string input)
         {
             if (input == null)
             {
@@ -52,7 +54,7 @@ namespace RetroMud.Messaging.Helpers
         }
 
         //given an input, returns the raw message name when given a message name
-        public static string ToMessageName(this string input)
+        public static string ToMessageTypeNameWithoutSuffix(this string input)
         {
             if (input == null)
             {
@@ -75,7 +77,27 @@ namespace RetroMud.Messaging.Helpers
                     ).ToList();
             }
 
-            var pocoType = _allMessageTypes.FirstOrDefault(x => x.Name.ToMessageName().ToLower() == messageName.ToMessageName().ToLower());
+            var pocoType = _allMessageTypes.FirstOrDefault(x => x.Name.ToMessageTypeNameWithoutSuffix().ToLower() == messageName.ToMessageTypeNameWithoutSuffix().ToLower());
+
+            return pocoType;
+        }
+
+        public static Type GetMessageResponseTypeByName(string messageName)
+        {
+            messageName += _responseSuffix;
+
+            if (_allMessageTypes == null)
+            {
+                var messageType = typeof(ITcpResponseMessage);
+
+                _allMessageTypes = AppDomain.CurrentDomain.GetAssemblies().SelectMany(x => x.GetTypes())
+                    .Where(
+                        x => messageType.IsAssignableFrom(x)
+                             && !x.IsAbstract
+                    ).ToList();
+            }
+
+            var pocoType = _allMessageTypes.FirstOrDefault(x => x.Name.ToMessageTypeNameWithoutSuffix().ToLower() == messageName.ToMessageTypeNameWithoutSuffix().ToLower());
 
             return pocoType;
         }

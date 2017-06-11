@@ -1,4 +1,6 @@
-﻿namespace RetroMud.Messaging.Dispatching
+﻿using RetroMud.Messaging.Messages;
+
+namespace RetroMud.Messaging.Dispatching
 {
     public interface IDispatchMessages
     {

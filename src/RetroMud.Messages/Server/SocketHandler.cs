@@ -5,6 +5,7 @@ using RetroMud.Messaging.Config;
 using RetroMud.Messaging.Dispatching;
 using RetroMud.Messaging.Encoders;
 using RetroMud.Messaging.Helpers;
+using RetroMud.Messaging.Messages;
 using RetroMud.Messaging.Serialization;
 
 namespace RetroMud.Messaging.Server

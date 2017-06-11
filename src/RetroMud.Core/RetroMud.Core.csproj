@@ -53,9 +53,9 @@
     <Compile Include="Events\Instance\IInstanceContextEvents.cs" />
     <Compile Include="Context\InstanceContext.cs" />
     <Compile Include="Events\Helpers\IRegisterEvents.cs" />
-    <Compile Include="MessageHandlers\FooHandler.cs" />
     <Compile Include="Context\GameContext.cs" />
     <Compile Include="Context\IGameContext.cs" />
+    <Compile Include="MessageHandlers\Healthchecks\CurrentClientVersionHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -1,9 +1,9 @@
-﻿using RetroMud.Messaging.Dispatching;
+﻿using RetroMud.Messaging.Messages;
 
 namespace RetroMud.Messaging.Publishing
 {
     public interface ISendTcpMessages
     {
-        string Send(ITcpMessage message);
+        object Send(ITcpMessage message);
     }
 }

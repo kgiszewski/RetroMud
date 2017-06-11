@@ -1,33 +1,17 @@
 ﻿using System;
-using RetroMud.Messaging.Config;
-using RetroMud.Messaging.Encoders;
 using RetroMud.Messaging.Helpers;
+using RetroMud.Messaging.Messages;
 
 namespace RetroMud.Messaging.Dispatching
 {
     public class MessageDispatcher : IDispatchMessages
     {
-        private readonly ITcpConfiguration _tcpConfiguration;
-        private readonly IHandleTextEncoding _textEncoder;
-
-        public MessageDispatcher()
-            :this(new TcpConfiguration(), new Utf8TextEncoder())
-        {
-            
-        }
-
-        public MessageDispatcher(ITcpConfiguration tcpConfiguration, IHandleTextEncoding textEncoder)
-        {
-            _tcpConfiguration = tcpConfiguration;
-            _textEncoder = textEncoder;
-        }
-
         public object Dispatch(ITcpMessage message)
         {
             Console.WriteLine("Dispatching...");
 
             //in the case of 'FooMessage' this will return 'Foo'
-            var nameOfMessageClass = message.GetType().Name.ToMessageName();
+            var nameOfMessageClass = message.GetType().Name.ToMessageTypeNameWithoutSuffix();
 
             //this goes and gets the handler type based on the name of the message class
             var handlerType = MessageHelper.GetMessageHandlerByMessageTypeName(nameOfMessageClass);

@@ -1,4 +1,4 @@
-﻿namespace RetroMud.Messaging.Dispatching
+﻿namespace RetroMud.Messaging.Messages
 {
     public interface ITcpMessage
     {

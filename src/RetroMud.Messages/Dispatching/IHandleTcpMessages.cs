@@ -1,7 +1,11 @@
-﻿namespace RetroMud.Messaging.Dispatching
+﻿using RetroMud.Messaging.Messages;
+
+namespace RetroMud.Messaging.Dispatching
 {
-    public interface IHandleTcpMessages<in TMessage> where TMessage : ITcpMessage
+    public interface IHandleTcpMessages<in TMessage, out TResponse> 
+        where TMessage : ITcpMessage
+        where TResponse : ITcpResponseMessage
     {
-        object Handle(TMessage message);
+        TResponse Handle(TMessage message);
     }
 }
