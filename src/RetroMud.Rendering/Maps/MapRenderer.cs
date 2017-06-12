@@ -83,6 +83,9 @@ namespace RetroMud.Rendering.Maps
 
                     sb = new StringBuilder(renderedRow) { [column] = '@' };
                     renderedRow = sb.ToString();
+
+                    WriteLineWithColoredLetter(renderedRow, '@');
+                    continue;
                 }
 
                 Console.WriteLine(renderedRow);
@@ -99,6 +102,16 @@ namespace RetroMud.Rendering.Maps
             }
 
             Console.WriteLine($"RowWindow: {rowWindowSize} ColumnWindow: {columnWindowSize} ");
+        }
+
+        void WriteLineWithColoredLetter(string letters, char c)
+        {
+            var o = letters.IndexOf(c);
+            Console.Write(letters.Substring(0, o));
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.Write(letters[o]);
+            Console.ResetColor();
+            Console.WriteLine(letters.Substring(o + 1));
         }
     }
 }
