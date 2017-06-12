@@ -4,18 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{D941A41D-E3DC-41EC-B45D-17F780A3FC87}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <ProjectGuid>{E174CAD6-B1D4-4283-A094-3556BB05A1DE}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>RetroMud.Instance</RootNamespace>
-    <AssemblyName>RetroMud.Instance</AssemblyName>
+    <RootNamespace>RetroMud.Messaging</RootNamespace>
+    <AssemblyName>RetroMud.Messaging</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -25,7 +23,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -34,8 +31,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -43,29 +43,33 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
-    <Reference Include="Topshelf, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b800c4cfcdeea87b, processorArchitecture=MSIL">
-      <HintPath>..\packages\Topshelf.4.0.3\lib\net452\Topshelf.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
+    <Compile Include="Config\ITcpConfiguration.cs" />
+    <Compile Include="Config\TcpConfiguration.cs" />
+    <Compile Include="Dispatching\IDispatchMessages.cs" />
+    <Compile Include="Dispatching\IHandleTcpMessages.cs" />
+    <Compile Include="Dispatching\MessageDispatcher.cs" />
+    <Compile Include="Encoders\IHandleTextEncoding.cs" />
+    <Compile Include="Encoders\Utf8TextEncoder.cs" />
+    <Compile Include="Helpers\MessageHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="InstanceHolder.cs" />
+    <Compile Include="Publishing\ISendTcpMessages.cs" />
+    <Compile Include="Publishing\ITcpMessage.cs" />
+    <Compile Include="Publishing\ITcpResponseMessage.cs" />
+    <Compile Include="Publishing\TcpMessageBase.cs" />
+    <Compile Include="Publishing\TcpMessenger.cs" />
+    <Compile Include="Publishing\TcpMessengerFactory.cs" />
+    <Compile Include="Serialization\IHandleSerialization.cs" />
+    <Compile Include="Serialization\JsonSerializer.cs" />
+    <Compile Include="Server\ISocketHandler.cs" />
+    <Compile Include="Server\ITcpServer.cs" />
+    <Compile Include="Server\SocketHandler.cs" />
+    <Compile Include="Server\TcpServer.cs" />
+    <Compile Include="Server\TcpServerFactory.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\RetroMud.Core\RetroMud.Core.csproj">
-      <Project>{64acd832-7568-4fdd-8736-0f920840324c}</Project>
-      <Name>RetroMud.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\RetroMud.Messaging\RetroMud.Messaging.csproj">
-      <Project>{e174cad6-b1d4-4283-a094-3556bb05a1de}</Project>
-      <Name>RetroMud.Messaging</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

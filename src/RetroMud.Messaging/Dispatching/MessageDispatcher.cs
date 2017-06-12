@@ -8,7 +8,7 @@ namespace RetroMud.Messaging.Dispatching
     {
         public object Dispatch(ITcpMessage message)
         {
-            Console.WriteLine("Dispatching...");
+            Console.WriteLine($"Dispatching {message.MessageType}...");
 
             //in the case of 'FooMessage' this will return 'Foo'
             var nameOfMessageClass = message.GetType().Name.ToMessageTypeNameWithoutSuffix();

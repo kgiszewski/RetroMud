@@ -11,7 +11,7 @@ namespace RetroMud.Messaging.Helpers
         private static IEnumerable<Type> _allHandlerTypes;
         private static IEnumerable<Type> _allMessageTypes;
         private static string _handlerSuffix = "Handler";
-        private static string _messageSuffix = "Message";
+        private static string _requestSuffix = "Request";
         private static string _responseSuffix = "Response";
 
         //based on message name, fine the corresponding handler type
@@ -61,7 +61,7 @@ namespace RetroMud.Messaging.Helpers
                 return string.Empty;
             }
 
-            return !input.EndsWith(_messageSuffix) ? input : input.Remove(input.LastIndexOf(_messageSuffix));
+            return !input.EndsWith(_requestSuffix) ? input : input.Remove(input.LastIndexOf(_requestSuffix));
         }
 
         public static Type GetMessageTypeByName(string messageName)

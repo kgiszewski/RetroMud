@@ -55,17 +55,25 @@
     <Compile Include="Events\Helpers\IRegisterEvents.cs" />
     <Compile Include="Context\GameContext.cs" />
     <Compile Include="Context\IGameContext.cs" />
-    <Compile Include="MessageHandlers\Healthchecks\CurrentClientVersionHandler.cs" />
+    <Compile Include="Healthchecks\MessageHandlers\CurrentClientVersionHandler.cs" />
+    <Compile Include="Healthchecks\Messages\CurrentClientVersion.cs" />
+    <Compile Include="Maps\IMap.cs" />
+    <Compile Include="Maps\IMapWindow.cs" />
+    <Compile Include="Maps\Map.cs" />
+    <Compile Include="Maps\MapWindow.cs" />
+    <Compile Include="Maps\MessageHandlers\GetMapHandler.cs" />
+    <Compile Include="Maps\Messages\GetMapRequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\RetroMud.Messages\RetroMud.Messaging.csproj">
+    <ProjectReference Include="..\RetroMud.Messaging\RetroMud.Messaging.csproj">
       <Project>{e174cad6-b1d4-4283-a094-3556bb05a1de}</Project>
       <Name>RetroMud.Messaging</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Maps\Data\HelloWorld.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

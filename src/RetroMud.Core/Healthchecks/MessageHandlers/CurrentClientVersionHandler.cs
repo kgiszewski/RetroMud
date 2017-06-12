@@ -1,12 +1,12 @@
 ﻿using System;
+using RetroMud.Core.Healthchecks.Messages;
 using RetroMud.Messaging.Dispatching;
-using RetroMud.Messaging.Messages.Healthchecks;
 
-namespace RetroMud.Core.MessageHandlers.Healthchecks
+namespace RetroMud.Core.Healthchecks.MessageHandlers
 {
-    public class CurrentClientVersionHandler : IHandleTcpMessages<CurrentClientVersion, CurrentClientVersionResponse>
+    public class CurrentClientVersionHandler : IHandleTcpMessages<CurrentClientVersionRequest, CurrentClientVersionResponse>
     {
-        public CurrentClientVersionResponse Handle(CurrentClientVersion message)
+        public CurrentClientVersionResponse Handle(CurrentClientVersionRequest message)
         {
             Console.WriteLine($"The current version for client Id: {message.ClientId} is {message.CurrentVersion}");
 

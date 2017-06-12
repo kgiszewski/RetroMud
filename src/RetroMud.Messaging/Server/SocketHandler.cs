@@ -74,7 +74,9 @@ namespace RetroMud.Messaging.Server
 
                 var response = _messageDispatcher.Dispatch((ITcpMessage)deserialized);
 
-                _socket.Send(_textEncoder.GetBytes(_serializer.Serialize(response)));
+                var serializedResponse = _serializer.Serialize(response);
+
+                _socket.Send(_textEncoder.GetBytes(serializedResponse));
             }
             catch (Exception ex)
             {
