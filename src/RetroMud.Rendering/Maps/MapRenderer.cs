@@ -2,57 +2,40 @@
 using System.Text;
 using RetroMud.Core.Maps;
 using RetroMud.Core.Maps.Window;
+using RetroMud.Core.Players;
 
 namespace RetroMud.Rendering.Maps
 {
     public class MapRenderer : IRenderMaps
     {
-        public void RenderMap(IMap map, IMapWindow mapWindow, IWindowBoundGenerator boundGenerator, int currentColumn, int currentRow)
+        public void RenderMap(IMap map, IMapWindow mapWindow, IWindowBoundGenerator boundGenerator, IPlayer player)
         {
             Console.SetCursorPosition(0, 0);
 
-            var sb = new StringBuilder();
+            var blankRow = _getBlankRow(map);
 
-            for (var j = 0; j < map.Width; j++)
-            {
-                sb.Append(" ");
-            }
+            var bounds = boundGenerator.GetBounds(map, mapWindow, player.CurrentRow, player.CurrentColumn);
 
-            var blankRow = sb.ToString();
-
-            var bounds = boundGenerator.GetBounds(map, mapWindow, currentRow, currentColumn);
-
-            Console.WriteLine($"Current Position: {currentRow.ToString("00")}, {currentColumn.ToString("00")} UpperLimit: {bounds.UpperLimit.ToString("00")} LowerLimit: {bounds.LowerLimit.ToString("00")} LeftLimit: {bounds.LeftLimit.ToString("00")} RightLimit: {bounds.RightLimit.ToString("00")}");
-            Console.WriteLine($"Map size {map.Height.ToString("00")}, {map.Width.ToString("00")}");
+            Console.WriteLine($"Current Position: {player.CurrentRow.ToString("000")}, {player.CurrentColumn.ToString("000")} UpperLimit: {bounds.UpperLimit.ToString("000")} LowerLimit: {bounds.LowerLimit.ToString("000")} LeftLimit: {bounds.LeftLimit.ToString("000")} RightLimit: {bounds.RightLimit.ToString("000")}");
+            Console.WriteLine($"Map size {map.Height.ToString("000")}, {map.Width.ToString("000")}");
 
             for (var row = bounds.UpperLimit; row < bounds.LowerLimit; row++)
             {
-                var width = mapWindow.ColumnSize * 2;
-                var spaceFiller = string.Empty;
+                var totalWindowWidth = mapWindow.ColumnSize * 2;
+                var spaceFiller = _getSpaceFiller(map, mapWindow, bounds, totalWindowWidth);
 
-                if (bounds.LeftLimit + width > map.Width)
-                {
-                    width = map.Width - bounds.LeftLimit;
-                    sb.Clear();
+                var renderedRow = $"{map.Data[row].Substring(bounds.LeftLimit, spaceFiller.Item2)}{spaceFiller.Item1}";
 
-                    for (var i = 0; i < (mapWindow.ColumnSize * 2) - width; i++)
-                    {
-                        sb.Append(" ");
-                    }
-
-                    spaceFiller = sb.ToString();
-                }
-
-                var renderedRow = $"{map.Data[row].Substring(bounds.LeftLimit, width)}{spaceFiller}";
-
-                if (row == currentRow)
+                if (row == player.CurrentRow)
                 {
                     var column = mapWindow.ColumnSize;
 
-                    if (currentColumn < mapWindow.ColumnSize)
+                    if (player.CurrentColumn < mapWindow.ColumnSize)
                     {
-                        column = currentColumn;
+                        column = player.CurrentColumn;
                     }
+
+                    var sb = new StringBuilder();
 
                     sb = new StringBuilder(renderedRow) { [column] = '@' };
                     renderedRow = sb.ToString();
@@ -64,7 +47,7 @@ namespace RetroMud.Rendering.Maps
                 Console.WriteLine(renderedRow);
             }
 
-            if (currentRow > mapWindow.RowSize && (bounds.LowerLimit - bounds.UpperLimit < mapWindow.RowSize * 2))
+            if (player.CurrentRow > mapWindow.RowSize && (bounds.LowerLimit - bounds.UpperLimit < mapWindow.RowSize * 2))
             {
                 var blankLineCount = (mapWindow.RowSize * 2) - (bounds.LowerLimit - bounds.UpperLimit);
 
@@ -85,6 +68,38 @@ namespace RetroMud.Rendering.Maps
             Console.Write(letters[o]);
             Console.ResetColor();
             Console.WriteLine(letters.Substring(o + 1));
+        }
+
+        private string _getBlankRow(IMap map)
+        {
+            var sb = new StringBuilder();
+
+            for (var j = 0; j < map.Width; j++)
+            {
+                sb.Append(" ");
+            }
+
+            return sb.ToString();
+        }
+
+        private Tuple<string, int> _getSpaceFiller(IMap map, IMapWindow mapWindow, IWindowBounds bounds, int totalWindowWidth)
+        {
+            if (bounds.LeftLimit + totalWindowWidth > map.Width)
+            {
+                var sb = new StringBuilder();
+
+                totalWindowWidth = map.Width - bounds.LeftLimit;
+                sb.Clear();
+
+                for (var i = 0; i < (mapWindow.ColumnSize * 2) - totalWindowWidth; i++)
+                {
+                    sb.Append(" ");
+                }
+
+                return new Tuple<string, int>(sb.ToString(), totalWindowWidth);
+            }
+
+            return new Tuple<string, int>(string.Empty, totalWindowWidth);
         }
     }
 }
