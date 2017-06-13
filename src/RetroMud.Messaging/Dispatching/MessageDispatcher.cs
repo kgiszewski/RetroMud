@@ -8,6 +8,18 @@ namespace RetroMud.Messaging.Dispatching
     {
         public event DispatchEventHandler OnDispatchMessage;
 
+        private static IDispatchMessages _messageDispatcher;
+
+        private MessageDispatcher()
+        {
+            
+        }
+
+        public static IDispatchMessages Instance()
+        {
+            return _messageDispatcher ?? (_messageDispatcher = new MessageDispatcher());
+        }
+
         public object Dispatch(ITcpMessage message)
         {
             //in the case of 'FooMessage' this will return 'Foo'

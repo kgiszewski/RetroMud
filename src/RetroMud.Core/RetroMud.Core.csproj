@@ -53,6 +53,7 @@
     <Compile Include="Config\IGameContextConfiguration.cs" />
     <Compile Include="Events\EventHandlers\InstanceEventHandler.cs" />
     <Compile Include="Context\IInstanceContext.cs" />
+    <Compile Include="Events\EventHandlers\LoggingEventHandler.cs" />
     <Compile Include="Events\Helpers\EventHelper.cs" />
     <Compile Include="Events\Instance\IInstanceContextEvents.cs" />
     <Compile Include="Context\InstanceContext.cs" />
