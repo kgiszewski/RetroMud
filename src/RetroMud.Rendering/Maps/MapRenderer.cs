@@ -3,14 +3,25 @@ using System.Text;
 using RetroMud.Core.Maps;
 using RetroMud.Core.Maps.Window;
 using RetroMud.Core.Players;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace RetroMud.Rendering.Maps
 {
     public class MapRenderer : IRenderMaps
     {
-        public void RenderMap(IMap map, IMapWindow mapWindow, IWindowBoundGenerator boundGenerator, IPlayer player)
+        private List<char> _colorCharacters;
+
+        public void RenderMap(
+            IMap map, 
+            IMapWindow mapWindow, 
+            IWindowBoundGenerator boundGenerator, 
+            IPlayer player
+        )
         {
             Console.SetCursorPosition(0, 0);
+
+            _colorCharacters = map.CharacterColors.Select(x => x.Character).ToList();
 
             var bounds = boundGenerator.GetBounds(map, mapWindow, player.CurrentRow, player.CurrentColumn);
 
@@ -26,38 +37,17 @@ namespace RetroMud.Rendering.Maps
 
                 if (row == player.CurrentRow)
                 {
-                    var column = mapWindow.ColumnSize;
-
-                    if (player.CurrentColumn < mapWindow.ColumnSize)
-                    {
-                        column = player.CurrentColumn;
-                    }
-
-                    var sb = new StringBuilder();
-
-                    sb = new StringBuilder(renderedRow) { [column] = '@' };
-                    renderedRow = sb.ToString();
-
-                    WriteLineWithColoredLetter(renderedRow, '@');
-                    continue;
+                    _renderPlayerRow(renderedRow, mapWindow, player, map);
                 }
-
-                Console.WriteLine(renderedRow);
+                else
+                {
+                    _renderRow(renderedRow, map);
+                }
             }
 
             _renderBlankRowsIfNeededAtBottom(map, player, mapWindow, bounds);
 
             Console.WriteLine($"RowWindow: {mapWindow.RowSize} ColumnWindow: {mapWindow.ColumnSize} ");
-        }
-
-        void WriteLineWithColoredLetter(string letters, char c)
-        {
-            var o = letters.IndexOf(c);
-            Console.Write(letters.Substring(0, o));
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.Write(letters[o]);
-            Console.ResetColor();
-            Console.WriteLine(letters.Substring(o + 1));
         }
 
         private string _getBlankRow(IMap map)
@@ -103,6 +93,60 @@ namespace RetroMud.Rendering.Maps
                 {
                     Console.WriteLine(blankRow);
                 }
+            }
+        }
+
+        private void _renderPlayerRow(string rowToRender, IMapWindow mapWindow, IPlayer player, IMap map)
+        {
+            var column = mapWindow.ColumnSize;
+
+            if (player.CurrentColumn < mapWindow.ColumnSize)
+            {
+                column = player.CurrentColumn;
+            }
+
+            var sb = new StringBuilder();
+
+            sb = new StringBuilder(rowToRender) { [column] = '@' };
+            rowToRender = sb.ToString();
+
+            _renderRow(rowToRender, map);
+        }
+
+        private void _renderRow(string rowToRender, IMap map)
+        {
+            if (_colorCharacters.Any(x => rowToRender.Contains(x)))
+            {
+                var chars = rowToRender.ToCharArray();
+
+                var counter = 0;
+
+                foreach (var chr in chars)
+                {
+                    if (_colorCharacters.Contains(chr))
+                    {
+                        var colorMapping = map.CharacterColors.First(x => x.Character == chr);
+
+                        Console.ForegroundColor = colorMapping.Color;
+                        Console.Write(chr);
+                        Console.ResetColor();
+                    }
+                    else
+                    {
+                        Console.Write(chr);
+                    }
+
+                    counter++;
+
+                    if (counter == chars.Length)
+                    {
+                        Console.WriteLine();
+                    }
+                }
+            }
+            else
+            {
+                Console.WriteLine(rowToRender);
             }
         }
     }

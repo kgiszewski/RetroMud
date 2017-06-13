@@ -63,6 +63,8 @@
     <Compile Include="Healthchecks\MessageHandlers\CurrentClientVersionHandler.cs" />
     <Compile Include="Healthchecks\Messages\CurrentClientVersionRequest.cs" />
     <Compile Include="Logging\Logger.cs" />
+    <Compile Include="Maps\CharacterColors\CharacterColor.cs" />
+    <Compile Include="Maps\CharacterColors\ICharacterColor.cs" />
     <Compile Include="Maps\IMap.cs" />
     <Compile Include="Maps\Window\IMapWindow.cs" />
     <Compile Include="Maps\Window\IWindowBoundGenerator.cs" />
