@@ -1,8 +1,5 @@
 # RetroMud
 
-Logging by observation
-- Async?
-
 Encryption
 - Shared Secret?
 - Compiled in?
