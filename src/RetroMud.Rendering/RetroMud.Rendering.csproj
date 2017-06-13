@@ -41,7 +41,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ImageRenderer.cs" />
     <Compile Include="Maps\IRenderMaps.cs" />
     <Compile Include="Maps\MapRenderer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
