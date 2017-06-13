@@ -61,7 +61,7 @@
     <Compile Include="Context\GameContext.cs" />
     <Compile Include="Context\IGameContext.cs" />
     <Compile Include="Healthchecks\MessageHandlers\CurrentClientVersionHandler.cs" />
-    <Compile Include="Healthchecks\Messages\CurrentClientVersion.cs" />
+    <Compile Include="Healthchecks\Messages\CurrentClientVersionRequest.cs" />
     <Compile Include="Logging\Logger.cs" />
     <Compile Include="Maps\IMap.cs" />
     <Compile Include="Maps\Window\IMapWindow.cs" />
@@ -74,6 +74,8 @@
     <Compile Include="Maps\Window\WindowBoundGenerator.cs" />
     <Compile Include="Maps\Window\WindowBounds.cs" />
     <Compile Include="Players\IPlayer.cs" />
+    <Compile Include="Players\MessageHandlers\GetPlayerHandler.cs" />
+    <Compile Include="Players\Messages\GetPlayerRequest.cs" />
     <Compile Include="Players\Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -89,6 +91,7 @@
   <ItemGroup>
     <Content Include="Maps\Data\HelloWorld.txt" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -1,11 +1,8 @@
 ﻿using System;
 using RetroMud.Messaging.Publishing;
-using RetroMud.Rendering.Maps;
 using RetroMud.Core.Healthchecks.Messages;
-using RetroMud.Core.Maps;
-using RetroMud.Core.Maps.Messages;
-using RetroMud.Core.Maps.Window;
 using RetroMud.Core.Players;
+using RetroMud.Core.Players.Messages;
 using RetroMud.Rendering.Scenes;
 
 namespace RetroMud
@@ -35,11 +32,10 @@ namespace RetroMud
 
             Console.WriteLine($"Requires upgrade: {response.RequiresUpgrade}");
 
-            var player = new Player
+            var player = ((GetPlayerResponse)_messenger.Send(new GetPlayerRequest
             {
-                CurrentRow = 7,
-                CurrentColumn = 54
-            };
+                PlayerId = 1
+            })).Player;
 
             var scene = new ExploreMapScene(1, player);
 
