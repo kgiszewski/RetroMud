@@ -1,4 +1,5 @@
 ﻿using System;
+using RetroMud.Core.Collision;
 using RetroMud.Core.Maps.Messages;
 using RetroMud.Core.Maps.Window;
 using RetroMud.Core.Players;
@@ -12,11 +13,32 @@ namespace RetroMud.Rendering.Scenes
         private static ISendTcpMessages _messenger;
         private readonly int _mapId;
         private readonly IPlayer _player;
+        private readonly IMapWindow _mapWindow;
+        private readonly IWindowBoundGenerator _boundGenerator;
+        private readonly IHandleCollisionDetection _collisionDetector;
+        private readonly IRenderMaps _mapRenderer;
 
         public ExploreMapScene(int mapId, IPlayer player)
+            :this (mapId, player, new MapWindow(), new WindowBoundGenerator(), new CollisionDetector(), new MapRenderer())
+        {
+            
+        }
+
+        public ExploreMapScene(
+            int mapId, 
+            IPlayer player,
+            IMapWindow mapWindow,
+            IWindowBoundGenerator boundGenerator,
+            IHandleCollisionDetection collisionDetector,
+            IRenderMaps mapRenderer
+        )
         {
             _mapId = mapId;
             _player = player;
+            _mapWindow = mapWindow;
+            _boundGenerator = boundGenerator;
+            _collisionDetector = collisionDetector;
+            _mapRenderer = mapRenderer;
         }
 
         public void Render()
@@ -32,12 +54,7 @@ namespace RetroMud.Rendering.Scenes
 
             var map = getMapResponse.Map;
 
-            var mapWindow = new MapWindow();
-            var boundGenerator = new WindowBoundGenerator();
-
-            var mapRenderer = new MapRenderer();
-
-            mapRenderer.RenderMap(map, mapWindow, boundGenerator, _player);
+            _mapRenderer.RenderMap(map, _player);
 
             while (true)
             {
@@ -63,7 +80,7 @@ namespace RetroMud.Rendering.Scenes
                     _player.CurrentRow++;
                 }
 
-                mapRenderer.RenderMap(map, mapWindow, boundGenerator, _player);
+                _mapRenderer.RenderMap(map, _player);
             }
         }
     }

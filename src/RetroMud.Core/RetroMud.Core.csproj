@@ -46,6 +46,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Collision\CollisionDetector.cs" />
+    <Compile Include="Collision\IHandleCollisionDetection.cs" />
     <Compile Include="Config\ConfigConstants.cs" />
     <Compile Include="Config\InstanceConfiguation.cs" />
     <Compile Include="Config\GameContextConfiguration.cs" />

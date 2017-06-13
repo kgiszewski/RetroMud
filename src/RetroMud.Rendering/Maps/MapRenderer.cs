@@ -10,12 +10,28 @@ namespace RetroMud.Rendering.Maps
 {
     public class MapRenderer : IRenderMaps
     {
+        private readonly IMapWindow _mapWindow;
+        private readonly IWindowBoundGenerator _boundGenerator;
+
+        public MapRenderer()
+            :this(new MapWindow(), new WindowBoundGenerator())
+        {
+            
+        }
+
+        public MapRenderer(
+            IMapWindow mapWindow,
+            IWindowBoundGenerator boundGenerator
+            )
+        {
+            _mapWindow = mapWindow;
+            _boundGenerator = boundGenerator;
+        }
+
         private List<char> _colorCharacters;
 
         public void RenderMap(
-            IMap map, 
-            IMapWindow mapWindow, 
-            IWindowBoundGenerator boundGenerator, 
+            IMap map,
             IPlayer player
         )
         {
@@ -23,21 +39,21 @@ namespace RetroMud.Rendering.Maps
 
             _colorCharacters = map.CharacterColors.Select(x => x.Character).ToList();
 
-            var bounds = boundGenerator.GetBounds(map, mapWindow, player.CurrentRow, player.CurrentColumn);
+            var bounds = _boundGenerator.GetBounds(map, _mapWindow, player.CurrentRow, player.CurrentColumn);
 
             Console.WriteLine($"Current Position: {player.CurrentRow.ToString("000")}, {player.CurrentColumn.ToString("000")} UpperLimit: {bounds.UpperLimit.ToString("000")} LowerLimit: {bounds.LowerLimit.ToString("000")} LeftLimit: {bounds.LeftLimit.ToString("000")} RightLimit: {bounds.RightLimit.ToString("000")}");
             Console.WriteLine($"Map size {map.Height.ToString("000")}, {map.Width.ToString("000")}");
 
             for (var row = bounds.UpperLimit; row < bounds.LowerLimit; row++)
             {
-                var totalWindowWidth = mapWindow.ColumnSize * 2;
-                var spaceFiller = _getSpaceFiller(map, mapWindow, bounds, totalWindowWidth);
+                var totalWindowWidth = _mapWindow.ColumnSize * 2;
+                var spaceFiller = _getSpaceFiller(map, _mapWindow, bounds, totalWindowWidth);
 
                 var renderedRow = $"{map.Data[row].Substring(bounds.LeftLimit, spaceFiller.Item2)}{spaceFiller.Item1}";
 
                 if (row == player.CurrentRow)
                 {
-                    _renderPlayerRow(renderedRow, mapWindow, player, map);
+                    _renderPlayerRow(renderedRow, _mapWindow, player, map);
                 }
                 else
                 {
@@ -45,9 +61,9 @@ namespace RetroMud.Rendering.Maps
                 }
             }
 
-            _renderBlankRowsIfNeededAtBottom(map, player, mapWindow, bounds);
+            _renderBlankRowsIfNeededAtBottom(map, player, _mapWindow, bounds);
 
-            Console.WriteLine($"RowWindow: {mapWindow.RowSize} ColumnWindow: {mapWindow.ColumnSize} ");
+            Console.WriteLine($"RowWindow: {_mapWindow.RowSize} ColumnWindow: {_mapWindow.ColumnSize} ");
         }
 
         private string _getBlankRow(IMap map)
