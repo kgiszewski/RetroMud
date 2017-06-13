@@ -37,7 +37,7 @@ namespace RetroMud.Rendering.Scenes
 
             var mapRenderer = new MapRenderer();
 
-            mapRenderer.RenderMap(map, mapWindow, boundGenerator, _player.CurrentColumn, _player.CurrentRow);
+            mapRenderer.RenderMap(map, mapWindow, boundGenerator, _player);
 
             while (true)
             {
@@ -63,7 +63,7 @@ namespace RetroMud.Rendering.Scenes
                     _player.CurrentRow++;
                 }
 
-                mapRenderer.RenderMap(map, mapWindow, boundGenerator, _player.CurrentColumn, _player.CurrentRow);
+                mapRenderer.RenderMap(map, mapWindow, boundGenerator, _player);
             }
         }
     }

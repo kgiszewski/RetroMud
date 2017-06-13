@@ -1,10 +1,11 @@
 ﻿using RetroMud.Core.Maps;
 using RetroMud.Core.Maps.Window;
+using RetroMud.Core.Players;
 
 namespace RetroMud.Rendering.Maps
 {
     public interface IRenderMaps
     {
-        void RenderMap(IMap map, IMapWindow mapWindow, IWindowBoundGenerator boundGenerator, int currentColumn, int currentRow);
+        void RenderMap(IMap map, IMapWindow mapWindow, IWindowBoundGenerator boundGenerator, IPlayer player);
     }
 }

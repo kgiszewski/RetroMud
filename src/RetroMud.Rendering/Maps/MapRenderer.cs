@@ -12,8 +12,6 @@ namespace RetroMud.Rendering.Maps
         {
             Console.SetCursorPosition(0, 0);
 
-            var blankRow = _getBlankRow(map);
-
             var bounds = boundGenerator.GetBounds(map, mapWindow, player.CurrentRow, player.CurrentColumn);
 
             Console.WriteLine($"Current Position: {player.CurrentRow.ToString("000")}, {player.CurrentColumn.ToString("000")} UpperLimit: {bounds.UpperLimit.ToString("000")} LowerLimit: {bounds.LowerLimit.ToString("000")} LeftLimit: {bounds.LeftLimit.ToString("000")} RightLimit: {bounds.RightLimit.ToString("000")}");
@@ -47,15 +45,7 @@ namespace RetroMud.Rendering.Maps
                 Console.WriteLine(renderedRow);
             }
 
-            if (player.CurrentRow > mapWindow.RowSize && (bounds.LowerLimit - bounds.UpperLimit < mapWindow.RowSize * 2))
-            {
-                var blankLineCount = (mapWindow.RowSize * 2) - (bounds.LowerLimit - bounds.UpperLimit);
-
-                for (var i = 0; i < blankLineCount; i++)
-                {
-                    Console.WriteLine(blankRow);
-                }
-            }
+            _renderBlankRowsIfNeededAtBottom(map, player, mapWindow, bounds);
 
             Console.WriteLine($"RowWindow: {mapWindow.RowSize} ColumnWindow: {mapWindow.ColumnSize} ");
         }
@@ -100,6 +90,20 @@ namespace RetroMud.Rendering.Maps
             }
 
             return new Tuple<string, int>(string.Empty, totalWindowWidth);
+        }
+
+        private void _renderBlankRowsIfNeededAtBottom(IMap map, IPlayer player, IMapWindow mapWindow, IWindowBounds bounds)
+        {
+            if (player.CurrentRow > mapWindow.RowSize && (bounds.LowerLimit - bounds.UpperLimit < mapWindow.RowSize * 2))
+            {
+                var blankLineCount = (mapWindow.RowSize * 2) - (bounds.LowerLimit - bounds.UpperLimit);
+                var blankRow = _getBlankRow(map);
+
+                for (var i = 0; i < blankLineCount; i++)
+                {
+                    Console.WriteLine(blankRow);
+                }
+            }
         }
     }
 }
