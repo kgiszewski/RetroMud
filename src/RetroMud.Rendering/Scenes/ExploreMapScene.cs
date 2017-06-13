@@ -13,13 +13,11 @@ namespace RetroMud.Rendering.Scenes
         private static ISendTcpMessages _messenger;
         private readonly int _mapId;
         private readonly IPlayer _player;
-        private readonly IMapWindow _mapWindow;
-        private readonly IWindowBoundGenerator _boundGenerator;
         private readonly IHandleCollisionDetection _collisionDetector;
         private readonly IRenderMaps _mapRenderer;
 
         public ExploreMapScene(int mapId, IPlayer player)
-            :this (mapId, player, new MapWindow(), new WindowBoundGenerator(), new CollisionDetector(), new MapRenderer())
+            :this (mapId, player, new MapWindow(), new CollisionDetector(), new MapRenderer())
         {
             
         }
@@ -28,15 +26,12 @@ namespace RetroMud.Rendering.Scenes
             int mapId, 
             IPlayer player,
             IMapWindow mapWindow,
-            IWindowBoundGenerator boundGenerator,
             IHandleCollisionDetection collisionDetector,
             IRenderMaps mapRenderer
         )
         {
             _mapId = mapId;
             _player = player;
-            _mapWindow = mapWindow;
-            _boundGenerator = boundGenerator;
             _collisionDetector = collisionDetector;
             _mapRenderer = mapRenderer;
         }
@@ -60,22 +55,22 @@ namespace RetroMud.Rendering.Scenes
             {
                 var input = Console.ReadKey(true);
 
-                if (input.KeyChar == 'a' && _player.CurrentColumn > 0)
+                if (input.KeyChar == 'a' && _player.CurrentColumn > 0 && _collisionDetector.CanMovePosition(map, _player.CurrentRow, _player.CurrentColumn - 1))
                 {
                     _player.CurrentColumn--;
                 }
 
-                if (input.KeyChar == 'w' && _player.CurrentRow > 0)
+                if (input.KeyChar == 'w' && _player.CurrentRow > 0 && _collisionDetector.CanMovePosition(map, _player.CurrentRow - 1, _player.CurrentColumn))
                 {
                     _player.CurrentRow--;
                 }
 
-                if (input.KeyChar == 'd' && _player.CurrentColumn < map.Width - 1)
+                if (input.KeyChar == 'd' && _player.CurrentColumn < map.Width - 1 && _collisionDetector.CanMovePosition(map, _player.CurrentRow, _player.CurrentColumn + 1))
                 {
                     _player.CurrentColumn++;
                 }
 
-                if (input.KeyChar == 's' && _player.CurrentRow < map.Height - 1)
+                if (input.KeyChar == 's' && _player.CurrentRow < map.Height - 1 && _collisionDetector.CanMovePosition(map, _player.CurrentRow + 1, _player.CurrentColumn))
                 {
                     _player.CurrentRow++;
                 }
