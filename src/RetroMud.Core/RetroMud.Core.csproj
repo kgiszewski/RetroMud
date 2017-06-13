@@ -31,6 +31,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
@@ -57,6 +61,7 @@
     <Compile Include="Context\IGameContext.cs" />
     <Compile Include="Healthchecks\MessageHandlers\CurrentClientVersionHandler.cs" />
     <Compile Include="Healthchecks\Messages\CurrentClientVersion.cs" />
+    <Compile Include="Logging\Logger.cs" />
     <Compile Include="Maps\IMap.cs" />
     <Compile Include="Maps\IMapWindow.cs" />
     <Compile Include="Maps\Map.cs" />
@@ -65,7 +70,9 @@
     <Compile Include="Maps\Messages\GetMapRequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RetroMud.Messaging\RetroMud.Messaging.csproj">
       <Project>{e174cad6-b1d4-4283-a094-3556bb05a1de}</Project>

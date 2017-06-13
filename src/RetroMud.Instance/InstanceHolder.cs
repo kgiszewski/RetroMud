@@ -1,5 +1,7 @@
 ﻿using System.Threading.Tasks;
+using log4net.Config;
 using RetroMud.Core.Context;
+using RetroMud.Core.Logging;
 using RetroMud.Messaging.Server;
 
 namespace RetroMud.Instance
@@ -11,6 +13,8 @@ namespace RetroMud.Instance
         public void Start()
         {
             InstanceContext.Instance.Start();
+
+            XmlConfigurator.Configure();
 
             _tcpServer = TcpServerFactory.GetServer();
 
