@@ -15,7 +15,7 @@ namespace RetroMud.Messaging.Server
         private bool _stopServer;
         private readonly List<ISocketHandler> _listeners = new List<ISocketHandler>();
         private readonly ITcpConfiguration _tcpConfiguration;
-        private readonly object _cleanupLock = new Object();
+        private readonly object _cleanupLock = new object();
 
         public TcpServer()
             : this(new TcpConfiguration())

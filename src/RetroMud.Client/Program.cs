@@ -4,6 +4,9 @@ using RetroMud.Rendering.Maps;
 using RetroMud.Core.Healthchecks.Messages;
 using RetroMud.Core.Maps;
 using RetroMud.Core.Maps.Messages;
+using RetroMud.Core.Maps.Window;
+using RetroMud.Core.Players;
+using RetroMud.Rendering.Scenes;
 
 namespace RetroMud
 {
@@ -32,52 +35,15 @@ namespace RetroMud
 
             Console.WriteLine($"Requires upgrade: {response.RequiresUpgrade}");
 
-            IMap map = null;
-            
-            var rawResponse = _messenger.Send(new GetMapRequest
+            var player = new Player
             {
-                MapId = 1
-            });
+                CurrentRow = 7,
+                CurrentColumn = 54
+            };
 
-            var getMapResponse = (GetMapResponse)rawResponse;
+            var scene = new ExploreMapScene(1, player);
 
-            map = getMapResponse.Map;
-
-            var mapWindow = new MapWindow();
-
-            var currentColumn = 54;
-            var currentRow = 7;
-
-            var mapRenderer = new MapRenderer();
-            
-            mapRenderer.RenderMap(map.Data, mapWindow.RowSize, mapWindow.ColumnSize, currentColumn, currentRow);
-
-            while (true)
-            {
-                var input = Console.ReadKey(true);
-
-                if (input.KeyChar == 'a' && currentColumn > 0)
-                {
-                    currentColumn--;
-                }
-
-                if (input.KeyChar == 'w' && currentRow > 0)
-                {
-                    currentRow--;
-                }
-
-                if (input.KeyChar == 'd' && currentColumn < map.Width - 1)
-                {
-                    currentColumn++;
-                }
-
-                if (input.KeyChar == 's' && currentRow < map.Height - 1)
-                {
-                    currentRow++;
-                }
-
-                mapRenderer.RenderMap(map.Data, mapWindow.RowSize, mapWindow.ColumnSize, currentColumn, currentRow);
-            }
+            scene.Render();
         }
     }
 }

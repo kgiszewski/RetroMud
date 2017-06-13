@@ -64,11 +64,17 @@
     <Compile Include="Healthchecks\Messages\CurrentClientVersion.cs" />
     <Compile Include="Logging\Logger.cs" />
     <Compile Include="Maps\IMap.cs" />
-    <Compile Include="Maps\IMapWindow.cs" />
+    <Compile Include="Maps\Window\IMapWindow.cs" />
+    <Compile Include="Maps\Window\IWindowBoundGenerator.cs" />
+    <Compile Include="Maps\Window\IWindowBounds.cs" />
     <Compile Include="Maps\Map.cs" />
-    <Compile Include="Maps\MapWindow.cs" />
+    <Compile Include="Maps\Window\MapWindow.cs" />
     <Compile Include="Maps\MessageHandlers\GetMapHandler.cs" />
     <Compile Include="Maps\Messages\GetMapRequest.cs" />
+    <Compile Include="Maps\Window\WindowBoundGenerator.cs" />
+    <Compile Include="Maps\Window\WindowBounds.cs" />
+    <Compile Include="Players\IPlayer.cs" />
+    <Compile Include="Players\Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

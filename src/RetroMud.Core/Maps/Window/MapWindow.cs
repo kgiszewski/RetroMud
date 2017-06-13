@@ -1,4 +1,4 @@
-﻿namespace RetroMud.Core.Maps
+﻿namespace RetroMud.Core.Maps.Window
 {
     public class MapWindow : IMapWindow
     {
