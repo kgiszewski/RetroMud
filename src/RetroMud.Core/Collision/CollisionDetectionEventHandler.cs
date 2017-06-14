@@ -3,7 +3,7 @@ using RetroMud.Core.Logging;
 
 namespace RetroMud.Core.Collision
 {
-    public class CollisionDetectionEventHandler : IRegisterEvents
+    public class CollisionDetectionEventHandler : IRegisterClientEvents
     {
         public void Register()
         {

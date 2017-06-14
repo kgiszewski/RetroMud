@@ -59,9 +59,10 @@
     <Compile Include="Context\IInstanceContext.cs" />
     <Compile Include="Events\EventHandlers\LoggingEventHandler.cs" />
     <Compile Include="Events\Helpers\EventHelper.cs" />
+    <Compile Include="Events\Helpers\IRegisterClientEvents.cs" />
     <Compile Include="Events\Instance\IInstanceContextEvents.cs" />
     <Compile Include="Context\InstanceContext.cs" />
-    <Compile Include="Events\Helpers\IRegisterEvents.cs" />
+    <Compile Include="Events\Helpers\IRegisterServerEvents.cs" />
     <Compile Include="Context\GameContext.cs" />
     <Compile Include="Context\IGameContext.cs" />
     <Compile Include="Healthchecks\MessageHandlers\CurrentClientVersionHandler.cs" />

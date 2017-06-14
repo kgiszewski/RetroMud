@@ -54,7 +54,7 @@ namespace RetroMud.Core.Context
 
         public void Start()
         {
-            EventHelper.RegisterAllEventHandlers();
+            EventHelper.RegisterAllServerEventHandlers();
 
             OnInstanceStart?.Invoke(this, new EventArgs());
         }

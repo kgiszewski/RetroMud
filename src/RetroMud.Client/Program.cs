@@ -1,7 +1,8 @@
 ﻿using System;
+using log4net.Config;
+using RetroMud.Core.Events.Helpers;
 using RetroMud.Messaging.Publishing;
 using RetroMud.Core.Healthchecks.Messages;
-using RetroMud.Core.Players;
 using RetroMud.Core.Players.Messages;
 using RetroMud.Rendering.Scenes;
 
@@ -14,7 +15,11 @@ namespace RetroMud
 
         static void Main(string[] args)
         {
+            XmlConfigurator.Configure();
+
             Console.ReadKey();
+
+            EventHelper.RegisterAllClientEventHandlers();
 
             Console.WindowWidth = 150;
             Console.WindowHeight = 40;

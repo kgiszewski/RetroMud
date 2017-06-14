@@ -1,7 +1,6 @@
 ﻿using System;
 using RetroMud.Core.Collision;
 using RetroMud.Core.Maps.Messages;
-using RetroMud.Core.Maps.Window;
 using RetroMud.Core.Players;
 using RetroMud.Messaging.Publishing;
 using RetroMud.Rendering.Maps;
@@ -17,7 +16,7 @@ namespace RetroMud.Rendering.Scenes
         private readonly IRenderMaps _mapRenderer;
 
         public ExploreMapScene(int mapId, IPlayer player)
-            :this (mapId, player, new MapWindow(), CollisionDetector.Instance(), new MapRenderer())
+            :this (mapId, player, CollisionDetector.Instance(), new MapRenderer())
         {
             
         }
@@ -25,7 +24,6 @@ namespace RetroMud.Rendering.Scenes
         public ExploreMapScene(
             int mapId, 
             IPlayer player,
-            IMapWindow mapWindow,
             IHandleCollisionDetection collisionDetector,
             IRenderMaps mapRenderer
         )

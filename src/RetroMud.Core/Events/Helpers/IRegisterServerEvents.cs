@@ -1,6 +1,6 @@
 ﻿namespace RetroMud.Core.Events.Helpers
 {
-    public interface IRegisterEvents
+    public interface IRegisterServerEvents
     {
         void Register();
     }

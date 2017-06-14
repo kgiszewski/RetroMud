@@ -1,7 +1,6 @@
 ﻿using System.Threading.Tasks;
 using log4net.Config;
 using RetroMud.Core.Context;
-using RetroMud.Core.Logging;
 using RetroMud.Messaging.Server;
 
 namespace RetroMud.Instance

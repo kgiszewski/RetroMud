@@ -4,7 +4,7 @@ using RetroMud.Messaging.Dispatching;
 
 namespace RetroMud.Core.Events.EventHandlers
 {
-    public class LoggingEventHandler : IRegisterEvents
+    public class LoggingEventHandler : IRegisterServerEvents
     {
         public void Register()
         {

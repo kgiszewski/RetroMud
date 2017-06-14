@@ -3,7 +3,7 @@ using RetroMud.Core.Events.Helpers;
 
 namespace RetroMud.Core.Events.EventHandlers
 {
-    public class InstanceEventHandler : IRegisterEvents
+    public class InstanceEventHandler : IRegisterServerEvents
     {
         public void Register()
         {
