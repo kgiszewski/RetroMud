@@ -14,6 +14,8 @@ namespace RetroMud
 
         static void Main(string[] args)
         {
+            Console.ReadKey();
+
             Console.WindowWidth = 150;
             Console.WindowHeight = 40;
 

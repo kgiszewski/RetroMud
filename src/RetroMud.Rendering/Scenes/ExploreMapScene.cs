@@ -17,7 +17,7 @@ namespace RetroMud.Rendering.Scenes
         private readonly IRenderMaps _mapRenderer;
 
         public ExploreMapScene(int mapId, IPlayer player)
-            :this (mapId, player, new MapWindow(), new CollisionDetector(), new MapRenderer())
+            :this (mapId, player, new MapWindow(), CollisionDetector.Instance(), new MapRenderer())
         {
             
         }
@@ -55,26 +55,27 @@ namespace RetroMud.Rendering.Scenes
             {
                 var input = Console.ReadKey(true);
 
-                if (input.KeyChar == 'a' && _player.CurrentColumn > 0 && _collisionDetector.CanMovePosition(map, _player.CurrentRow, _player.CurrentColumn - 1))
+                if (input.KeyChar == 'a' && _player.CurrentColumn > 0 && _collisionDetector.CanMoveToPosition(map, _player.CurrentRow, _player.CurrentColumn - 1))
                 {
                     _player.CurrentColumn--;
                 }
 
-                if (input.KeyChar == 'w' && _player.CurrentRow > 0 && _collisionDetector.CanMovePosition(map, _player.CurrentRow - 1, _player.CurrentColumn))
+                if (input.KeyChar == 'w' && _player.CurrentRow > 0 && _collisionDetector.CanMoveToPosition(map, _player.CurrentRow - 1, _player.CurrentColumn))
                 {
                     _player.CurrentRow--;
                 }
 
-                if (input.KeyChar == 'd' && _player.CurrentColumn < map.Width - 1 && _collisionDetector.CanMovePosition(map, _player.CurrentRow, _player.CurrentColumn + 1))
+                if (input.KeyChar == 'd' && _player.CurrentColumn < map.Width - 1 && _collisionDetector.CanMoveToPosition(map, _player.CurrentRow, _player.CurrentColumn + 1))
                 {
                     _player.CurrentColumn++;
                 }
 
-                if (input.KeyChar == 's' && _player.CurrentRow < map.Height - 1 && _collisionDetector.CanMovePosition(map, _player.CurrentRow + 1, _player.CurrentColumn))
+                if (input.KeyChar == 's' && _player.CurrentRow < map.Height - 1 && _collisionDetector.CanMoveToPosition(map, _player.CurrentRow + 1, _player.CurrentColumn))
                 {
                     _player.CurrentRow++;
                 }
 
+                _collisionDetector.Update(map, _player.CurrentRow, _player.CurrentColumn);
                 _mapRenderer.RenderMap(map, _player);
             }
         }
