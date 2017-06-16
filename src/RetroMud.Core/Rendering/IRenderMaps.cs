@@ -1,9 +1,7 @@
-﻿using RetroMud.Core.Collision;
-using RetroMud.Core.Maps;
-using RetroMud.Core.Maps.Window;
+﻿using RetroMud.Core.Maps;
 using RetroMud.Core.Players;
 
-namespace RetroMud.Rendering.Maps
+namespace RetroMud.Core.Rendering
 {
     public interface IRenderMaps
     {

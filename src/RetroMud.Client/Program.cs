@@ -1,10 +1,11 @@
 ﻿using System;
 using log4net.Config;
+using RetroMud.Core.Context;
 using RetroMud.Core.Events.Helpers;
 using RetroMud.Messaging.Publishing;
 using RetroMud.Core.Healthchecks.Messages;
 using RetroMud.Core.Players.Messages;
-using RetroMud.Rendering.Scenes;
+using RetroMud.Core.Scenes;
 
 namespace RetroMud
 {
@@ -39,14 +40,19 @@ namespace RetroMud
 
             Console.WriteLine($"Requires upgrade: {response.RequiresUpgrade}");
 
-            var player = ((GetPlayerResponse)_messenger.Send(new GetPlayerRequest
+            GameContext.Instance.Player = ((GetPlayerResponse)_messenger.Send(new GetPlayerRequest
             {
                 PlayerId = 1
             })).Player;
+            
+            GameContext.Instance.GameSceneManager = new GameSceneManager();
 
-            var scene = new ExploreMapScene(1, player);
+            GameContext.Instance.GameSceneManager.CurrentGameScene = new ExploreMapScene(1, GameContext.Instance.Player);
 
-            scene.Render();
+            while (GameContext.Instance.GameSceneManager.CurrentGameScene != null)
+            {
+                GameContext.Instance.GameSceneManager.CurrentGameScene.Render();
+            }
         }
     }
 }

@@ -2,10 +2,10 @@
 using RetroMud.Core.Collision;
 using RetroMud.Core.Maps.Messages;
 using RetroMud.Core.Players;
+using RetroMud.Core.Rendering;
 using RetroMud.Messaging.Publishing;
-using RetroMud.Rendering.Maps;
 
-namespace RetroMud.Rendering.Scenes
+namespace RetroMud.Core.Scenes
 {
     public class ExploreMapScene : IGameScene
     {
@@ -14,6 +14,8 @@ namespace RetroMud.Rendering.Scenes
         private readonly IPlayer _player;
         private readonly IHandleCollisionDetection _collisionDetector;
         private readonly IRenderMaps _mapRenderer;
+
+        public bool IsSceneActive { get; set; }
 
         public ExploreMapScene(int mapId, IPlayer player)
             :this (mapId, player, CollisionDetector.Instance(), new MapRenderer())
@@ -28,6 +30,7 @@ namespace RetroMud.Rendering.Scenes
             IRenderMaps mapRenderer
         )
         {
+            IsSceneActive = true;
             _mapId = mapId;
             _player = player;
             _collisionDetector = collisionDetector;
@@ -49,7 +52,7 @@ namespace RetroMud.Rendering.Scenes
 
             _mapRenderer.RenderMap(map, _player);
 
-            while (true)
+            while (IsSceneActive)
             {
                 var input = Console.ReadKey(true);
 

@@ -85,6 +85,12 @@
     <Compile Include="Players\Messages\GetPlayerRequest.cs" />
     <Compile Include="Players\Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Scenes\ExploreMapScene.cs" />
+    <Compile Include="Scenes\GameSceneManager.cs" />
+    <Compile Include="Scenes\IGameScene.cs" />
+    <Compile Include="Scenes\IGameSceneManager.cs" />
+    <Compile Include="Rendering\IRenderMaps.cs" />
+    <Compile Include="Rendering\MapRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

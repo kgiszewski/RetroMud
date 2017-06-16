@@ -1,5 +1,7 @@
 ﻿using System;
 using RetroMud.Core.Config;
+using RetroMud.Core.Players;
+using RetroMud.Core.Scenes;
 
 namespace RetroMud.Core.Context
 {
@@ -44,5 +46,8 @@ namespace RetroMud.Core.Context
                 return _instance;
             }
         }
+
+        public IGameSceneManager GameSceneManager { get; set; }
+        public IPlayer Player { get; set; }
     }
 }

@@ -67,10 +67,6 @@
       <Project>{e174cad6-b1d4-4283-a094-3556bb05a1de}</Project>
       <Name>RetroMud.Messaging</Name>
     </ProjectReference>
-    <ProjectReference Include="..\RetroMud.Rendering\RetroMud.Rendering.csproj">
-      <Project>{4b78a9f0-b2c5-4045-b695-4daedd0f6db8}</Project>
-      <Name>RetroMud.Rendering</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

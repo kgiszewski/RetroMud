@@ -1,4 +1,5 @@
 ﻿using RetroMud.Core.Maps;
+using RetroMud.Core.Scenes;
 
 namespace RetroMud.Core.Collision
 {
