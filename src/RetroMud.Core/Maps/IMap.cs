@@ -5,6 +5,7 @@ namespace RetroMud.Core.Maps
 {
     public interface IMap
     {
+        int Id { get; }
         int Width { get; }
         int Height { get; }
         string[] Data { get; set; }

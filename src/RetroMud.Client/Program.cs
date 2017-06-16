@@ -44,15 +44,17 @@ namespace RetroMud
             {
                 PlayerId = 1
             })).Player;
-            
-            GameContext.Instance.GameSceneManager = new GameSceneManager();
 
-            GameContext.Instance.GameSceneManager.CurrentGameScene = new ExploreMapScene(1, GameContext.Instance.Player);
+            GameContext.Instance.GameSceneManager = new GameSceneManager { CurrentGameScene = new ExploreMapScene(1)};
 
             while (GameContext.Instance.GameSceneManager.CurrentGameScene != null)
             {
                 GameContext.Instance.GameSceneManager.CurrentGameScene.Render();
             }
+
+            Console.WriteLine("Game over!");
+
+            Console.ReadKey();
         }
     }
 }

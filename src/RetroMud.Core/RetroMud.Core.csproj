@@ -80,6 +80,11 @@
     <Compile Include="Maps\Messages\GetMapRequest.cs" />
     <Compile Include="Maps\Window\WindowBoundGenerator.cs" />
     <Compile Include="Maps\Window\WindowBounds.cs" />
+    <Compile Include="Maps\Wormholes\IWormholePortal.cs" />
+    <Compile Include="Maps\Wormholes\IWormholeManager.cs" />
+    <Compile Include="Maps\Wormholes\WormholeManager.cs" />
+    <Compile Include="Maps\Wormholes\WormholePortal.cs" />
+    <Compile Include="Maps\Wormholes\WormholePortalMap.cs" />
     <Compile Include="Players\IPlayer.cs" />
     <Compile Include="Players\MessageHandlers\GetPlayerHandler.cs" />
     <Compile Include="Players\Messages\GetPlayerRequest.cs" />
@@ -102,6 +107,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Maps\Data\AnotherWorld.txt" />
     <Content Include="Maps\Data\HelloWorld.txt" />
   </ItemGroup>
   <ItemGroup />

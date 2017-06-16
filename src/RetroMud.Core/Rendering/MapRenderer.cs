@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using RetroMud.Core.Context;
 using RetroMud.Core.Maps;
 using RetroMud.Core.Maps.Window;
 using RetroMud.Core.Players;
@@ -31,11 +32,12 @@ namespace RetroMud.Core.Rendering
         private List<char> _colorCharacters;
 
         public void RenderMap(
-            IMap map,
-            IPlayer player
+            IMap map
         )
         {
             Console.SetCursorPosition(0, 0);
+
+            var player = GameContext.Instance.Player;
 
             _colorCharacters = map.CharacterColors.Select(x => x.Character).ToList();
 
