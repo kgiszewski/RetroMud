@@ -23,7 +23,7 @@ namespace RetroMud.Messaging.Server
         public SocketHandler(Socket socket)
             :this(
                  socket,
-                 MessageDispatcher.Instance(), 
+                 MessageDispatcher.Instance, 
                  new TcpConfiguration(), 
                  new Utf8TextEncoder(),
                  new JsonSerializer()

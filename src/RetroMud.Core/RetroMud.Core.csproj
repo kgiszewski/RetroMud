@@ -55,6 +55,8 @@
     <Compile Include="Config\GameContextConfiguration.cs" />
     <Compile Include="Config\IInstanceConfiguation.cs" />
     <Compile Include="Config\IGameContextConfiguration.cs" />
+    <Compile Include="Controls\IHandleMapMovementControls.cs" />
+    <Compile Include="Controls\KeyboardMapMovementController.cs" />
     <Compile Include="Events\EventHandlers\InstanceEventHandler.cs" />
     <Compile Include="Context\IInstanceContext.cs" />
     <Compile Include="Events\EventHandlers\LoggingEventHandler.cs" />

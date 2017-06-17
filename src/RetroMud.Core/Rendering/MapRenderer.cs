@@ -13,6 +13,7 @@ namespace RetroMud.Core.Rendering
     {
         private readonly IMapWindow _mapWindow;
         private readonly IWindowBoundGenerator _boundGenerator;
+        private List<char> _colorCharacters;
 
         public MapRenderer()
             :this(new MapWindow(), new WindowBoundGenerator())
@@ -29,22 +30,30 @@ namespace RetroMud.Core.Rendering
             _boundGenerator = boundGenerator;
         }
 
-        private List<char> _colorCharacters;
-
-        public void RenderMap(
-            IMap map
-        )
+        public void RenderMap(IMap map)
         {
+            Console.CursorVisible = false;
             Console.SetCursorPosition(0, 0);
 
             var player = GameContext.Instance.Player;
 
-            _colorCharacters = map.CharacterColors.Select(x => x.Character).ToList();
+            if (_colorCharacters == null)
+            {
+                _colorCharacters = map.CharacterColors.Select(x => x.Character).ToList();
+            }
 
             var bounds = _boundGenerator.GetBounds(map, _mapWindow, player.CurrentRow, player.CurrentColumn);
 
             Console.WriteLine($"Current Position: {player.CurrentRow.ToString("000")}, {player.CurrentColumn.ToString("000")} UpperLimit: {bounds.UpperLimit.ToString("000")} LowerLimit: {bounds.LowerLimit.ToString("000")} LeftLimit: {bounds.LeftLimit.ToString("000")} RightLimit: {bounds.RightLimit.ToString("000")}");
             Console.WriteLine($"Map size {map.Height.ToString("000")}, {map.Width.ToString("000")}");
+
+            var status = new List<string>
+            {
+                "Line 1 is pretty long and I want to test the word wrapping",
+                "Line 2"
+            };
+
+            var statusArray = _getStatusAsArray(status);
 
             for (var row = bounds.UpperLimit; row < bounds.LowerLimit; row++)
             {
@@ -66,6 +75,32 @@ namespace RetroMud.Core.Rendering
             _renderBlankRowsIfNeededAtBottom(map, player, _mapWindow, bounds);
 
             Console.WriteLine($"RowWindow: {_mapWindow.RowSize} ColumnWindow: {_mapWindow.ColumnSize}");
+        }
+
+        private string[] _getStatusAsArray(IEnumerable<string> statusList)
+        {
+            var rowSize = 20;
+            var wrappedList = new List<string>();
+            var sb = new StringBuilder();
+
+            foreach (var status in statusList)
+            {
+                var totalRows = Math.Ceiling((double)status.Length / rowSize);
+                var statusCharArray = status.ToCharArray();
+
+                for (var row = 0; row < totalRows; row++)
+                {
+                    foreach (var c in statusCharArray.Skip(row * rowSize).Take(rowSize))
+                    {
+                        sb.Append(c);
+                    }
+                    
+                    wrappedList.Add(sb.ToString());
+                    sb.Clear();
+                }
+            }
+
+            return wrappedList.ToArray();
         }
 
         private string _getBlankRow(IMap map)

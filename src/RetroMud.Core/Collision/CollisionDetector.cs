@@ -21,10 +21,7 @@ namespace RetroMud.Core.Collision
 
         }
 
-        public static IHandleCollisionDetection Instance()
-        {
-            return _collisionDetector ?? (_collisionDetector = new CollisionDetector());
-        }
+        public static IHandleCollisionDetection Instance => _collisionDetector ?? (_collisionDetector = new CollisionDetector());
 
         public bool CanMoveToPosition(IMap map, int row, int column)
         {
