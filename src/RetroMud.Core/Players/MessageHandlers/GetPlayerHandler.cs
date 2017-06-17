@@ -11,6 +11,7 @@ namespace RetroMud.Core.Players.MessageHandlers
             {
                 Player = new Player
                 {
+                    Id = 1,
                     CurrentRow = 7,
                     CurrentColumn = 54
                 }

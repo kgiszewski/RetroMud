@@ -5,10 +5,11 @@ namespace RetroMud.Core.Status.Messages
 {
     public class GetStatusMessagesRequest : TcpMessageBase
     {
+        public int PlayerId { get; set; }
     }
 
     public class GetStatusMessagesResponse : ITcpResponseMessage
     {
-        public List<StatusMessage> StatusMessages { get; set; }
+        public IEnumerable<IStatusMessage> StatusMessages { get; set; }
     }
 }

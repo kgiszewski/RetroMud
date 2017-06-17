@@ -100,7 +100,9 @@
     <Compile Include="Rendering\MapRenderer.cs" />
     <Compile Include="Status\IStatusMessage.cs" />
     <Compile Include="Status\IStatusMessageManager.cs" />
+    <Compile Include="Status\MessageHandlers\AddStatusMessageHandler.cs" />
     <Compile Include="Status\MessageHandlers\GetStatusMessagesHandler.cs" />
+    <Compile Include="Status\Messages\AddStatusMessageRequest.cs" />
     <Compile Include="Status\Messages\GetStatusMessagesRequest.cs" />
     <Compile Include="Status\StatusMessage.cs" />
     <Compile Include="Status\StatusMessageManager.cs" />

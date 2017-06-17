@@ -3,22 +3,26 @@ using RetroMud.Core.Events.Helpers;
 using RetroMud.Core.Logging;
 using RetroMud.Core.Maps.Wormholes;
 using RetroMud.Core.Scenes;
+using RetroMud.Core.Status.Messages;
+using RetroMud.Messaging.Publishing;
 
 namespace RetroMud.Core.Collision
 {
     public class CollisionDetectionEventHandler : IRegisterClientEvents
     {
         private readonly IWormholeManager _wormholeManager;
+        private readonly ISendTcpMessages _tcpMessenger;
 
         public CollisionDetectionEventHandler()
-            : this(new WormholeManager())
+            : this(new WormholeManager(), new TcpMessenger())
         {
             
         }
 
-        public CollisionDetectionEventHandler(IWormholeManager wormholeManager)
+        public CollisionDetectionEventHandler(IWormholeManager wormholeManager, ISendTcpMessages tcpMessenger)
         {
             _wormholeManager = wormholeManager;
+            _tcpMessenger = tcpMessenger;
         }
 
         public void Register()
@@ -32,6 +36,12 @@ namespace RetroMud.Core.Collision
 
             if (e.Character == '▒')
             {
+                _tcpMessenger.Send<AddStatusMessageResponse>(new AddStatusMessageRequest
+                {
+                    PlayerId = ClientContext.Instance.Player.Id,
+                    Message = $"You've entered into a wormhole!"
+                });
+
                 var destinationPortal = _wormholeManager.RouteFrom(new WormholePortal
                 {
                     MapId = e.Map.Id,

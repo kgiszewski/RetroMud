@@ -2,6 +2,7 @@
 {
     public interface IPlayer
     {
+        int Id { get; set; }
         int CurrentRow { get; set; }
         int CurrentColumn { get; set; }
     }

@@ -1,6 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using RetroMud.Core.Players;
 using RetroMud.Core.Status.Messages;
 using RetroMud.Messaging.Publishing;
 
@@ -23,9 +23,20 @@ namespace RetroMud.Core.Status
 
         public IEnumerable<IStatusMessage> GetMessages(int count)
         {
-            var messages = _tcpMessenger.Send<GetStatusMessagesResponse>(new GetStatusMessagesRequest()).StatusMessages;
+            var messages = _tcpMessenger.Send<GetStatusMessagesResponse>(new GetStatusMessagesRequest
+            {
+                PlayerId = 1
+            }).StatusMessages;
 
             return messages.OrderBy(x => x.CreatedOn).Select(x => x);
+        }
+
+        public void AddStatusMessage(IPlayer player, string message)
+        {
+            _tcpMessenger.Send<AddStatusMessageResponse>(new AddStatusMessageRequest
+            {
+                Message = message
+            });
         }
     }
 }

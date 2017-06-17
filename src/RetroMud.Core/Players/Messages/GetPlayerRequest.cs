@@ -9,6 +9,6 @@ namespace RetroMud.Core.Players.Messages
 
     public class GetPlayerResponse : ITcpResponseMessage
     {
-        public Player Player { get; set; }
+        public IPlayer Player { get; set; }
     }
 }

@@ -1,5 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Linq;
+using RetroMud.Core.Context;
 using RetroMud.Core.Status.Messages;
 using RetroMud.Messaging.Dispatching;
 
@@ -11,19 +11,7 @@ namespace RetroMud.Core.Status.MessageHandlers
         {
             return new GetStatusMessagesResponse
             {
-                StatusMessages = new List<StatusMessage>
-                {
-                    new StatusMessage
-                    {
-                        Message = "This is the first message and it should wrap!",
-                        CreatedOn = DateTime.Now
-                    },
-                    new StatusMessage
-                    {
-                        Message = "This is the second message and it should wrap!",
-                        CreatedOn = DateTime.Now.AddMinutes(-1)
-                    }
-                }
+                StatusMessages = InstanceContext.Instance.StatusMessages.Where(x => x.PlayerId == message.PlayerId).ToList()
             };
         }
     }

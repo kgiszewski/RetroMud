@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using RetroMud.Core.Config;
 using RetroMud.Core.Events.Helpers;
 using RetroMud.Core.Events.Instance;
+using RetroMud.Core.Status;
 
 namespace RetroMud.Core.Context
 {
@@ -17,6 +19,8 @@ namespace RetroMud.Core.Context
 
             set { _configuration = value; }
         }
+
+        public List<IStatusMessage> StatusMessages { get; set; } = new List<IStatusMessage>();
 
         //this will hold the internal instance of our singleton
         private static volatile InstanceContext _instance;

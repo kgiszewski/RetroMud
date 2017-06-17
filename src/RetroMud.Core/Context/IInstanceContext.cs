@@ -1,4 +1,6 @@
-﻿using RetroMud.Core.Config;
+﻿using System.Collections.Generic;
+using RetroMud.Core.Config;
+using RetroMud.Core.Status;
 
 namespace RetroMud.Core.Context
 {
@@ -8,5 +10,6 @@ namespace RetroMud.Core.Context
         void Start();
         void Stop();
         IInstanceConfiguration Configuration { get; set; }
+        List<IStatusMessage> StatusMessages { get; set; }
     }
 }
