@@ -6,6 +6,7 @@ using RetroMud.Messaging.Publishing;
 using RetroMud.Core.Healthchecks.Messages;
 using RetroMud.Core.Players.Messages;
 using RetroMud.Core.Scenes;
+using RetroMud.Core.Status;
 
 namespace RetroMud
 {
@@ -46,6 +47,8 @@ namespace RetroMud
             })).Player;
 
             GameContext.Instance.GameSceneManager = new GameSceneManager { CurrentGameScene = new ExploreMapScene(1)};
+
+            GameContext.Instance.StatsStatusMessageManager = new StatusMessageManager();
 
             while (GameContext.Instance.GameSceneManager.CurrentGameScene != null)
             {

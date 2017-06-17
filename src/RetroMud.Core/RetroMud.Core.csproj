@@ -98,6 +98,10 @@
     <Compile Include="Scenes\IGameSceneManager.cs" />
     <Compile Include="Rendering\IRenderMaps.cs" />
     <Compile Include="Rendering\MapRenderer.cs" />
+    <Compile Include="Status\IStatusMessage.cs" />
+    <Compile Include="Status\IStatusMessageManager.cs" />
+    <Compile Include="Status\StatusMessage.cs" />
+    <Compile Include="Status\StatusMessageManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

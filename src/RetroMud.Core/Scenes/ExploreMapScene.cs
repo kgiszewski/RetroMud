@@ -1,4 +1,5 @@
-﻿using RetroMud.Core.Collision;
+﻿using System.Linq;
+using RetroMud.Core.Collision;
 using RetroMud.Core.Context;
 using RetroMud.Core.Controls;
 using RetroMud.Core.Maps.Messages;
@@ -50,7 +51,11 @@ namespace RetroMud.Core.Scenes
 
             var map = getMapResponse.Map;
 
-            _mapRenderer.RenderMap(map);
+            var statusMessageManager = GameContext.Instance.StatsStatusMessageManager;
+
+            var statusMessages = statusMessageManager.GetMessages().OrderBy(x => x.CreatedOn).Select(x => x.Message).ToList();
+
+            _mapRenderer.RenderMap(map, statusMessages);
 
             var player = GameContext.Instance.Player;
 
@@ -58,7 +63,7 @@ namespace RetroMud.Core.Scenes
             {
                 _mapMovementControls.HandleInput(map, player);
                 _collisionDetector.Update(map, player.CurrentRow, player.CurrentColumn);
-                _mapRenderer.RenderMap(map);
+                _mapRenderer.RenderMap(map, statusMessages);
             }
         }
     }

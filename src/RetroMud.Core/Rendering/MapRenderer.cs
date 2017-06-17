@@ -30,7 +30,7 @@ namespace RetroMud.Core.Rendering
             _boundGenerator = boundGenerator;
         }
 
-        public void RenderMap(IMap map)
+        public void RenderMap(IMap map, List<string> statusMessages)
         {
             Console.CursorVisible = false;
             Console.SetCursorPosition(0, 0);
@@ -47,29 +47,28 @@ namespace RetroMud.Core.Rendering
             Console.WriteLine($"Current Position: {player.CurrentRow.ToString("000")}, {player.CurrentColumn.ToString("000")} UpperLimit: {bounds.UpperLimit.ToString("000")} LowerLimit: {bounds.LowerLimit.ToString("000")} LeftLimit: {bounds.LeftLimit.ToString("000")} RightLimit: {bounds.RightLimit.ToString("000")}");
             Console.WriteLine($"Map size {map.Height.ToString("000")}, {map.Width.ToString("000")}");
 
-            var status = new List<string>
-            {
-                "Line 1 is pretty long and I want to test the word wrapping",
-                "Line 2"
-            };
+            var statusArray = _getStatusAsArray(statusMessages);
 
-            var statusArray = _getStatusAsArray(status);
-
+            var statusRowIndex = 0;
+            
             for (var row = bounds.UpperLimit; row < bounds.LowerLimit; row++)
             {
+                var statusRowToRender = _getStatusRowToRender(statusArray, statusRowIndex);
                 var totalWindowWidth = _mapWindow.ColumnSize * 2;
                 var spaceFiller = _getSpaceFiller(map, _mapWindow, bounds, totalWindowWidth);
 
-                var renderedRow = $"{map.Data[row].Substring(bounds.LeftLimit, spaceFiller.Item2)}{spaceFiller.Item1}";
+                var rowToRender = $"{map.Data[row].Substring(bounds.LeftLimit, spaceFiller.Item2)}{spaceFiller.Item1}|{statusRowToRender}";
 
                 if (row == player.CurrentRow)
                 {
-                    _renderPlayerRow(renderedRow, _mapWindow, player, map);
+                    _renderPlayerRow(rowToRender, _mapWindow, player, map);
                 }
                 else
                 {
-                    _renderRow(renderedRow, map);
+                    _renderRow(rowToRender, map);
                 }
+
+                statusRowIndex++;
             }
 
             _renderBlankRowsIfNeededAtBottom(map, player, _mapWindow, bounds);
@@ -77,20 +76,27 @@ namespace RetroMud.Core.Rendering
             Console.WriteLine($"RowWindow: {_mapWindow.RowSize} ColumnWindow: {_mapWindow.ColumnSize}");
         }
 
+        private string _getStatusRowToRender(string[] statusArray, int statusRowIndex)
+        {
+            var statusRowToRender = statusArray.Length > statusRowIndex ? statusArray[statusRowIndex] : string.Empty;
+
+            return statusRowToRender;
+        }
+
         private string[] _getStatusAsArray(IEnumerable<string> statusList)
         {
-            var rowSize = 20;
+            var columnWidth = 20;
             var wrappedList = new List<string>();
             var sb = new StringBuilder();
 
             foreach (var status in statusList)
             {
-                var totalRows = Math.Ceiling((double)status.Length / rowSize);
+                var totalRows = Math.Ceiling((double)status.Length / columnWidth);
                 var statusCharArray = status.ToCharArray();
 
                 for (var row = 0; row < totalRows; row++)
                 {
-                    foreach (var c in statusCharArray.Skip(row * rowSize).Take(rowSize))
+                    foreach (var c in statusCharArray.Skip(row * columnWidth).Take(columnWidth))
                     {
                         sb.Append(c);
                     }
@@ -188,13 +194,13 @@ namespace RetroMud.Core.Rendering
                     {
                         Console.Write(chr);
                     }
-
+                    
                     counter++;
+                }
 
-                    if (counter == chars.Length)
-                    {
-                        Console.WriteLine();
-                    }
+                if (counter == chars.Length)
+                {
+                    Console.WriteLine();
                 }
             }
             else

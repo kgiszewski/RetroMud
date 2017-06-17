@@ -2,6 +2,7 @@
 using RetroMud.Core.Config;
 using RetroMud.Core.Players;
 using RetroMud.Core.Scenes;
+using RetroMud.Core.Status;
 
 namespace RetroMud.Core.Context
 {
@@ -49,5 +50,6 @@ namespace RetroMud.Core.Context
 
         public IGameSceneManager GameSceneManager { get; set; }
         public IPlayer Player { get; set; }
+        public IStatusMessageManager StatsStatusMessageManager { get; set; }
     }
 }
