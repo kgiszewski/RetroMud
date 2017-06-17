@@ -15,11 +15,8 @@ namespace RetroMud.Messaging.Dispatching
             
         }
 
-        public static IDispatchMessages Instance()
-        {
-            return _messageDispatcher ?? (_messageDispatcher = new MessageDispatcher());
-        }
-
+        public static IDispatchMessages Instance => _messageDispatcher ?? (_messageDispatcher = new MessageDispatcher());
+        
         public object Dispatch(ITcpMessage message)
         {
             //in the case of 'FooMessage' this will return 'Foo'

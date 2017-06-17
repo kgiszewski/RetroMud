@@ -31,9 +31,7 @@ namespace RetroMud.Core.Rendering
 
         private List<char> _colorCharacters;
 
-        public void RenderMap(
-            IMap map
-        )
+        public void RenderMap(IMap map)
         {
             Console.SetCursorPosition(0, 0);
 

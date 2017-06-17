@@ -8,7 +8,7 @@ namespace RetroMud.Core.Events.EventHandlers
     {
         public void Register()
         {
-            MessageDispatcher.Instance().OnDispatchMessage += LoggingEventHandler_OnDispatchMessage;
+            MessageDispatcher.Instance.OnDispatchMessage += LoggingEventHandler_OnDispatchMessage;
         }
 
         private void LoggingEventHandler_OnDispatchMessage(object sender, DispatcherEventArgs e)

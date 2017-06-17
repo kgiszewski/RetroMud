@@ -23,7 +23,7 @@ namespace RetroMud.Core.Collision
 
         public void Register()
         {
-            CollisionDetector.Instance().OnCollision += CollisionDetectionEventHandler_OnCollision;
+            CollisionDetector.Instance.OnCollision += CollisionDetectionEventHandler_OnCollision;
         }
 
         private void CollisionDetectionEventHandler_OnCollision(object sending, CollisionDetectedEventArgs e)

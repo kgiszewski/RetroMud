@@ -17,7 +17,7 @@ namespace RetroMud.Core.Scenes
         public bool IsSceneActive { get; set; }
 
         public ExploreMapScene(int mapId)
-            :this (mapId, CollisionDetector.Instance(), new MapRenderer())
+            :this (mapId, CollisionDetector.Instance, new MapRenderer())
         {
             
         }
