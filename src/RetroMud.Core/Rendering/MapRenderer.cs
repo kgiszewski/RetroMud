@@ -65,7 +65,7 @@ namespace RetroMud.Core.Rendering
 
             _renderBlankRowsIfNeededAtBottom(map, player, _mapWindow, bounds);
 
-            Console.WriteLine($"RowWindow: {_mapWindow.RowSize} ColumnWindow: {_mapWindow.ColumnSize} ");
+            Console.WriteLine($"RowWindow: {_mapWindow.RowSize} ColumnWindow: {_mapWindow.ColumnSize}");
         }
 
         private string _getBlankRow(IMap map)
