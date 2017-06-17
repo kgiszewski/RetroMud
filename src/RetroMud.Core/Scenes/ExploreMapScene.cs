@@ -42,12 +42,10 @@ namespace RetroMud.Core.Scenes
         {
             _messenger = TcpMessengerFactory.GetMessenger();
             
-            var rawResponse = _messenger.Send(new GetMapRequest
+            var getMapResponse = _messenger.Send<GetMapResponse>(new GetMapRequest
             {
                 MapId = _mapId
             });
-
-            var getMapResponse = (GetMapResponse)rawResponse;
 
             var map = getMapResponse.Map;
 

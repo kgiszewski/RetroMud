@@ -4,6 +4,6 @@ namespace RetroMud.Messaging.Publishing
 {
     public interface ISendTcpMessages
     {
-        object Send(ITcpMessage message);
+        TResponse Send<TResponse>(ITcpMessage message);
     }
 }

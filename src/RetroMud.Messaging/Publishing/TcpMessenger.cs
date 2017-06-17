@@ -43,7 +43,7 @@ namespace RetroMud.Messaging.Publishing
             return socket;
         }
 
-        public object Send(ITcpMessage message)
+        public TResponse Send<TResponse>(ITcpMessage message)
         {
             var socket = GetSocket();
 
@@ -59,7 +59,7 @@ namespace RetroMud.Messaging.Publishing
 
             var deserialized = _serializer.Deserialize(rawResponse, responseMessageType);
 
-            return deserialized;
+            return (TResponse)deserialized;
         }
     }
 }

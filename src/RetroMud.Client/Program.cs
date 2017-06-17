@@ -33,19 +33,19 @@ namespace RetroMud
 
             Console.WriteLine("Sending healthcheck info...");
 
-            var response = ((CurrentClientVersionResponse)_messenger.Send(new CurrentClientVersionRequest
+            var healthCheckResponse = _messenger.Send<CurrentClientVersionResponse>(new CurrentClientVersionRequest
             {
                 ClientId = clientId,
                 CurrentVersion = clientVersion
-            }));
+            });
 
-            Console.WriteLine($"Requires upgrade: {response.RequiresUpgrade}");
+            Console.WriteLine($"Requires upgrade: {healthCheckResponse.RequiresUpgrade}");
 
-            ClientContext.Instance.Player = ((GetPlayerResponse)_messenger.Send(new GetPlayerRequest
+            ClientContext.Instance.Player = _messenger.Send<GetPlayerResponse>(new GetPlayerRequest
             {
                 PlayerId = 1
-            })).Player;
-
+            }).Player;
+        
             ClientContext.Instance.GameSceneManager = new GameSceneManager { CurrentGameScene = new ExploreMapScene(1)};
 
             ClientContext.Instance.StatusMessageManager = new StatusMessageManager();

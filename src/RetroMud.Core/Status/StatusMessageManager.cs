@@ -23,7 +23,7 @@ namespace RetroMud.Core.Status
 
         public IEnumerable<IStatusMessage> GetMessages(int count)
         {
-            var messages = ((GetStatusMessagesResponse)_tcpMessenger.Send(new GetStatusMessagesRequest())).StatusMessages;
+            var messages = _tcpMessenger.Send<GetStatusMessagesResponse>(new GetStatusMessagesRequest()).StatusMessages;
 
             return messages.OrderBy(x => x.CreatedOn).Select(x => x);
         }
