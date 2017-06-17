@@ -37,7 +37,7 @@ namespace RetroMud.Core.Scenes
         public void Render()
         {
             _messenger = TcpMessengerFactory.GetMessenger();
-
+            
             var rawResponse = _messenger.Send(new GetMapRequest
             {
                 MapId = _mapId
@@ -53,26 +53,33 @@ namespace RetroMud.Core.Scenes
 
             while (IsSceneActive)
             {
-                var input = Console.ReadKey(true);
-
-                if (input.KeyChar == 'a' && player.CurrentColumn > 0 && _collisionDetector.CanMoveToPosition(map, player.CurrentRow, player.CurrentColumn - 1))
+                if (Console.KeyAvailable)
                 {
-                    player.CurrentColumn--;
-                }
+                    var input = Console.ReadKey(true);
 
-                if (input.KeyChar == 'w' && player.CurrentRow > 0 && _collisionDetector.CanMoveToPosition(map, player.CurrentRow - 1, player.CurrentColumn))
-                {
-                    player.CurrentRow--;
-                }
+                    if (input.KeyChar == 'a' && player.CurrentColumn > 0 &&
+                        _collisionDetector.CanMoveToPosition(map, player.CurrentRow, player.CurrentColumn - 1))
+                    {
+                        player.CurrentColumn--;
+                    }
 
-                if (input.KeyChar == 'd' && player.CurrentColumn < map.Width - 1 && _collisionDetector.CanMoveToPosition(map, player.CurrentRow, player.CurrentColumn + 1))
-                {
-                    player.CurrentColumn++;
-                }
+                    if (input.KeyChar == 'w' && player.CurrentRow > 0 &&
+                        _collisionDetector.CanMoveToPosition(map, player.CurrentRow - 1, player.CurrentColumn))
+                    {
+                        player.CurrentRow--;
+                    }
 
-                if (input.KeyChar == 's' && player.CurrentRow < map.Height - 1 && _collisionDetector.CanMoveToPosition(map, player.CurrentRow + 1, player.CurrentColumn))
-                {
-                    player.CurrentRow++;
+                    if (input.KeyChar == 'd' && player.CurrentColumn < map.Width - 1 &&
+                        _collisionDetector.CanMoveToPosition(map, player.CurrentRow, player.CurrentColumn + 1))
+                    {
+                        player.CurrentColumn++;
+                    }
+
+                    if (input.KeyChar == 's' && player.CurrentRow < map.Height - 1 &&
+                        _collisionDetector.CanMoveToPosition(map, player.CurrentRow + 1, player.CurrentColumn))
+                    {
+                        player.CurrentRow++;
+                    }
                 }
 
                 _collisionDetector.Update(map, player.CurrentRow, player.CurrentColumn);

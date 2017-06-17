@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using RetroMud.Core.Context;
@@ -33,6 +34,7 @@ namespace RetroMud.Core.Rendering
 
         public void RenderMap(IMap map)
         {
+            Console.CursorVisible = false;
             Console.SetCursorPosition(0, 0);
 
             var player = GameContext.Instance.Player;
