@@ -6,7 +6,7 @@ using RetroMud.Core.Status;
 
 namespace RetroMud.Core.Context
 {
-    public class GameContext : IGameContext
+    public class ClientContext : IClientContext
     {
         private IGameContextConfiguration _configuration;
 
@@ -18,18 +18,18 @@ namespace RetroMud.Core.Context
         }
 
         //this will hold the internal instance of our singleton
-        private static volatile GameContext _instance;
+        private static volatile ClientContext _instance;
 
         //this is used purely for thread safety
         private static readonly object _padLock = new Object();
 
         //note that the constructor is private and only the class itself can create a new instance
-        private GameContext()
+        private ClientContext()
         {
         }
 
         //this is where the instance will live, notice the return value is the singleton class itself
-        public static GameContext Instance
+        public static ClientContext Instance
         {
             get
             {
@@ -39,7 +39,7 @@ namespace RetroMud.Core.Context
                     {
                         if (_instance == null)
                         {
-                            _instance = new GameContext();
+                            _instance = new ClientContext();
                         }
                     }
                 }
@@ -50,6 +50,6 @@ namespace RetroMud.Core.Context
 
         public IGameSceneManager GameSceneManager { get; set; }
         public IPlayer Player { get; set; }
-        public IStatusMessageManager StatsStatusMessageManager { get; set; }
+        public IStatusMessageManager StatusMessageManager { get; set; }
     }
 }

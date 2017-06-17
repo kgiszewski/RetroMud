@@ -51,19 +51,21 @@ namespace RetroMud.Core.Scenes
 
             var map = getMapResponse.Map;
 
-            var statusMessageManager = GameContext.Instance.StatsStatusMessageManager;
+            var statusMessageManager = ClientContext.Instance.StatusMessageManager;
 
-            var statusMessages = statusMessageManager.GetMessages().OrderBy(x => x.CreatedOn).Select(x => x.Message).ToList();
+            var statusMessages = statusMessageManager.GetMessages(10);
 
-            _mapRenderer.RenderMap(map, statusMessages);
+            _mapRenderer.RenderMap(map, statusMessages.Select(x => x.Message));
 
-            var player = GameContext.Instance.Player;
+            var player = ClientContext.Instance.Player;
 
             while (IsSceneActive)
             {
+                statusMessages = statusMessageManager.GetMessages(10);
+
                 _mapMovementControls.HandleInput(map, player);
                 _collisionDetector.Update(map, player.CurrentRow, player.CurrentColumn);
-                _mapRenderer.RenderMap(map, statusMessages);
+                _mapRenderer.RenderMap(map, statusMessages.Select(x => x.Message));
             }
         }
     }

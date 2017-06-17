@@ -65,8 +65,8 @@
     <Compile Include="Events\Instance\IInstanceContextEvents.cs" />
     <Compile Include="Context\InstanceContext.cs" />
     <Compile Include="Events\Helpers\IRegisterServerEvents.cs" />
-    <Compile Include="Context\GameContext.cs" />
-    <Compile Include="Context\IGameContext.cs" />
+    <Compile Include="Context\ClientContext.cs" />
+    <Compile Include="Context\IClientContext.cs" />
     <Compile Include="Healthchecks\MessageHandlers\CurrentClientVersionHandler.cs" />
     <Compile Include="Healthchecks\Messages\CurrentClientVersionRequest.cs" />
     <Compile Include="Logging\Logger.cs" />
@@ -100,6 +100,8 @@
     <Compile Include="Rendering\MapRenderer.cs" />
     <Compile Include="Status\IStatusMessage.cs" />
     <Compile Include="Status\IStatusMessageManager.cs" />
+    <Compile Include="Status\MessageHandlers\GetStatusMessagesHandler.cs" />
+    <Compile Include="Status\Messages\GetStatusMessagesRequest.cs" />
     <Compile Include="Status\StatusMessage.cs" />
     <Compile Include="Status\StatusMessageManager.cs" />
   </ItemGroup>

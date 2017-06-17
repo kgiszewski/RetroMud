@@ -5,6 +5,6 @@ namespace RetroMud.Core.Rendering
 {
     public interface IRenderMaps
     {
-        void RenderMap(IMap map, List<string> statusMessages);
+        void RenderMap(IMap map, IEnumerable<string> statusMessages);
     }
 }

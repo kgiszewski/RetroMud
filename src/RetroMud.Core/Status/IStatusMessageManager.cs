@@ -4,6 +4,6 @@ namespace RetroMud.Core.Status
 {
     public interface IStatusMessageManager
     {
-        IEnumerable<IStatusMessage> GetMessages();
+        IEnumerable<IStatusMessage> GetMessages(int count);
     }
 }

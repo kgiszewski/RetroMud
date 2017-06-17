@@ -41,18 +41,18 @@ namespace RetroMud
 
             Console.WriteLine($"Requires upgrade: {response.RequiresUpgrade}");
 
-            GameContext.Instance.Player = ((GetPlayerResponse)_messenger.Send(new GetPlayerRequest
+            ClientContext.Instance.Player = ((GetPlayerResponse)_messenger.Send(new GetPlayerRequest
             {
                 PlayerId = 1
             })).Player;
 
-            GameContext.Instance.GameSceneManager = new GameSceneManager { CurrentGameScene = new ExploreMapScene(1)};
+            ClientContext.Instance.GameSceneManager = new GameSceneManager { CurrentGameScene = new ExploreMapScene(1)};
 
-            GameContext.Instance.StatsStatusMessageManager = new StatusMessageManager();
+            ClientContext.Instance.StatusMessageManager = new StatusMessageManager();
 
-            while (GameContext.Instance.GameSceneManager.CurrentGameScene != null)
+            while (ClientContext.Instance.GameSceneManager.CurrentGameScene != null)
             {
-                GameContext.Instance.GameSceneManager.CurrentGameScene.Render();
+                ClientContext.Instance.GameSceneManager.CurrentGameScene.Render();
             }
 
             Console.WriteLine("Game over!");

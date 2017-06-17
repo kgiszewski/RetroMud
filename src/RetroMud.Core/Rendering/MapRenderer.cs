@@ -30,12 +30,12 @@ namespace RetroMud.Core.Rendering
             _boundGenerator = boundGenerator;
         }
 
-        public void RenderMap(IMap map, List<string> statusMessages)
+        public void RenderMap(IMap map, IEnumerable<string> statusMessages)
         {
             Console.CursorVisible = false;
             Console.SetCursorPosition(0, 0);
 
-            var player = GameContext.Instance.Player;
+            var player = ClientContext.Instance.Player;
 
             if (_colorCharacters == null)
             {

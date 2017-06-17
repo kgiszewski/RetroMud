@@ -1,25 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using RetroMud.Core.Status.Messages;
+using RetroMud.Messaging.Publishing;
 
 namespace RetroMud.Core.Status
 {
     public class StatusMessageManager : IStatusMessageManager
     {
-        public IEnumerable<IStatusMessage> GetMessages()
+        private readonly ISendTcpMessages _tcpMessenger;
+
+        public StatusMessageManager()
+            : this(new TcpMessenger())
         {
-            return new List<IStatusMessage>
-            {
-                new StatusMessage
-                {
-                    Message = "This is the first message and it should wrap!",
-                    CreatedOn = DateTime.Now
-                },
-                new StatusMessage
-                {
-                    Message = "This is the second message and it should wrap!",
-                    CreatedOn = DateTime.Now.AddMinutes(-1)
-                }
-            };
+            
+        }
+
+        public StatusMessageManager(ISendTcpMessages tcpMessenger)
+        {
+            _tcpMessenger = tcpMessenger;
+        }
+
+        public IEnumerable<IStatusMessage> GetMessages(int count)
+        {
+            var messages = ((GetStatusMessagesResponse)_tcpMessenger.Send(new GetStatusMessagesRequest())).StatusMessages;
+
+            return messages.OrderBy(x => x.CreatedOn).Select(x => x);
         }
     }
 }

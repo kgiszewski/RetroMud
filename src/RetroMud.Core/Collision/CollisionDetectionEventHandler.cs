@@ -41,10 +41,10 @@ namespace RetroMud.Core.Collision
 
                 if (destinationPortal != null)
                 {
-                    GameContext.Instance.GameSceneManager.CurrentGameScene.IsSceneActive = false;
-                    GameContext.Instance.GameSceneManager.CurrentGameScene = new ExploreMapScene(destinationPortal.MapId);
-                    GameContext.Instance.Player.CurrentColumn = destinationPortal.Column;
-                    GameContext.Instance.Player.CurrentRow = destinationPortal.Row;
+                    ClientContext.Instance.GameSceneManager.CurrentGameScene.IsSceneActive = false;
+                    ClientContext.Instance.GameSceneManager.CurrentGameScene = new ExploreMapScene(destinationPortal.MapId);
+                    ClientContext.Instance.Player.CurrentColumn = destinationPortal.Column;
+                    ClientContext.Instance.Player.CurrentRow = destinationPortal.Row;
                 }
             }
         }
