@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using RetroMud.Core.Config;
 using RetroMud.Core.Players;
 using RetroMud.Core.Scenes;
@@ -21,7 +21,9 @@ namespace RetroMud.Core.Context
         private static volatile ClientContext _instance;
 
         //this is used purely for thread safety
-        private static readonly object _padLock = new Object();
+        private static readonly object _padLock = new object();
+
+        public List<IStatusMessage> StatusMessages { get; set; } = new List<IStatusMessage>();
 
         //note that the constructor is private and only the class itself can create a new instance
         private ClientContext()

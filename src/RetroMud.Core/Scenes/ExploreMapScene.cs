@@ -2,15 +2,13 @@
 using RetroMud.Core.Collision;
 using RetroMud.Core.Context;
 using RetroMud.Core.Controls;
-using RetroMud.Core.Maps.Messages;
+using RetroMud.Core.Maps;
 using RetroMud.Core.Rendering;
-using RetroMud.Messaging.Publishing;
 
 namespace RetroMud.Core.Scenes
 {
     public class ExploreMapScene : IGameScene
     {
-        private static ISendTcpMessages _messenger;
         private readonly int _mapId;
         private readonly IHandleCollisionDetection _collisionDetector;
         private readonly IRenderMaps _mapRenderer;
@@ -40,15 +38,8 @@ namespace RetroMud.Core.Scenes
 
         public void Render()
         {
-            _messenger = TcpMessengerFactory.GetMessenger();
-            
-            var getMapResponse = _messenger.Send<GetMapResponse>(new GetMapRequest
-            {
-                MapId = _mapId
-            });
-
-            var map = getMapResponse.Map;
-
+            var map = MapFactory.Get(_mapId);
+                
             var statusMessageManager = ClientContext.Instance.StatusMessageManager;
 
             var statusMessages = statusMessageManager.GetMessages(10);
