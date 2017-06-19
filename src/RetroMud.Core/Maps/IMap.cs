@@ -10,5 +10,7 @@ namespace RetroMud.Core.Maps
         int Height { get; }
         string[] Data { get; set; }
         List<CharacterColor> CharacterColors { get; set; }
+        void UpdateAtPosition(int row, int column, char character);
+        void SaveAsAltered();
     }
 }

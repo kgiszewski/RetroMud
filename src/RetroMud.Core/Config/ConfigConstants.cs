@@ -8,5 +8,6 @@
         public static readonly string MapMoveDownKey = "Map:MoveDownKey";
         public static readonly string MapMoveLeftKey = "Map:MoveLeftKey";
         public static readonly string MapMoveRightKey = "Map:MoveRightKey";
+        public static readonly string SavedStatePath = "SavedStatePath";
     }
 }
