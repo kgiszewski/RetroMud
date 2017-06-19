@@ -85,7 +85,7 @@ namespace RetroMud.Core.Rendering
 
         private string[] _getStatusAsArray(IEnumerable<string> statusList)
         {
-            var columnWidth = 20;
+            var columnWidth = 30;
             var wrappedList = new List<string>();
             var sb = new StringBuilder();
 
@@ -96,9 +96,17 @@ namespace RetroMud.Core.Rendering
 
                 for (var row = 0; row < totalRows; row++)
                 {
+                    var textLength = 0; 
+
                     foreach (var c in statusCharArray.Skip(row * columnWidth).Take(columnWidth))
                     {
                         sb.Append(c);
+                        textLength++;
+                    }
+
+                    for (var i = 0; i < columnWidth - textLength; i++)
+                    {
+                        sb.Append(' ');
                     }
                     
                     wrappedList.Add(sb.ToString());

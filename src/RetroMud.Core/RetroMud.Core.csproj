@@ -49,6 +49,7 @@
     <Compile Include="Collision\CollisionDetectedEventArgs.cs" />
     <Compile Include="Collision\CollisionDetectionEventHandler.cs" />
     <Compile Include="Collision\CollisionDetector.cs" />
+    <Compile Include="Collision\CollisionHandlers\CoinHandler.cs" />
     <Compile Include="Collision\CollisionHandlers\WormholeHandler.cs" />
     <Compile Include="Collision\Dispatching\CollisionCharacterAttribute.cs" />
     <Compile Include="Collision\Dispatching\CollisionDispatcher.cs" />

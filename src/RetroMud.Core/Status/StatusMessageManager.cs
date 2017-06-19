@@ -10,7 +10,7 @@ namespace RetroMud.Core.Status
     {
         public IEnumerable<IStatusMessage> GetMessages(int count)
         {
-            return ClientContext.Instance.StatusMessages.OrderBy(x => x.CreatedOn).Select(x => x);
+            return ClientContext.Instance.StatusMessages.OrderByDescending(x => x.CreatedOn).Select(x => x).Take(count).OrderBy(x => x.CreatedOn);
         }
 
         public void AddStatusMessage(IPlayer player, string message)

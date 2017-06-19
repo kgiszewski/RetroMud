@@ -8,10 +8,11 @@ namespace RetroMud.Core.Collision
         private static readonly char _pathChar = ' ';
         private static IHandleCollisionDetection _collisionDetector;
 
-        private static readonly List<char> _allowedToMoveToChars = new List<char>
+        private static readonly List<char> AllowedToMoveToChars = new List<char>
         {
             _pathChar,
-            '▒'
+            '▒',
+            '$'
         };
 
         public event CollisionDetectedHandler OnCollision;
@@ -27,7 +28,7 @@ namespace RetroMud.Core.Collision
         {
             var charAtPosition = _getCharAtPosition(map, row, column);
 
-            return _allowedToMoveToChars.Contains(charAtPosition);
+            return AllowedToMoveToChars.Contains(charAtPosition);
         }
 
         public void Update(IMap map, int row, int column)
