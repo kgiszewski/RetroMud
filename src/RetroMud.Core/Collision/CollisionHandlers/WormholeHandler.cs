@@ -26,7 +26,7 @@ namespace RetroMud.Core.Collision.CollisionHandlers
 
         public void Handle(CollisionDetectedEventArgs eventArgs)
         {
-            _statusMessageManager.AddStatusMessage(ClientContext.Instance.Player, "You've entered a wormhole!");
+            _statusMessageManager.AddStatusMessage("You've entered a wormhole!");
 
             var destinationPortal = _wormholeManager.RouteFrom(new WormholePortal
             {

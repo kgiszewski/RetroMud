@@ -13,13 +13,13 @@ namespace RetroMud.Core.Status
             return ClientContext.Instance.StatusMessages.OrderByDescending(x => x.CreatedOn).Select(x => x).Take(count).OrderBy(x => x.CreatedOn);
         }
 
-        public void AddStatusMessage(IPlayer player, string message)
+        public void AddStatusMessage(string message)
         {
             ClientContext.Instance.StatusMessages.Add(new StatusMessage
             {
                 CreatedOn = DateTime.Now,
                 Message = message,
-                PlayerId = player.Id
+                PlayerId = ClientContext.Instance.Player.Id
             });
         }
     }

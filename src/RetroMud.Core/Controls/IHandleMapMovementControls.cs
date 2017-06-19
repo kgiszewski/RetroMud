@@ -5,6 +5,6 @@ namespace RetroMud.Core.Controls
 {
     public interface IHandleMapMovementControls
     {
-        void HandleInput(IMap map, IPlayer player);
+        void HandleInput(IMap map);
     }
 }

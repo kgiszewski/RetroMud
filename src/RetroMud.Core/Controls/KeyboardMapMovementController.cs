@@ -2,6 +2,7 @@
 using System.Configuration;
 using RetroMud.Core.Collision;
 using RetroMud.Core.Config;
+using RetroMud.Core.Context;
 using RetroMud.Core.Maps;
 using RetroMud.Core.Players;
 
@@ -26,11 +27,12 @@ namespace RetroMud.Core.Controls
             _collisionDetector = collisionDetector;
         }
 
-        public void HandleInput(IMap map, IPlayer player)
+        public void HandleInput(IMap map)
         {
             if (Console.KeyAvailable)
             {
                 var input = Console.ReadKey(true);
+                var player = ClientContext.Instance.Player;
 
                 if (input.KeyChar == _moveLeftKey && player.CurrentColumn > 0 &&
                     _collisionDetector.CanMoveToPosition(map, player.CurrentRow, player.CurrentColumn - 1))
@@ -59,3 +61,4 @@ namespace RetroMud.Core.Controls
         }
     }
 }
+

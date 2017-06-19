@@ -23,7 +23,7 @@ namespace RetroMud.Core.Collision.CollisionHandlers
 
         public void Handle(CollisionDetectedEventArgs eventArgs)
         {
-            _statusMessageManager.AddStatusMessage(ClientContext.Instance.Player, "+1 Coin!");
+            _statusMessageManager.AddStatusMessage("+1 Coin!");
 
             eventArgs.Map.UpdateAtPosition(eventArgs.Row, eventArgs.Column, ' ');
         }

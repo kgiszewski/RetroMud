@@ -52,7 +52,7 @@ namespace RetroMud.Core.Scenes
             {
                 statusMessages = statusMessageManager.GetMessages(30);
 
-                _mapMovementControls.HandleInput(map, player);
+                _mapMovementControls.HandleInput(map);
                 _collisionDetector.Update(map, player.CurrentRow, player.CurrentColumn);
                 _mapRenderer.RenderMap(map, statusMessages.Select(x => x.Message));
             }

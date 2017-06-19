@@ -61,7 +61,7 @@ namespace RetroMud.Core.Rendering
 
                 if (row == player.CurrentRow)
                 {
-                    _renderPlayerRow(rowToRender, _mapWindow, player, map);
+                    _renderPlayerRow(rowToRender, _mapWindow, map);
                 }
                 else
                 {
@@ -71,7 +71,7 @@ namespace RetroMud.Core.Rendering
                 statusRowIndex++;
             }
 
-            _renderBlankRowsIfNeededAtBottom(map, player, _mapWindow, bounds);
+            _renderBlankRowsIfNeededAtBottom(map, _mapWindow, bounds);
 
             Console.WriteLine($"RowWindow: {_mapWindow.RowSize} ColumnWindow: {_mapWindow.ColumnSize}");
         }
@@ -149,9 +149,9 @@ namespace RetroMud.Core.Rendering
             return new Tuple<string, int>(string.Empty, totalWindowWidth);
         }
 
-        private void _renderBlankRowsIfNeededAtBottom(IMap map, IPlayer player, IMapWindow mapWindow, IWindowBounds bounds)
+        private void _renderBlankRowsIfNeededAtBottom(IMap map, IMapWindow mapWindow, IWindowBounds bounds)
         {
-            if (player.CurrentRow > mapWindow.RowSize && (bounds.LowerLimit - bounds.UpperLimit < mapWindow.RowSize * 2))
+            if (ClientContext.Instance.Player.CurrentRow > mapWindow.RowSize && (bounds.LowerLimit - bounds.UpperLimit < mapWindow.RowSize * 2))
             {
                 var blankLineCount = (mapWindow.RowSize * 2) - (bounds.LowerLimit - bounds.UpperLimit);
                 var blankRow = _getBlankRow(map);
@@ -163,9 +163,10 @@ namespace RetroMud.Core.Rendering
             }
         }
 
-        private void _renderPlayerRow(string rowToRender, IMapWindow mapWindow, IPlayer player, IMap map)
+        private void _renderPlayerRow(string rowToRender, IMapWindow mapWindow, IMap map)
         {
             var column = mapWindow.ColumnSize;
+            var player = ClientContext.Instance.Player;
 
             if (player.CurrentColumn < mapWindow.ColumnSize)
             {
