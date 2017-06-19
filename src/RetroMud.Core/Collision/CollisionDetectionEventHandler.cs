@@ -1,28 +1,28 @@
-﻿using RetroMud.Core.Context;
+﻿using RetroMud.Core.Collision.Dispatching;
+using RetroMud.Core.Context;
 using RetroMud.Core.Events.Helpers;
 using RetroMud.Core.Logging;
 using RetroMud.Core.Maps.Wormholes;
 using RetroMud.Core.Scenes;
 using RetroMud.Core.Status;
-using RetroMud.Messaging.Publishing;
 
 namespace RetroMud.Core.Collision
 {
     public class CollisionDetectionEventHandler : IRegisterClientEvents
     {
+        private readonly IDispatchCollisions _collisionDispatcher;
         private readonly IWormholeManager _wormholeManager;
         private readonly IStatusMessageManager _statusMessageManager;
 
         public CollisionDetectionEventHandler()
-            : this(new WormholeManager(), new StatusMessageManager())
+            : this(new CollisionDispatcher())
         {
             
         }
 
-        public CollisionDetectionEventHandler(IWormholeManager wormholeManager, IStatusMessageManager statusMessageManager)
+        public CollisionDetectionEventHandler(IDispatchCollisions collisionDispatcher)
         {
-            _wormholeManager = wormholeManager;
-            _statusMessageManager = statusMessageManager;
+            _collisionDispatcher = collisionDispatcher;
         }
 
         public void Register()
@@ -34,25 +34,7 @@ namespace RetroMud.Core.Collision
         {
             Logger.Debug<CollisionDetectedHandler>($"The player has encountered a: {e.Character} character at position: {e.Column}, {e.Row}");
 
-            if (e.Character == '▒')
-            {
-                _statusMessageManager.AddStatusMessage(ClientContext.Instance.Player, "You've entered a wormhole!");
-
-                 var destinationPortal = _wormholeManager.RouteFrom(new WormholePortal
-                {
-                    MapId = e.Map.Id,
-                    Row = e.Row,
-                    Column = e.Column
-                });
-
-                if (destinationPortal != null)
-                {
-                    ClientContext.Instance.GameSceneManager.CurrentGameScene.IsSceneActive = false;
-                    ClientContext.Instance.GameSceneManager.CurrentGameScene = new ExploreMapScene(destinationPortal.MapId);
-                    ClientContext.Instance.Player.CurrentColumn = destinationPortal.Column;
-                    ClientContext.Instance.Player.CurrentRow = destinationPortal.Row;
-                }
-            }
+            _collisionDispatcher.Dispatch(e);
         }
     }
 }
