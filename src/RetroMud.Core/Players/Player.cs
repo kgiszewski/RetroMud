@@ -5,5 +5,6 @@
         public int Id { get; set; }
         public int CurrentRow { get; set; }
         public int CurrentColumn { get; set; }
+        public int Gold { get; set; }
     }
 }

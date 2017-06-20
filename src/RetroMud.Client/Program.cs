@@ -40,6 +40,7 @@ namespace RetroMud
             });
 
             Console.WriteLine($"Requires upgrade: {healthCheckResponse.RequiresUpgrade}");
+            Console.Clear();
 
             ClientContext.Instance.Player = _messenger.Send<GetPlayerResponse>(new GetPlayerRequest
             {

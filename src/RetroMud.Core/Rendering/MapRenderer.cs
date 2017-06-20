@@ -5,7 +5,6 @@ using System.Text;
 using RetroMud.Core.Context;
 using RetroMud.Core.Maps;
 using RetroMud.Core.Maps.Window;
-using RetroMud.Core.Players;
 
 namespace RetroMud.Core.Rendering
 {
@@ -44,8 +43,15 @@ namespace RetroMud.Core.Rendering
 
             var bounds = _boundGenerator.GetBounds(map, _mapWindow, player.CurrentRow, player.CurrentColumn);
 
-            Console.WriteLine($"Current Position: {player.CurrentRow.ToString("000")}, {player.CurrentColumn.ToString("000")} UpperLimit: {bounds.UpperLimit.ToString("000")} LowerLimit: {bounds.LowerLimit.ToString("000")} LeftLimit: {bounds.LeftLimit.ToString("000")} RightLimit: {bounds.RightLimit.ToString("000")}");
-            Console.WriteLine($"Map size {map.Height.ToString("000")}, {map.Width.ToString("000")}");
+            //Console.WriteLine($"Current Position: {player.CurrentRow.ToString("000")}, {player.CurrentColumn.ToString("000")} UpperLimit: {bounds.UpperLimit.ToString("000")} LowerLimit: {bounds.LowerLimit.ToString("000")} LeftLimit: {bounds.LeftLimit.ToString("000")} RightLimit: {bounds.RightLimit.ToString("000")}");
+            //Console.WriteLine($"Map size {map.Height.ToString("000")}, {map.Width.ToString("000")}");
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Console.Write($"Gold: ");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.Write($"{ClientContext.Instance.Player.Gold:00000000}");
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.ResetColor();
 
             var statusArray = _getStatusAsArray(statusMessages);
 
@@ -73,7 +79,7 @@ namespace RetroMud.Core.Rendering
 
             _renderBlankRowsIfNeededAtBottom(map, _mapWindow, bounds);
 
-            Console.WriteLine($"RowWindow: {_mapWindow.RowSize} ColumnWindow: {_mapWindow.ColumnSize}");
+            //Console.WriteLine($"RowWindow: {_mapWindow.RowSize} ColumnWindow: {_mapWindow.ColumnSize}");
         }
 
         private string _getStatusRowToRender(string[] statusArray, int statusRowIndex)
