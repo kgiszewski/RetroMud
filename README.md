@@ -3,12 +3,9 @@
 Encryption
 - Shared Secret?
 - Compiled in?
+- encrypt maps locally?
 
-Rendering
-- line renderer
-
-Collision Detection
-- Raise events
+Licensing?
 
 Quests
 
@@ -16,4 +13,4 @@ Achievements
 
 Fight System
 
-Chat
+Enemies that can move
