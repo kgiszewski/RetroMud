@@ -61,7 +61,9 @@
     <Compile Include="Config\GameContextConfiguration.cs" />
     <Compile Include="Config\IInstanceConfiguation.cs" />
     <Compile Include="Config\IGameContextConfiguration.cs" />
+    <Compile Include="Controls\IHandleInventoryControls.cs" />
     <Compile Include="Controls\IHandleMapMovementControls.cs" />
+    <Compile Include="Controls\InventoryController.cs" />
     <Compile Include="Controls\KeyboardMapMovementController.cs" />
     <Compile Include="Events\EventHandlers\InstanceEventHandler.cs" />
     <Compile Include="Context\IInstanceContext.cs" />
@@ -103,6 +105,7 @@
     <Compile Include="Scenes\IGameSceneManager.cs" />
     <Compile Include="Rendering\IRenderMaps.cs" />
     <Compile Include="Rendering\MapRenderer.cs" />
+    <Compile Include="Scenes\InventoryScene.cs" />
     <Compile Include="Status\IStatusMessage.cs" />
     <Compile Include="Status\IStatusMessageManager.cs" />
     <Compile Include="Status\StatusMessage.cs" />

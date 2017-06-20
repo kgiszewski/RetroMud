@@ -4,7 +4,7 @@ using RetroMud.Core.Collision;
 using RetroMud.Core.Config;
 using RetroMud.Core.Context;
 using RetroMud.Core.Maps;
-using RetroMud.Core.Players;
+using RetroMud.Core.Scenes;
 
 namespace RetroMud.Core.Controls
 {
@@ -15,6 +15,7 @@ namespace RetroMud.Core.Controls
         private readonly char _moveDownKey = ConfigurationManager.AppSettings[ConfigConstants.MapMoveDownKey].ToCharArray()[0];
         private readonly char _moveLeftKey = ConfigurationManager.AppSettings[ConfigConstants.MapMoveLeftKey].ToCharArray()[0];
         private readonly char _moveRightKey = ConfigurationManager.AppSettings[ConfigConstants.MapMoveRightKey].ToCharArray()[0];
+        private readonly char _inventoryKey = ConfigurationManager.AppSettings[ConfigConstants.MapInventoryKey].ToCharArray()[0];
 
         public KeyboardMapMovementController()
             :this(CollisionDetector.Instance)
@@ -39,23 +40,24 @@ namespace RetroMud.Core.Controls
                 {
                     player.CurrentColumn--;
                 }
-
-                if (input.KeyChar == _moveUpKey && player.CurrentRow > 0 &&
+                else if (input.KeyChar == _moveUpKey && player.CurrentRow > 0 &&
                     _collisionDetector.CanMoveToPosition(map, player.CurrentRow - 1, player.CurrentColumn))
                 {
                     player.CurrentRow--;
                 }
-
-                if (input.KeyChar == _moveRightKey && player.CurrentColumn < map.Width - 1 &&
-                    _collisionDetector.CanMoveToPosition(map, player.CurrentRow, player.CurrentColumn + 1))
+                else if (input.KeyChar == _moveRightKey && player.CurrentColumn < map.Width - 1 &&
+                         _collisionDetector.CanMoveToPosition(map, player.CurrentRow, player.CurrentColumn + 1))
                 {
                     player.CurrentColumn++;
                 }
-
-                if (input.KeyChar == _moveDownKey && player.CurrentRow < map.Height - 1 &&
-                    _collisionDetector.CanMoveToPosition(map, player.CurrentRow + 1, player.CurrentColumn))
+                else if (input.KeyChar == _moveDownKey && player.CurrentRow < map.Height - 1 &&
+                         _collisionDetector.CanMoveToPosition(map, player.CurrentRow + 1, player.CurrentColumn))
                 {
                     player.CurrentRow++;
+                }
+                else if (input.KeyChar == _inventoryKey)
+                {
+                    ClientContext.Instance.GameSceneManager.OpenModalScene(new InventoryScene());
                 }
             }
         }
