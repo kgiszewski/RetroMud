@@ -20,7 +20,7 @@ namespace RetroMud.Core.Scenes
 
                 Console.WriteLine();
 
-                Console.WriteLine("  ► Save");
+                Console.WriteLine("  » Save");
                 Console.WriteLine("   Quit");
 
                 if (Console.KeyAvailable)
