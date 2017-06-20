@@ -39,8 +39,7 @@ namespace RetroMud.Core.Collision.CollisionHandlers
             {
                 eventArgs.Map.SaveAsAltered();
 
-                ClientContext.Instance.GameSceneManager.CurrentGameScene.IsSceneActive = false;
-                ClientContext.Instance.GameSceneManager.CurrentGameScene = new ExploreMapScene(destinationPortal.MapId);
+                ClientContext.Instance.GameSceneManager.ChangeToNextScene(new ExploreMapScene(destinationPortal.MapId));
                 ClientContext.Instance.Player.CurrentColumn = destinationPortal.Column;
                 ClientContext.Instance.Player.CurrentRow = destinationPortal.Row;
             }

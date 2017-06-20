@@ -19,7 +19,7 @@ namespace RetroMud
         {
             XmlConfigurator.Configure();
 
-            Console.ReadKey();
+            Console.ReadKey(true);
 
             EventHelper.RegisterAllClientEventHandlers();
 
@@ -47,7 +47,8 @@ namespace RetroMud
                 PlayerId = 1
             }).Player;
         
-            ClientContext.Instance.GameSceneManager = new GameSceneManager { CurrentGameScene = new ExploreMapScene(1)};
+            ClientContext.Instance.GameSceneManager = new GameSceneManager();
+            ClientContext.Instance.GameSceneManager.ChangeToNextScene(new StartSplashScene());
 
             ClientContext.Instance.StatusMessageManager = new StatusMessageManager();
 

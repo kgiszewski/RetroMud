@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using RetroMud.Core.Collision;
 using RetroMud.Core.Context;
 using RetroMud.Core.Controls;
@@ -10,6 +11,7 @@ namespace RetroMud.Core.Scenes
     public class ExploreMapScene : IGameScene
     {
         private readonly int _mapId;
+        private readonly IMap _map;
         private readonly IHandleCollisionDetection _collisionDetector;
         private readonly IRenderMaps _mapRenderer;
         private readonly IHandleMapMovementControls _mapMovementControls;
@@ -19,7 +21,7 @@ namespace RetroMud.Core.Scenes
         public ExploreMapScene(int mapId)
             :this (mapId, CollisionDetector.Instance, new MapRenderer(), new KeyboardMapMovementController())
         {
-            
+            _map = MapFactory.Get(_mapId);
         }
 
         public ExploreMapScene(
@@ -37,24 +39,24 @@ namespace RetroMud.Core.Scenes
         }
 
         public void Render()
-        {
-            var map = MapFactory.Get(_mapId);
-                
+        {                
             var statusMessageManager = ClientContext.Instance.StatusMessageManager;
 
             var statusMessages = statusMessageManager.GetMessages(30);
 
-            _mapRenderer.RenderMap(map, statusMessages.Select(x => x.Message));
+            _mapRenderer.RenderMap(_map, statusMessages.Select(x => x.Message));
 
             var player = ClientContext.Instance.Player;
+
+            Console.Clear();
 
             while (IsSceneActive)
             {
                 statusMessages = statusMessageManager.GetMessages(30);
 
-                _mapMovementControls.HandleInput(map);
-                _collisionDetector.Update(map, player.CurrentRow, player.CurrentColumn);
-                _mapRenderer.RenderMap(map, statusMessages.Select(x => x.Message));
+                _mapMovementControls.HandleInput(_map);
+                _collisionDetector.Update(_map, player.CurrentRow, player.CurrentColumn);
+                _mapRenderer.RenderMap(_map, statusMessages.Select(x => x.Message));
             }
         }
     }

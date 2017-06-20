@@ -59,6 +59,10 @@ namespace RetroMud.Core.Controls
                 {
                     ClientContext.Instance.GameSceneManager.OpenModalScene(new InventoryScene());
                 }
+                else if (input.Key == ConsoleKey.Escape)
+                {
+                    ClientContext.Instance.GameSceneManager.OpenModalScene(new OptionsScene());
+                }
             }
         }
     }

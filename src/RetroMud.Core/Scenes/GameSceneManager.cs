@@ -2,13 +2,17 @@
 {
     public class GameSceneManager : IGameSceneManager
     {
-        public IGameScene CurrentGameScene { get; set; }
+        public IGameScene CurrentGameScene { get; internal set; }
         private IGameScene _nextGameScene;
         private IGameScene _previousGameScene;
 
         private void _changeToNextScene()
         {
-            CurrentGameScene.IsSceneActive = false;
+            if (CurrentGameScene != null)
+            {
+                CurrentGameScene.IsSceneActive = false;
+            }
+
             CurrentGameScene = _nextGameScene;
             CurrentGameScene.IsSceneActive = true;
         }

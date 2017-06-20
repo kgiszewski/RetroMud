@@ -45,13 +45,6 @@ namespace RetroMud.Core.Rendering
 
             //Console.WriteLine($"Current Position: {player.CurrentRow.ToString("000")}, {player.CurrentColumn.ToString("000")} UpperLimit: {bounds.UpperLimit.ToString("000")} LowerLimit: {bounds.LowerLimit.ToString("000")} LeftLimit: {bounds.LeftLimit.ToString("000")} RightLimit: {bounds.RightLimit.ToString("000")}");
             //Console.WriteLine($"Map size {map.Height.ToString("000")}, {map.Width.ToString("000")}");
-            Console.ForegroundColor = ConsoleColor.DarkYellow;
-            Console.Write($"Gold: ");
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.Write($"{ClientContext.Instance.Player.Gold:00000000}");
-            Console.WriteLine();
-            Console.WriteLine();
-            Console.ResetColor();
 
             var statusArray = _getStatusAsArray(statusMessages);
 
