@@ -51,7 +51,8 @@ namespace RetroMud.Core.Maps
                 CharacterColors = new List<CharacterColor>
                 {
                     new CharacterColor('@', ConsoleColor.Cyan),
-                    new CharacterColor('▒', ConsoleColor.Red),
+                    new CharacterColor('▒', ConsoleColor.Magenta),
+                    new CharacterColor('&', ConsoleColor.Red),
                 };
             }
 
@@ -62,7 +63,7 @@ namespace RetroMud.Core.Maps
                 CharacterColors = new List<CharacterColor>
                 {
                     new CharacterColor('@', ConsoleColor.Cyan),
-                    new CharacterColor('▒', ConsoleColor.Red),
+                    new CharacterColor('▒', ConsoleColor.Magenta),
                     new CharacterColor('$', ConsoleColor.Green)
                 };
             }

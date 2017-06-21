@@ -6,6 +6,7 @@ using System.Text;
 using RetroMud.Core.Context;
 using RetroMud.Core.Maps;
 using RetroMud.Core.Maps.Viewports;
+using RetroMud.Core.Rendering.Animation;
 
 namespace RetroMud.Core.Rendering
 {
@@ -15,8 +16,10 @@ namespace RetroMud.Core.Rendering
         private readonly IViewportBoundGenerator _boundGenerator;
         private readonly IAnimateNonPlayingCharacters _nonPlayingCharacterAnimator;
         private List<char> _colorCharacters;
-        private int _frames;
+        private int _frameNumber;
+        private int _totalFrames;
         private Stopwatch _stopwatch;
+        private string[] _statusArray;
 
         public MapRenderer()
             :this(new MapViewport(), new ViewportBoundGenerator(), new NonPlayingCharacterAnimator())
@@ -37,7 +40,14 @@ namespace RetroMud.Core.Rendering
 
         public void RenderMap(IMap map, IEnumerable<string> statusMessages)
         {
-            _frames++;
+            _frameNumber++;
+            _totalFrames++;
+
+            if (_frameNumber == 30)
+            {
+                _frameNumber = 0;
+            }
+
             Console.CursorVisible = false;
             Console.SetCursorPosition(0, 0);
 
@@ -52,18 +62,26 @@ namespace RetroMud.Core.Rendering
 
             var bounds = _boundGenerator.GetBounds(map, _mapViewport, player.Position.Row, player.Position.Column);
 
-            _nonPlayingCharacterAnimator.Animate(map);
+            if (_statusArray == null)
+            {
+                _statusArray = _getStatusAsArray(statusMessages);
+            }
+
+            if (_frameNumber % 20 == 0)
+            {
+                _statusArray = _getStatusAsArray(statusMessages);
+            }
+
+            _nonPlayingCharacterAnimator.Animate(map, _frameNumber);
 
             //Console.WriteLine($"Current Position: {player.CurrentRow.ToString("000")}, {player.CurrentColumn.ToString("000")} UpperLimit: {bounds.UpperLimit.ToString("000")} LowerLimit: {bounds.LowerLimit.ToString("000")} LeftLimit: {bounds.LeftLimit.ToString("000")} RightLimit: {bounds.RightLimit.ToString("000")}");
             //Console.WriteLine($"Map size {map.Height.ToString("000")}, {map.Width.ToString("000")}");
-
-            var statusArray = _getStatusAsArray(statusMessages);
 
             var statusRowIndex = 0;
             
             for (var row = bounds.UpperLimit; row < bounds.LowerLimit; row++)
             {
-                var statusRowToRender = _getStatusRowToRender(statusArray, statusRowIndex);
+                var statusRowToRender = _getStatusRowToRender(_statusArray, statusRowIndex);
                 var totalWindowWidth = _mapViewport.ColumnSize * 2;
                 var spaceFiller = _getSpaceFiller(map, _mapViewport, bounds, totalWindowWidth);
 
@@ -239,7 +257,7 @@ namespace RetroMud.Core.Rendering
 
             if (_stopwatch.Elapsed.Seconds > 0)
             {
-                Console.WriteLine($"Frames rendered: {_frames:000000} fps: {_frames / _stopwatch.Elapsed.Seconds:00}");
+                Console.WriteLine($"Frames rendered: {_totalFrames:000000} fps: {_totalFrames / _stopwatch.Elapsed.Seconds:00}");
             }
             else
             {
