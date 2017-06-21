@@ -1,4 +1,5 @@
-﻿using RetroMud.Core.Players.Messages;
+﻿using RetroMud.Core.Maps.Coordinates;
+using RetroMud.Core.Players.Messages;
 using RetroMud.Messaging.Dispatching;
 
 namespace RetroMud.Core.Players.MessageHandlers
@@ -12,8 +13,10 @@ namespace RetroMud.Core.Players.MessageHandlers
                 Player = new Player
                 {
                     Id = 1,
-                    CurrentRow = 7,
-                    CurrentColumn = 54
+                    Position = new MapMapCoordinate { 
+                        Row = 7,
+                        Column = 54
+                    }
                 }
             };
         }

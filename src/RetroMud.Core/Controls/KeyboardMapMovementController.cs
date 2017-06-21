@@ -35,25 +35,25 @@ namespace RetroMud.Core.Controls
                 var input = Console.ReadKey(true);
                 var player = ClientContext.Instance.Player;
 
-                if (input.KeyChar == _moveLeftKey && player.CurrentColumn > 0 &&
-                    _collisionDetector.CanMoveToPosition(map, player.CurrentRow, player.CurrentColumn - 1))
+                if (input.KeyChar == _moveLeftKey && player.Position.Column > 0 &&
+                    _collisionDetector.CanMoveToPosition(map, player.Position.Row, player.Position.Column - 1))
                 {
-                    player.CurrentColumn--;
+                    player.Position.Column--;
                 }
-                else if (input.KeyChar == _moveUpKey && player.CurrentRow > 0 &&
-                    _collisionDetector.CanMoveToPosition(map, player.CurrentRow - 1, player.CurrentColumn))
+                else if (input.KeyChar == _moveUpKey && player.Position.Row > 0 &&
+                    _collisionDetector.CanMoveToPosition(map, player.Position.Row - 1, player.Position.Column))
                 {
-                    player.CurrentRow--;
+                    player.Position.Row--;
                 }
-                else if (input.KeyChar == _moveRightKey && player.CurrentColumn < map.Width - 1 &&
-                         _collisionDetector.CanMoveToPosition(map, player.CurrentRow, player.CurrentColumn + 1))
+                else if (input.KeyChar == _moveRightKey && player.Position.Column < map.Width - 1 &&
+                         _collisionDetector.CanMoveToPosition(map, player.Position.Row, player.Position.Column + 1))
                 {
-                    player.CurrentColumn++;
+                    player.Position.Column++;
                 }
-                else if (input.KeyChar == _moveDownKey && player.CurrentRow < map.Height - 1 &&
-                         _collisionDetector.CanMoveToPosition(map, player.CurrentRow + 1, player.CurrentColumn))
+                else if (input.KeyChar == _moveDownKey && player.Position.Row < map.Height - 1 &&
+                         _collisionDetector.CanMoveToPosition(map, player.Position.Row + 1, player.Position.Column))
                 {
-                    player.CurrentRow++;
+                    player.Position.Row++;
                 }
                 else if (input.KeyChar == _inventoryKey)
                 {

@@ -48,7 +48,7 @@ namespace RetroMud.Core.Rendering
                 _colorCharacters = map.CharacterColors.Select(x => x.Character).ToList();
             }
 
-            var bounds = _boundGenerator.GetBounds(map, _mapViewport, player.CurrentRow, player.CurrentColumn);
+            var bounds = _boundGenerator.GetBounds(map, _mapViewport, player.Position.Row, player.Position.Column);
 
             //Console.WriteLine($"Current Position: {player.CurrentRow.ToString("000")}, {player.CurrentColumn.ToString("000")} UpperLimit: {bounds.UpperLimit.ToString("000")} LowerLimit: {bounds.LowerLimit.ToString("000")} LeftLimit: {bounds.LeftLimit.ToString("000")} RightLimit: {bounds.RightLimit.ToString("000")}");
             //Console.WriteLine($"Map size {map.Height.ToString("000")}, {map.Width.ToString("000")}");
@@ -65,7 +65,7 @@ namespace RetroMud.Core.Rendering
 
                 var rowToRender = $"{map.Buffer[row].Substring(bounds.LeftLimit, spaceFiller.Item2)}{spaceFiller.Item1}|{statusRowToRender}";
 
-                if (row == player.CurrentRow)
+                if (row == player.Position.Row)
                 {
                     _renderPlayerRow(rowToRender, _mapViewport, map);
                 }
@@ -157,7 +157,7 @@ namespace RetroMud.Core.Rendering
 
         private void _renderBlankRowsIfNeededAtBottom(IMap map, IMapViewport mapViewport, IViewportBounds bounds)
         {
-            if (ClientContext.Instance.Player.CurrentRow > mapViewport.RowSize && (bounds.LowerLimit - bounds.UpperLimit < mapViewport.RowSize * 2))
+            if (ClientContext.Instance.Player.Position.Row > mapViewport.RowSize && (bounds.LowerLimit - bounds.UpperLimit < mapViewport.RowSize * 2))
             {
                 var blankLineCount = (mapViewport.RowSize * 2) - (bounds.LowerLimit - bounds.UpperLimit);
                 var blankRow = _getBlankRow(map);
@@ -174,9 +174,9 @@ namespace RetroMud.Core.Rendering
             var column = mapViewport.ColumnSize;
             var player = ClientContext.Instance.Player;
 
-            if (player.CurrentColumn < mapViewport.ColumnSize)
+            if (player.Position.Column < mapViewport.ColumnSize)
             {
-                column = player.CurrentColumn;
+                column = player.Position.Column;
             }
 
             var sb = new StringBuilder();
