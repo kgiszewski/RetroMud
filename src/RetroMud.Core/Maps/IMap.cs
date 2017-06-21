@@ -8,7 +8,7 @@ namespace RetroMud.Core.Maps
         int Id { get; }
         int Width { get; }
         int Height { get; }
-        string[] Data { get; set; }
+        string[] Buffer { get; set; }
         List<CharacterColor> CharacterColors { get; set; }
         void UpdateAtPosition(int row, int column, char character);
         void SaveAsAltered();

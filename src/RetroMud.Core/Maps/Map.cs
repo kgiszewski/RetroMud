@@ -16,17 +16,17 @@ namespace RetroMud.Core.Maps
         private readonly string _filename = String.Empty;
 
         public int Id { get; set; }
-        public int Width => Data[0].Length;
-        public int Height => Data.Length;
-        public string[] Data { get; set; }
+        public int Width => Buffer[0].Length;
+        public int Height => Buffer.Length;
+        public string[] Buffer { get; set; }
         public List<CharacterColor> CharacterColors { get; set; }
         public void UpdateAtPosition(int row, int column, char character)
         {
             var sb = new StringBuilder();
 
-            sb = new StringBuilder(Data[row]) { [column] = ' ' };
+            sb = new StringBuilder(Buffer[row]) { [column] = ' ' };
 
-            Data[row] = sb.ToString();
+            Buffer[row] = sb.ToString();
         }
 
         public void SaveAsAltered()
@@ -36,7 +36,7 @@ namespace RetroMud.Core.Maps
                 Directory.CreateDirectory(_alteredStatePath);
             }
 
-            File.WriteAllLines($"{_alteredStatePath}/{_filename}", Data);
+            File.WriteAllLines($"{_alteredStatePath}/{_filename}", Buffer);
         }
 
         public Map(int mapId)
@@ -46,7 +46,7 @@ namespace RetroMud.Core.Maps
             if (mapId == 1)
             {
                 _filename = "HelloWorld.txt";
-                Data = _getMapData();
+                Buffer = _getMapData();
                 CharacterColors = new List<CharacterColor>
                 {
                     new CharacterColor('@', ConsoleColor.Cyan),
@@ -57,7 +57,7 @@ namespace RetroMud.Core.Maps
             if (mapId == 2)
             {
                 _filename = "AnotherWorld.txt";
-                Data = _getMapData();
+                Buffer = _getMapData();
                 CharacterColors = new List<CharacterColor>
                 {
                     new CharacterColor('@', ConsoleColor.Cyan),

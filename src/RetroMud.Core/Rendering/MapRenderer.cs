@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using RetroMud.Core.Context;
@@ -13,6 +14,8 @@ namespace RetroMud.Core.Rendering
         private readonly IMapViewport _mapViewport;
         private readonly IViewportBoundGenerator _boundGenerator;
         private List<char> _colorCharacters;
+        private int _frames;
+        private Stopwatch _stopwatch;
 
         public MapRenderer()
             :this(new MapViewport(), new ViewportBoundGenerator())
@@ -27,12 +30,16 @@ namespace RetroMud.Core.Rendering
         {
             _mapViewport = mapViewport;
             _boundGenerator = boundGenerator;
+            _stopwatch = Stopwatch.StartNew();
         }
 
         public void RenderMap(IMap map, IEnumerable<string> statusMessages)
         {
+            _frames++;
             Console.CursorVisible = false;
             Console.SetCursorPosition(0, 0);
+
+            _renderFrameRate(true);
 
             var player = ClientContext.Instance.Player;
 
@@ -56,7 +63,7 @@ namespace RetroMud.Core.Rendering
                 var totalWindowWidth = _mapViewport.ColumnSize * 2;
                 var spaceFiller = _getSpaceFiller(map, _mapViewport, bounds, totalWindowWidth);
 
-                var rowToRender = $"{map.Data[row].Substring(bounds.LeftLimit, spaceFiller.Item2)}{spaceFiller.Item1}|{statusRowToRender}";
+                var rowToRender = $"{map.Buffer[row].Substring(bounds.LeftLimit, spaceFiller.Item2)}{spaceFiller.Item1}|{statusRowToRender}";
 
                 if (row == player.CurrentRow)
                 {
@@ -214,6 +221,23 @@ namespace RetroMud.Core.Rendering
             else
             {
                 Console.WriteLine(rowToRender);
+            }
+        }
+
+        private void _renderFrameRate(bool enabled = false)
+        {
+            if (!enabled)
+            {
+                return;
+            }
+
+            if (_stopwatch.Elapsed.Seconds > 0)
+            {
+                Console.WriteLine($"Frames rendered: {_frames:000000} fps: {_frames / _stopwatch.Elapsed.Seconds:00}");
+            }
+            else
+            {
+                Console.WriteLine();
             }
         }
     }

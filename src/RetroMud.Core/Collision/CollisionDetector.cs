@@ -49,7 +49,7 @@ namespace RetroMud.Core.Collision
 
         private char _getCharAtPosition(IMap map, int row, int column)
         {
-            var rowData = map.Data[row];
+            var rowData = map.Buffer[row];
 
             return rowData[column];
         }
