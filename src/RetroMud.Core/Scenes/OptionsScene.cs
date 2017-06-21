@@ -6,10 +6,13 @@ namespace RetroMud.Core.Scenes
 {
     public class OptionsScene : IGameScene
     {
-        public void Render()
+        public void Setup()
         {
             Console.Clear();
-            
+        }
+
+        public void Render()
+        {
             while (IsSceneActive)
             {
                 Console.SetCursorPosition(0, 0);

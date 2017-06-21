@@ -6,6 +6,11 @@ namespace RetroMud.Core.Scenes
 {
     public class StartSplashScene : IGameScene
     {
+        public void Setup()
+        {
+            Console.Clear();
+        }
+
         public void Render()
         {
             while (IsSceneActive)

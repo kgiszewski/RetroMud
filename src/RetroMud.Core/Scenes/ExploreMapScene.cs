@@ -30,12 +30,16 @@ namespace RetroMud.Core.Scenes
             IRenderMaps mapRenderer,
             IHandleMapMovementControls mapMovementControls
         )
-        {
-            IsSceneActive = true;
+        {   
             _mapId = mapId;
             _collisionDetector = collisionDetector;
             _mapRenderer = mapRenderer;
             _mapMovementControls = mapMovementControls;
+        }
+
+        public void Setup()
+        {
+            Console.Clear();
         }
 
         public void Render()

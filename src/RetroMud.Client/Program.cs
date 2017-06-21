@@ -54,6 +54,7 @@ namespace RetroMud
 
             while (ClientContext.Instance.GameSceneManager.CurrentGameScene != null)
             {
+                ClientContext.Instance.GameSceneManager.CurrentGameScene.Setup();
                 ClientContext.Instance.GameSceneManager.CurrentGameScene.Render();
             }
 

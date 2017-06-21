@@ -17,12 +17,15 @@ namespace RetroMud.Core.Scenes
         public InventoryScene(IHandleInventoryControls inventoryController)
         {
             _inventoryController = inventoryController;
-            IsSceneActive = true;
+        }
+
+        public void Setup()
+        {
+            Console.Clear();
         }
 
         public void Render()
         {
-            Console.Clear();
             Console.WriteLine("Inventory!");
             
             while (IsSceneActive)
