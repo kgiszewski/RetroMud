@@ -1,5 +1,6 @@
 ﻿using RetroMud.Core.Collision.Dispatching;
 using RetroMud.Core.Context;
+using RetroMud.Core.Maps.Coordinates;
 using RetroMud.Core.Status;
 
 namespace RetroMud.Core.Collision.CollisionHandlers
@@ -24,7 +25,7 @@ namespace RetroMud.Core.Collision.CollisionHandlers
         {
             _statusMessageManager.AddStatusMessage("+1 Coin!");
             ClientContext.Instance.Player.Gold++;
-            eventArgs.Map.UpdateAtPosition(eventArgs.Row, eventArgs.Column, ' ');
+            eventArgs.Map.UpdateAtPosition(new MapCoordinate(eventArgs.Row, eventArgs.Column), ' ');
         }
     }
 }

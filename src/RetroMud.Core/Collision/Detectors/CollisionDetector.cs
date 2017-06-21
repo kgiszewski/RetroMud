@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 using RetroMud.Core.Maps;
 using RetroMud.Core.Maps.Coordinates;
+using RetroMud.Core.Maps.Helpers;
 
-namespace RetroMud.Core.Collision
+namespace RetroMud.Core.Collision.Detectors
 {
     public class CollisionDetector : IHandleCollisionDetection
     {
@@ -27,14 +28,14 @@ namespace RetroMud.Core.Collision
 
         public bool CanMoveToPosition(IMap map, IMapCoordinate position)
         {
-            var charAtPosition = _getCharAtPosition(map, position);
+            var charAtPosition = MapHelper.GetCharAtPosition(map, position);
 
             return AllowedToMoveToChars.Contains(charAtPosition);
         }
 
         public void Update(IMap map, IMapCoordinate position)
         {
-            var charAtPosition = _getCharAtPosition(map, position);
+            var charAtPosition = MapHelper.GetCharAtPosition(map, position);
 
             if (charAtPosition != _pathChar)
             {
@@ -46,13 +47,6 @@ namespace RetroMud.Core.Collision
                     Map = map
                 });
             }
-        }
-
-        private char _getCharAtPosition(IMap map, IMapCoordinate position)
-        {
-            var rowData = map.Buffer[position.Row];
-
-            return rowData[position.Column];
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using RetroMud.Core.Maps;
 using RetroMud.Core.Maps.Coordinates;
 
-namespace RetroMud.Core.Collision
+namespace RetroMud.Core.Collision.Detectors
 {
     public delegate void CollisionDetectedHandler(object sending, CollisionDetectedEventArgs e);
 

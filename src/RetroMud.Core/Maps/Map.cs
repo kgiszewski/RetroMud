@@ -6,6 +6,7 @@ using System.Text;
 using RetroMud.Core.Config;
 using RetroMud.Core.Context;
 using RetroMud.Core.Maps.CharacterColors;
+using RetroMud.Core.Maps.Coordinates;
 
 namespace RetroMud.Core.Maps
 {
@@ -20,13 +21,13 @@ namespace RetroMud.Core.Maps
         public int Height => Buffer.Length;
         public string[] Buffer { get; set; }
         public List<CharacterColor> CharacterColors { get; set; }
-        public void UpdateAtPosition(int row, int column, char character)
+        public void UpdateAtPosition(IMapCoordinate position, char character)
         {
             var sb = new StringBuilder();
 
-            sb = new StringBuilder(Buffer[row]) { [column] = ' ' };
+            sb = new StringBuilder(Buffer[position.Row]) { [position.Column] = character };
 
-            Buffer[row] = sb.ToString();
+            Buffer[position.Row] = sb.ToString();
         }
 
         public void SaveAsAltered()

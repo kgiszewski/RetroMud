@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using RetroMud.Core.Collision;
+using RetroMud.Core.Collision.Detectors;
 using RetroMud.Core.Context;
 using RetroMud.Core.Controls;
 using RetroMud.Core.Maps;

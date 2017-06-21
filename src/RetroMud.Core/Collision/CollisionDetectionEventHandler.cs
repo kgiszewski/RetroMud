@@ -1,4 +1,5 @@
-﻿using RetroMud.Core.Collision.Dispatching;
+﻿using RetroMud.Core.Collision.Detectors;
+using RetroMud.Core.Collision.Dispatching;
 using RetroMud.Core.Events.Helpers;
 using RetroMud.Core.Logging;
 

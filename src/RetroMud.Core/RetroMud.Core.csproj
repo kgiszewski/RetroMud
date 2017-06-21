@@ -48,14 +48,15 @@
   <ItemGroup>
     <Compile Include="Collision\CollisionDetectedEventArgs.cs" />
     <Compile Include="Collision\CollisionDetectionEventHandler.cs" />
-    <Compile Include="Collision\CollisionDetector.cs" />
+    <Compile Include="Collision\Detectors\CollisionDetector.cs" />
     <Compile Include="Collision\CollisionHandlers\CoinHandler.cs" />
     <Compile Include="Collision\CollisionHandlers\WormholeHandler.cs" />
+    <Compile Include="Collision\Detectors\NonPlayingCharacterCollisionDetector.cs" />
     <Compile Include="Collision\Dispatching\CollisionCharacterAttribute.cs" />
     <Compile Include="Collision\Dispatching\CollisionDispatcher.cs" />
     <Compile Include="Collision\Dispatching\IDispatchCollisions.cs" />
     <Compile Include="Collision\Dispatching\IHandleCharacterCollisions.cs" />
-    <Compile Include="Collision\IHandleCollisionDetection.cs" />
+    <Compile Include="Collision\Detectors\IHandleCollisionDetection.cs" />
     <Compile Include="Config\ConfigConstants.cs" />
     <Compile Include="Config\InstanceConfiguation.cs" />
     <Compile Include="Config\GameContextConfiguration.cs" />
@@ -82,6 +83,7 @@
     <Compile Include="Maps\CharacterColors\ICharacterColor.cs" />
     <Compile Include="Maps\Coordinates\IMapCoordinate.cs" />
     <Compile Include="Maps\Coordinates\MapCoordinate.cs" />
+    <Compile Include="Maps\Helpers\MapHelper.cs" />
     <Compile Include="Maps\IMap.cs" />
     <Compile Include="Maps\MapFactory.cs" />
     <Compile Include="Maps\Viewports\IMapViewport.cs" />

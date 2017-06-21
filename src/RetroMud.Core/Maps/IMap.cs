@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using RetroMud.Core.Maps.CharacterColors;
+using RetroMud.Core.Maps.Coordinates;
 
 namespace RetroMud.Core.Maps
 {
@@ -10,7 +11,7 @@ namespace RetroMud.Core.Maps
         int Height { get; }
         string[] Buffer { get; set; }
         List<CharacterColor> CharacterColors { get; set; }
-        void UpdateAtPosition(int row, int column, char character);
+        void UpdateAtPosition(IMapCoordinate position, char character);
         void SaveAsAltered();
     }
 }

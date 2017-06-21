@@ -1,8 +1,8 @@
 ﻿namespace RetroMud.Core.Maps.Coordinates
 {
-    public class MapMapCoordinate : IMapCoordinate
+    public class MapCoordinate : IMapCoordinate
     {
-        public MapMapCoordinate(int row, int column)
+        public MapCoordinate(int row, int column)
         {
             Row = row;
             Column = column;

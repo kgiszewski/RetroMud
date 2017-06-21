@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Configuration;
 using RetroMud.Core.Collision;
+using RetroMud.Core.Collision.Detectors;
 using RetroMud.Core.Config;
 using RetroMud.Core.Context;
 using RetroMud.Core.Maps;
@@ -37,22 +38,22 @@ namespace RetroMud.Core.Controls
                 var player = ClientContext.Instance.Player;
 
                 if (input.KeyChar == _moveLeftKey && player.Position.Column > 0 &&
-                    _collisionDetector.CanMoveToPosition(map, new MapMapCoordinate(player.Position.Row, player.Position.Column - 1)))
+                    _collisionDetector.CanMoveToPosition(map, new MapCoordinate(player.Position.Row, player.Position.Column - 1)))
                 {
                     player.Position.Column--;
                 }
                 else if (input.KeyChar == _moveUpKey && player.Position.Row > 0 &&
-                    _collisionDetector.CanMoveToPosition(map, new MapMapCoordinate(player.Position.Row - 1, player.Position.Column)))
+                    _collisionDetector.CanMoveToPosition(map, new MapCoordinate(player.Position.Row - 1, player.Position.Column)))
                 {
                     player.Position.Row--;
                 }
                 else if (input.KeyChar == _moveRightKey && player.Position.Column < map.Width - 1 &&
-                         _collisionDetector.CanMoveToPosition(map, new MapMapCoordinate(player.Position.Row, player.Position.Column + 1)))
+                         _collisionDetector.CanMoveToPosition(map, new MapCoordinate(player.Position.Row, player.Position.Column + 1)))
                 {
                     player.Position.Column++;
                 }
                 else if (input.KeyChar == _moveDownKey && player.Position.Row < map.Height - 1 &&
-                         _collisionDetector.CanMoveToPosition(map, new MapMapCoordinate(player.Position.Row + 1, player.Position.Column)))
+                         _collisionDetector.CanMoveToPosition(map, new MapCoordinate(player.Position.Row + 1, player.Position.Column)))
                 {
                     player.Position.Row++;
                 }

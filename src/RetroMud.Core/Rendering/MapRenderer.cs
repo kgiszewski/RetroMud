@@ -13,24 +13,26 @@ namespace RetroMud.Core.Rendering
     {
         private readonly IMapViewport _mapViewport;
         private readonly IViewportBoundGenerator _boundGenerator;
+        private readonly IAnimateNonPlayingCharacters _nonPlayingCharacterAnimator;
         private List<char> _colorCharacters;
         private int _frames;
         private Stopwatch _stopwatch;
 
         public MapRenderer()
-            :this(new MapViewport(), new ViewportBoundGenerator())
+            :this(new MapViewport(), new ViewportBoundGenerator(), new NonPlayingCharacterAnimator())
         {
             
         }
 
         public MapRenderer(
             IMapViewport mapViewport,
-            IViewportBoundGenerator boundGenerator
+            IViewportBoundGenerator boundGenerator,
+            IAnimateNonPlayingCharacters nonPlayingCharacterAnimator
             )
         {
             _mapViewport = mapViewport;
             _boundGenerator = boundGenerator;
-            _stopwatch = Stopwatch.StartNew();
+            _nonPlayingCharacterAnimator = nonPlayingCharacterAnimator;
         }
 
         public void RenderMap(IMap map, IEnumerable<string> statusMessages)
@@ -49,6 +51,8 @@ namespace RetroMud.Core.Rendering
             }
 
             var bounds = _boundGenerator.GetBounds(map, _mapViewport, player.Position.Row, player.Position.Column);
+
+            _nonPlayingCharacterAnimator.Animate(map);
 
             //Console.WriteLine($"Current Position: {player.CurrentRow.ToString("000")}, {player.CurrentColumn.ToString("000")} UpperLimit: {bounds.UpperLimit.ToString("000")} LowerLimit: {bounds.LowerLimit.ToString("000")} LeftLimit: {bounds.LeftLimit.ToString("000")} RightLimit: {bounds.RightLimit.ToString("000")}");
             //Console.WriteLine($"Map size {map.Height.ToString("000")}, {map.Width.ToString("000")}");
@@ -230,6 +234,8 @@ namespace RetroMud.Core.Rendering
             {
                 return;
             }
+
+            _stopwatch = Stopwatch.StartNew();
 
             if (_stopwatch.Elapsed.Seconds > 0)
             {
