@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using RetroMud.Core.Maps;
+using RetroMud.Core.Maps.Coordinates;
 
 namespace RetroMud.Core.Collision
 {
@@ -24,34 +25,34 @@ namespace RetroMud.Core.Collision
 
         public static IHandleCollisionDetection Instance => _collisionDetector ?? (_collisionDetector = new CollisionDetector());
 
-        public bool CanMoveToPosition(IMap map, int row, int column)
+        public bool CanMoveToPosition(IMap map, IMapCoordinate position)
         {
-            var charAtPosition = _getCharAtPosition(map, row, column);
+            var charAtPosition = _getCharAtPosition(map, position);
 
             return AllowedToMoveToChars.Contains(charAtPosition);
         }
 
-        public void Update(IMap map, int row, int column)
+        public void Update(IMap map, IMapCoordinate position)
         {
-            var charAtPosition = _getCharAtPosition(map, row, column);
+            var charAtPosition = _getCharAtPosition(map, position);
 
             if (charAtPosition != _pathChar)
             {
                 OnCollision?.Invoke(this, new CollisionDetectedEventArgs
                 {
                     Character = charAtPosition,
-                    Column = column,
-                    Row = row,
+                    Column = position.Column,
+                    Row = position.Row,
                     Map = map
                 });
             }
         }
 
-        private char _getCharAtPosition(IMap map, int row, int column)
+        private char _getCharAtPosition(IMap map, IMapCoordinate position)
         {
-            var rowData = map.Buffer[row];
+            var rowData = map.Buffer[position.Row];
 
-            return rowData[column];
+            return rowData[position.Column];
         }
     }
 }

@@ -4,6 +4,7 @@ using RetroMud.Core.Collision;
 using RetroMud.Core.Context;
 using RetroMud.Core.Controls;
 using RetroMud.Core.Maps;
+using RetroMud.Core.Maps.Coordinates;
 using RetroMud.Core.Rendering;
 
 namespace RetroMud.Core.Scenes
@@ -59,7 +60,7 @@ namespace RetroMud.Core.Scenes
                 statusMessages = statusMessageManager.GetMessages(30);
 
                 _mapMovementControls.HandleInput(_map);
-                _collisionDetector.Update(_map, player.Position.Row, player.Position.Column);
+                _collisionDetector.Update(_map, player.Position);
                 _mapRenderer.RenderMap(_map, statusMessages.Select(x => x.Message));
             }
         }

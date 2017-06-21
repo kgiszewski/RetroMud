@@ -4,6 +4,7 @@ using RetroMud.Core.Collision;
 using RetroMud.Core.Config;
 using RetroMud.Core.Context;
 using RetroMud.Core.Maps;
+using RetroMud.Core.Maps.Coordinates;
 using RetroMud.Core.Scenes;
 
 namespace RetroMud.Core.Controls
@@ -36,22 +37,22 @@ namespace RetroMud.Core.Controls
                 var player = ClientContext.Instance.Player;
 
                 if (input.KeyChar == _moveLeftKey && player.Position.Column > 0 &&
-                    _collisionDetector.CanMoveToPosition(map, player.Position.Row, player.Position.Column - 1))
+                    _collisionDetector.CanMoveToPosition(map, new MapMapCoordinate(player.Position.Row, player.Position.Column - 1)))
                 {
                     player.Position.Column--;
                 }
                 else if (input.KeyChar == _moveUpKey && player.Position.Row > 0 &&
-                    _collisionDetector.CanMoveToPosition(map, player.Position.Row - 1, player.Position.Column))
+                    _collisionDetector.CanMoveToPosition(map, new MapMapCoordinate(player.Position.Row - 1, player.Position.Column)))
                 {
                     player.Position.Row--;
                 }
                 else if (input.KeyChar == _moveRightKey && player.Position.Column < map.Width - 1 &&
-                         _collisionDetector.CanMoveToPosition(map, player.Position.Row, player.Position.Column + 1))
+                         _collisionDetector.CanMoveToPosition(map, new MapMapCoordinate(player.Position.Row, player.Position.Column + 1)))
                 {
                     player.Position.Column++;
                 }
                 else if (input.KeyChar == _moveDownKey && player.Position.Row < map.Height - 1 &&
-                         _collisionDetector.CanMoveToPosition(map, player.Position.Row + 1, player.Position.Column))
+                         _collisionDetector.CanMoveToPosition(map, new MapMapCoordinate(player.Position.Row + 1, player.Position.Column)))
                 {
                     player.Position.Row++;
                 }

@@ -13,10 +13,7 @@ namespace RetroMud.Core.Players.MessageHandlers
                 Player = new Player
                 {
                     Id = 1,
-                    Position = new MapMapCoordinate { 
-                        Row = 7,
-                        Column = 54
-                    }
+                    Position = new MapMapCoordinate(7, 54)
                 }
             };
         }
