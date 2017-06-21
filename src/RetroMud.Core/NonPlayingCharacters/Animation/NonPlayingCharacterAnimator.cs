@@ -15,6 +15,7 @@ namespace RetroMud.Core.NonPlayingCharacters.Animation
                 _npcList = MapHelper.GetNpcForMap(map);
             }
 
+            //TODO: move this to the movement strategy
             if (frameNumber % 10 == 0)
             {
                 foreach (var npc in _npcList)

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using RetroMud.Core.Maps.Coordinates;
 using RetroMud.Core.NonPlayingCharacters;
 
@@ -16,6 +17,7 @@ namespace RetroMud.Core.Maps.Helpers
         public static List<INonPlayingCharacter> GetNpcForMap(IMap map)
         {
             var npcList = new List<INonPlayingCharacter>();
+            var allPossibleNpcCharacters = _getAllPossibleNpcCharacters().ToList();
 
             for (var row = 0; row < map.Buffer.Length; row++)
             {
@@ -23,15 +25,19 @@ namespace RetroMud.Core.Maps.Helpers
 
                 for (var column = 0; column < rowCharacters.Length; column++)
                 {
-                    //TODO: make a list of chars
-                    if (rowCharacters[column] == '&')
+                    if (allPossibleNpcCharacters.Any(x => x == rowCharacters[column]))
                     {
-                        npcList.Add(NonPlayingCharacterFactory.Create('&', new MapCoordinate(row, column)));
+                        npcList.Add(NonPlayingCharacterFactory.Create(rowCharacters[column], new MapCoordinate(row, column)));
                     }
                 }
             }
 
             return npcList;
+        }
+
+        private static IEnumerable<char> _getAllPossibleNpcCharacters()
+        {
+            return new List<char> {'&'};
         }
     }
 }
