@@ -15,16 +15,12 @@ namespace RetroMud.Core.NonPlayingCharacters.Animation
                 _npcList = MapHelper.GetNpcForMap(map);
             }
 
-            //TODO: move this to the movement strategy
-            if (frameNumber % 10 == 0)
+            foreach (var npc in _npcList)
             {
-                foreach (var npc in _npcList)
-                {
-                    var newPosition = npc.AnimationStrategy.GetNewPosition(map, npc.Position);
-                    map.UpdateAtPosition(npc.Position, ' ');
-                    map.UpdateAtPosition(newPosition, npc.Character);
-                    npc.Position = newPosition;
-                }
+                var newPosition = npc.AnimationStrategy.GetNewPosition(map, npc.Position, frameNumber);
+                map.UpdateAtPosition(npc.Position, ' ');
+                map.UpdateAtPosition(newPosition, npc.Character);
+                npc.Position = newPosition;
             }
         }
     }

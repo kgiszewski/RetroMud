@@ -7,7 +7,7 @@ namespace RetroMud.Core.NonPlayingCharacters
     {
         public static INonPlayingCharacter Create(char character, IMapCoordinate position)
         {
-            var movementStrategy = new SideToSideMovementStrategy();
+            var movementStrategy = new SideToSideMovementStrategy(7);
 
             return new NonPlayingCharacter
             {

@@ -1,5 +1,5 @@
 ﻿using RetroMud.Core.Maps.Coordinates;
-using RetroMud.Core.Rendering.Animation;
+using RetroMud.Core.NonPlayingCharacters.Animation;
 
 namespace RetroMud.Core.NonPlayingCharacters
 {

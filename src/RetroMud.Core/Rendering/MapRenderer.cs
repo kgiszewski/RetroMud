@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using RetroMud.Core.Config;
 using RetroMud.Core.Context;
 using RetroMud.Core.Maps;
 using RetroMud.Core.Maps.Viewports;
 using RetroMud.Core.NonPlayingCharacters.Animation;
-using RetroMud.Core.Rendering.Animation;
 
 namespace RetroMud.Core.Rendering
 {
@@ -17,7 +17,7 @@ namespace RetroMud.Core.Rendering
         private readonly IViewportBoundGenerator _boundGenerator;
         private readonly IAnimateNonPlayingCharacters _nonPlayingCharacterAnimator;
         private List<char> _colorCharacters;
-        private int _frameNumber;
+        private int _frameNumber = 1;
         private int _totalFrames;
         private Stopwatch _stopwatch;
         private string[] _statusArray;
@@ -44,9 +44,9 @@ namespace RetroMud.Core.Rendering
             _frameNumber++;
             _totalFrames++;
 
-            if (_frameNumber == 30)
+            if (_frameNumber == ConfigConstants.MaxGameFrameRate)
             {
-                _frameNumber = 0;
+                _frameNumber = 1;
             }
 
             Console.CursorVisible = false;
