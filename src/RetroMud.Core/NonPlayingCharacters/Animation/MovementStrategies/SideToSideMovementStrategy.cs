@@ -10,7 +10,7 @@ namespace RetroMud.Core.NonPlayingCharacters.Animation.MovementStrategies
     {
         private readonly IHandleCollisionDetection _collisionDetector;
         private bool _isMovingLeft;
-        private int _updateFrequency;
+        private readonly int _movementRate;
 
         public SideToSideMovementStrategy(int updateFrequency)
             :this(updateFrequency, new NonPlayingCharacterCollisionDetector())
@@ -22,16 +22,16 @@ namespace RetroMud.Core.NonPlayingCharacters.Animation.MovementStrategies
         {
             if (updateFrequency > ConfigConstants.MaxGameFrameRate || updateFrequency < 1)
             {
-                throw new ArgumentOutOfRangeException(nameof(_updateFrequency));
+                throw new ArgumentOutOfRangeException(nameof(_movementRate));
             }
 
-            _updateFrequency = updateFrequency;
+            _movementRate = updateFrequency;
             _collisionDetector = collisionDetector;
         }
 
         public IMapCoordinate GetNewPosition(IMap map, IMapCoordinate mapCoordinate, int frameNumber)
         {
-            if (frameNumber % _updateFrequency == 0)
+            if (frameNumber % _movementRate == 0)
             {
                 if (_isMovingLeft)
                 {
