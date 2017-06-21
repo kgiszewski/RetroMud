@@ -1,6 +1,6 @@
-﻿namespace RetroMud.Core.Maps.Window
+﻿namespace RetroMud.Core.Maps.Viewports
 {
-    public interface IMapWindow
+    public interface IMapViewport
     {
         int ColumnSize { get; }
         int RowSize { get; }

@@ -4,28 +4,28 @@ using System.Linq;
 using System.Text;
 using RetroMud.Core.Context;
 using RetroMud.Core.Maps;
-using RetroMud.Core.Maps.Window;
+using RetroMud.Core.Maps.Viewports;
 
 namespace RetroMud.Core.Rendering
 {
     public class MapRenderer : IRenderMaps
     {
-        private readonly IMapWindow _mapWindow;
-        private readonly IWindowBoundGenerator _boundGenerator;
+        private readonly IMapViewport _mapViewport;
+        private readonly IViewportBoundGenerator _boundGenerator;
         private List<char> _colorCharacters;
 
         public MapRenderer()
-            :this(new MapWindow(), new WindowBoundGenerator())
+            :this(new MapViewport(), new ViewportBoundGenerator())
         {
             
         }
 
         public MapRenderer(
-            IMapWindow mapWindow,
-            IWindowBoundGenerator boundGenerator
+            IMapViewport mapViewport,
+            IViewportBoundGenerator boundGenerator
             )
         {
-            _mapWindow = mapWindow;
+            _mapViewport = mapViewport;
             _boundGenerator = boundGenerator;
         }
 
@@ -41,7 +41,7 @@ namespace RetroMud.Core.Rendering
                 _colorCharacters = map.CharacterColors.Select(x => x.Character).ToList();
             }
 
-            var bounds = _boundGenerator.GetBounds(map, _mapWindow, player.CurrentRow, player.CurrentColumn);
+            var bounds = _boundGenerator.GetBounds(map, _mapViewport, player.CurrentRow, player.CurrentColumn);
 
             //Console.WriteLine($"Current Position: {player.CurrentRow.ToString("000")}, {player.CurrentColumn.ToString("000")} UpperLimit: {bounds.UpperLimit.ToString("000")} LowerLimit: {bounds.LowerLimit.ToString("000")} LeftLimit: {bounds.LeftLimit.ToString("000")} RightLimit: {bounds.RightLimit.ToString("000")}");
             //Console.WriteLine($"Map size {map.Height.ToString("000")}, {map.Width.ToString("000")}");
@@ -53,14 +53,14 @@ namespace RetroMud.Core.Rendering
             for (var row = bounds.UpperLimit; row < bounds.LowerLimit; row++)
             {
                 var statusRowToRender = _getStatusRowToRender(statusArray, statusRowIndex);
-                var totalWindowWidth = _mapWindow.ColumnSize * 2;
-                var spaceFiller = _getSpaceFiller(map, _mapWindow, bounds, totalWindowWidth);
+                var totalWindowWidth = _mapViewport.ColumnSize * 2;
+                var spaceFiller = _getSpaceFiller(map, _mapViewport, bounds, totalWindowWidth);
 
                 var rowToRender = $"{map.Data[row].Substring(bounds.LeftLimit, spaceFiller.Item2)}{spaceFiller.Item1}|{statusRowToRender}";
 
                 if (row == player.CurrentRow)
                 {
-                    _renderPlayerRow(rowToRender, _mapWindow, map);
+                    _renderPlayerRow(rowToRender, _mapViewport, map);
                 }
                 else
                 {
@@ -70,7 +70,7 @@ namespace RetroMud.Core.Rendering
                 statusRowIndex++;
             }
 
-            _renderBlankRowsIfNeededAtBottom(map, _mapWindow, bounds);
+            _renderBlankRowsIfNeededAtBottom(map, _mapViewport, bounds);
 
             //Console.WriteLine($"RowWindow: {_mapWindow.RowSize} ColumnWindow: {_mapWindow.ColumnSize}");
         }
@@ -128,7 +128,7 @@ namespace RetroMud.Core.Rendering
             return sb.ToString();
         }
 
-        private Tuple<string, int> _getSpaceFiller(IMap map, IMapWindow mapWindow, IWindowBounds bounds, int totalWindowWidth)
+        private Tuple<string, int> _getSpaceFiller(IMap map, IMapViewport mapViewport, IViewportBounds bounds, int totalWindowWidth)
         {
             if (bounds.LeftLimit + totalWindowWidth > map.Width)
             {
@@ -137,7 +137,7 @@ namespace RetroMud.Core.Rendering
                 totalWindowWidth = map.Width - bounds.LeftLimit;
                 sb.Clear();
 
-                for (var i = 0; i < (mapWindow.ColumnSize * 2) - totalWindowWidth; i++)
+                for (var i = 0; i < (mapViewport.ColumnSize * 2) - totalWindowWidth; i++)
                 {
                     sb.Append(" ");
                 }
@@ -148,11 +148,11 @@ namespace RetroMud.Core.Rendering
             return new Tuple<string, int>(string.Empty, totalWindowWidth);
         }
 
-        private void _renderBlankRowsIfNeededAtBottom(IMap map, IMapWindow mapWindow, IWindowBounds bounds)
+        private void _renderBlankRowsIfNeededAtBottom(IMap map, IMapViewport mapViewport, IViewportBounds bounds)
         {
-            if (ClientContext.Instance.Player.CurrentRow > mapWindow.RowSize && (bounds.LowerLimit - bounds.UpperLimit < mapWindow.RowSize * 2))
+            if (ClientContext.Instance.Player.CurrentRow > mapViewport.RowSize && (bounds.LowerLimit - bounds.UpperLimit < mapViewport.RowSize * 2))
             {
-                var blankLineCount = (mapWindow.RowSize * 2) - (bounds.LowerLimit - bounds.UpperLimit);
+                var blankLineCount = (mapViewport.RowSize * 2) - (bounds.LowerLimit - bounds.UpperLimit);
                 var blankRow = _getBlankRow(map);
 
                 for (var i = 0; i < blankLineCount; i++)
@@ -162,12 +162,12 @@ namespace RetroMud.Core.Rendering
             }
         }
 
-        private void _renderPlayerRow(string rowToRender, IMapWindow mapWindow, IMap map)
+        private void _renderPlayerRow(string rowToRender, IMapViewport mapViewport, IMap map)
         {
-            var column = mapWindow.ColumnSize;
+            var column = mapViewport.ColumnSize;
             var player = ClientContext.Instance.Player;
 
-            if (player.CurrentColumn < mapWindow.ColumnSize)
+            if (player.CurrentColumn < mapViewport.ColumnSize)
             {
                 column = player.CurrentColumn;
             }

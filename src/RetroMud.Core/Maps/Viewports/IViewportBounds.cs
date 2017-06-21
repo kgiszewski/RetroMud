@@ -1,6 +1,6 @@
-﻿namespace RetroMud.Core.Maps.Window
+﻿namespace RetroMud.Core.Maps.Viewports
 {
-    public interface IWindowBounds
+    public interface IViewportBounds
     {
         int UpperLimit { get; }
         int LowerLimit { get; }
