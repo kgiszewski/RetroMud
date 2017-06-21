@@ -6,6 +6,7 @@ using System.Text;
 using RetroMud.Core.Context;
 using RetroMud.Core.Maps;
 using RetroMud.Core.Maps.Viewports;
+using RetroMud.Core.NonPlayingCharacters.Animation;
 using RetroMud.Core.Rendering.Animation;
 
 namespace RetroMud.Core.Rendering

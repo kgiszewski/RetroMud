@@ -1,6 +1,6 @@
 ﻿using RetroMud.Core.Maps;
 
-namespace RetroMud.Core.Rendering.Animation
+namespace RetroMud.Core.NonPlayingCharacters.Animation
 {
     public interface IAnimateNonPlayingCharacters
     {

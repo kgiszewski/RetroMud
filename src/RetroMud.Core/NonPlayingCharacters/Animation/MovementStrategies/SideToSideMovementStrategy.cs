@@ -1,8 +1,9 @@
 ﻿using RetroMud.Core.Collision.Detectors;
 using RetroMud.Core.Maps;
 using RetroMud.Core.Maps.Coordinates;
+using RetroMud.Core.Rendering.Animation;
 
-namespace RetroMud.Core.Rendering.Animation
+namespace RetroMud.Core.NonPlayingCharacters.Animation.MovementStrategies
 {
     public class SideToSideMovementStrategy : IAnimationStrategy
     {
