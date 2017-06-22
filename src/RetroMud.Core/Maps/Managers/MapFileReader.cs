@@ -56,9 +56,14 @@ namespace RetroMud.Core.Maps.Managers
                     new CharacterColor('$', ConsoleColor.Green),
                 };
 
-            var characterColors = null ?? defaultCharacterColors;
+            var characterColors = _characterColorsFromFile() ?? defaultCharacterColors;
 
             return MapFactory.Create(map.Id, characterColors, buffer, _portalMapsFromFile(map.WormholePortalMaps));
+        }
+
+        private List<ICharacterColor> _characterColorsFromFile()
+        {
+            return null;
         }
 
         private IEnumerable<IWormholePortalMap> _portalMapsFromFile(IEnumerable<int[]> portalMaps)

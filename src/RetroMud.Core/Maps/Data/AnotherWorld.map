@@ -59,5 +59,11 @@ AnotherWorldAnotherWorldAnotherWorldAnotherWorldAnotherWorldAnotherWorldAnotherW
       17,
       64
     ]
-  ]
+  ],
+  "CharacterColors": {
+    "Cyan": "@",
+    "Magenta": "▒",
+    "Red": "&",
+    "Green": "$"
+  }
 }

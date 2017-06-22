@@ -41,5 +41,11 @@
       27,
       58
     ]
-  ]
+  ],
+  "CharacterColors": {
+    "Cyan": "@",
+    "Magenta": "▒",
+    "Red": "&",
+    "Green": "$"
+  }
 }

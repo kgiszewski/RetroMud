@@ -6,5 +6,6 @@ namespace RetroMud.Core.Maps.Managers
     {
         public int Id { get; set; }
         public List<int[]> WormholePortalMaps { get; set; }
+        public Dictionary<string, string> CharacterColors { get; set; }
     }
 }

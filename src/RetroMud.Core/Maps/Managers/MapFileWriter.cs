@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Newtonsoft.Json;
 using RetroMud.Core.Config;
+using RetroMud.Core.Maps.CharacterColors;
 using RetroMud.Core.Maps.Wormholes;
 
 namespace RetroMud.Core.Maps.Managers
@@ -23,11 +25,24 @@ namespace RetroMud.Core.Maps.Managers
             var metaJson = JsonConvert.SerializeObject(new MapMetaData
             {
                 Id = map.Id,
-                WormholePortalMaps = _toPortalMap(map.WormholePortalMaps)
+                WormholePortalMaps = _toPortalMap(map.WormholePortalMaps),
+                CharacterColors = _toCharacterColors(map.CharacterColors)
             }, jsonSettings);
 
             File.WriteAllLines(filePath, map.Buffer);
             File.AppendAllText(filePath, $"{ConfigConstants.MapMetaBoundary}\r\n{metaJson}");
+        }
+
+        private Dictionary<string, string> _toCharacterColors(IEnumerable<ICharacterColor> characterColors)
+        {
+            var dictionary = new Dictionary<string, string>();
+
+            foreach (var group in characterColors.GroupBy(x => x.Color))
+            {
+                dictionary.Add(group.Key.ToString(), string.Join(",", group.Select(x => x.Character)));
+            }
+
+            return dictionary;
         }
 
         private List<int[]> _toPortalMap(IEnumerable<IWormholePortalMap> portalMaps)
