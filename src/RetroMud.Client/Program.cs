@@ -4,6 +4,7 @@ using RetroMud.Core.Context;
 using RetroMud.Core.Events.Helpers;
 using RetroMud.Messaging.Publishing;
 using RetroMud.Core.Healthchecks.Messages;
+using RetroMud.Core.Maps.Managers;
 using RetroMud.Core.Players.Messages;
 using RetroMud.Core.Scenes;
 using RetroMud.Core.Status;
@@ -51,6 +52,8 @@ namespace RetroMud
             ClientContext.Instance.GameSceneManager.ChangeToNextScene(new StartSplashScene());
 
             ClientContext.Instance.StatusMessageManager = new StatusMessageManager();
+
+            ClientContext.Instance.MapManager = new FileSystemMapManager();
 
             while (ClientContext.Instance.GameSceneManager.CurrentGameScene != null)
             {

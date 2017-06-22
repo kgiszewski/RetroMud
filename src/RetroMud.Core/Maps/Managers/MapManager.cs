@@ -10,31 +10,28 @@ namespace RetroMud.Core.Maps.Managers
     public class FileSystemMapManager : IMapManager
     {
         private readonly IMapFileReader _mapFileReader;
+        private readonly IMapFileWriter _mapFileWriter;
         private readonly string _alteredStatePath = $"{ConfigurationManager.AppSettings[ConfigConstants.SavedStatePath]}\\{ClientContext.Instance.Player.Id}";
         private readonly string _defaultStatePath = $"..\\..\\..\\RetroMud.Core\\Maps\\Data";
         private List<FileSystemMap> _allMaps;
 
         public FileSystemMapManager()
-            :this(new MapFileReader())
+            :this(new MapFileReader(), new MapFileWriter())
         {
             
         }
 
-        public FileSystemMapManager(IMapFileReader mapFileReader)
+        public FileSystemMapManager(IMapFileReader mapFileReader, IMapFileWriter mapFileWriter)
         {
             _mapFileReader = mapFileReader;
+            _mapFileWriter = mapFileWriter;
         }
 
         public void SaveAsAltered(IMap map)
         {
             var fileSystemMap = _allMaps.First(x => x.Map.Id == map.Id);
 
-            if (!Directory.Exists(_alteredStatePath))
-            {
-                Directory.CreateDirectory(_alteredStatePath);
-            }
-
-            File.WriteAllLines($"{_alteredStatePath}/{fileSystemMap.FileName}", map.Buffer);
+            _mapFileWriter.Write(map, $"{_alteredStatePath}/{fileSystemMap.FileName}");
         }
 
         public IEnumerable<IMap> GetAllMaps()

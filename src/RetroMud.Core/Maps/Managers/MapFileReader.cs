@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using RetroMud.Core.Config;
 using RetroMud.Core.Maps.CharacterColors;
 
 namespace RetroMud.Core.Maps.Managers
 {
     public class MapFileReader : IMapFileReader
     {
-        private string _boundaryDelimiter = "<!!>";
-
+ 
         public IMap Read(string[] fileLines)
         {
             int? boundaryLine = null;
@@ -16,7 +16,7 @@ namespace RetroMud.Core.Maps.Managers
             //split the file by the field separator
             for (var row = 0; row < fileLines.Length; row++)
             {
-                if(fileLines[row].Trim() == _boundaryDelimiter)
+                if(fileLines[row].Trim() == ConfigConstants.MapMetaBoundary)
                 {
                     boundaryLine = row;
                     break;
@@ -39,7 +39,7 @@ namespace RetroMud.Core.Maps.Managers
 
             Array.Copy(fileLines, boundaryLine.Value + 1, metaLines, 0, lengthOfMeta);
 
-            var map = JsonConvert.DeserializeObject<Map>(string.Join("", metaLines));
+            var map = JsonConvert.DeserializeObject<MapMetaData>(string.Join("", metaLines));
 
             if (map.Id == 0)
             {
@@ -53,7 +53,7 @@ namespace RetroMud.Core.Maps.Managers
                     new CharacterColor('&', ConsoleColor.Red),
                 };
 
-            var characterColors = map.CharacterColors ?? defaultCharacterColors;
+            var characterColors = null ?? defaultCharacterColors;
 
             return MapFactory.Create(map.Id, characterColors, buffer);
         }

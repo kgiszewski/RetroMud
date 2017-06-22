@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Linq;
-using RetroMud.Core.Collision;
 using RetroMud.Core.Collision.Detectors;
 using RetroMud.Core.Context;
 using RetroMud.Core.Controls;
 using RetroMud.Core.Maps;
-using RetroMud.Core.Maps.Managers;
 using RetroMud.Core.Rendering;
 
 namespace RetroMud.Core.Scenes
@@ -16,12 +14,11 @@ namespace RetroMud.Core.Scenes
         private readonly IHandleCollisionDetection _collisionDetector;
         private readonly IRenderMaps _mapRenderer;
         private readonly IHandleMapMovementControls _mapMovementControls;
-        private readonly IMapManager _mapManager;
 
         public bool IsSceneActive { get; set; }
 
         public ExploreMapScene(int mapId)
-            :this (mapId, CollisionDetector.Instance, new MapRenderer(), new KeyboardMapMovementController(), new FileSystemMapManager())
+            :this (mapId, CollisionDetector.Instance, new MapRenderer(), new KeyboardMapMovementController())
         {
         }
 
@@ -29,15 +26,13 @@ namespace RetroMud.Core.Scenes
             int mapId, 
             IHandleCollisionDetection collisionDetector,
             IRenderMaps mapRenderer,
-            IHandleMapMovementControls mapMovementControls,
-            IMapManager mapManager
+            IHandleMapMovementControls mapMovementControls
         )
         {
             _collisionDetector = collisionDetector;
             _mapRenderer = mapRenderer;
             _mapMovementControls = mapMovementControls;
-            _mapManager = mapManager;
-            _map = _mapManager.GetById(mapId);
+            _map = ClientContext.Instance.MapManager.GetById(mapId);
         }
 
         public void Setup()
@@ -49,20 +44,12 @@ namespace RetroMud.Core.Scenes
         {                
             var statusMessageManager = ClientContext.Instance.StatusMessageManager;
 
-            var statusMessages = statusMessageManager.GetMessages(30);
-
-            _mapRenderer.RenderMap(_map, statusMessages.Select(x => x.Message));
-
-            var player = ClientContext.Instance.Player;
-
-            Console.Clear();
-
             while (IsSceneActive)
             {
-                statusMessages = statusMessageManager.GetMessages(30);
+                var statusMessages = statusMessageManager.GetMessages(30);
 
                 _mapMovementControls.HandleInput(_map);
-                _collisionDetector.Update(_map, player.Position);
+                _collisionDetector.Update(_map, ClientContext.Instance.Player.Position);
                 _mapRenderer.RenderMap(_map, statusMessages.Select(x => x.Message));
             }
         }

@@ -12,5 +12,6 @@
         public static readonly string SavedStatePath = "SavedStatePath";
 
         public static int MaxGameFrameRate = 30;
+        public static string MapMetaBoundary = "<!!>";
     }
 }

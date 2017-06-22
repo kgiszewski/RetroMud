@@ -92,7 +92,11 @@
     <Compile Include="Maps\Managers\FileSystemMap.cs" />
     <Compile Include="Maps\Managers\IMapFileReader.cs" />
     <Compile Include="Maps\Managers\IMapManager.cs" />
+    <Compile Include="Maps\Managers\IMapFileWriter.cs" />
+    <Compile Include="Maps\Managers\IMapMetaData.cs" />
     <Compile Include="Maps\Managers\MapFileReader.cs" />
+    <Compile Include="Maps\Managers\MapFileWriter.cs" />
+    <Compile Include="Maps\Managers\MapMetaData.cs" />
     <Compile Include="Maps\MapFactory.cs" />
     <Compile Include="Maps\Managers\MapManager.cs" />
     <Compile Include="Maps\Viewports\IMapViewport.cs" />
