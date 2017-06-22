@@ -1,15 +1,24 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace RetroMud.Core.Maps.Wormholes
 {
     public class WormholeManager : IWormholeManager
     {
+        private readonly IEnumerable<IWormholePortalMap> _allPortalMaps;
+
+        public WormholeManager()
+        {
+            if (_allPortalMaps == null)
+            {
+                _allPortalMaps = Context.ClientContext.Instance.MapManager.GetAllMaps().SelectMany(x => x.WormholePortalMaps);
+            }
+        }
+
         public IWormholePortal RouteFrom(IWormholePortal portal)
         {
-            var allPortalMaps = Context.ClientContext.Instance.MapManager.GetAllMaps().SelectMany(x => x.WormholePortalMaps);
-
-            var mapping = allPortalMaps.FirstOrDefault(x => 
+            var mapping = _allPortalMaps.FirstOrDefault(x => 
                 x.From.MapId == portal.MapId 
                 && x.From.Position.Row == portal.Position.Row
                 && x.From.Position.Column == portal.Position.Column
