@@ -39,7 +39,10 @@ namespace RetroMud.Core.Collision.CollisionHandlers
                 ClientContext.Instance.MapManager.SaveAsAltered(eventArgs.Map);
 
                 ClientContext.Instance.GameSceneManager.ChangeToNextScene(new ExploreMapScene(destinationPortal.MapId));
-                ClientContext.Instance.Player.Position = destinationPortal.Position;
+
+                //passing by value so that we don't mess with the portal mappings
+                ClientContext.Instance.Player.Position.Row = destinationPortal.Position.Row;
+                ClientContext.Instance.Player.Position.Column = destinationPortal.Position.Column;
             }
         }
     }
