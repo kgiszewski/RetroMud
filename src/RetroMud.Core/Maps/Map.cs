@@ -2,6 +2,7 @@
 using System.Text;
 using RetroMud.Core.Maps.CharacterColors;
 using RetroMud.Core.Maps.Coordinates;
+using RetroMud.Core.Maps.Wormholes;
 
 namespace RetroMud.Core.Maps
 {
@@ -20,5 +21,7 @@ namespace RetroMud.Core.Maps
 
             Buffer[position.Row] = sb.ToString();
         }
+
+        public IEnumerable<IWormholePortalMap> WormholePortalMaps { get; set; }
     }
 }

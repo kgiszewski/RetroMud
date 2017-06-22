@@ -31,5 +31,15 @@
 795gjrepw;ldfkjgwpe;iyghdshwepkryhgpweiokfdhgb[795gjrepw;ldfkjgwpe;iyghds31rtsdgfhu6yjgnbvasgsdiokjhhbvr4ergfygwvesdfh
 <!!>
 {
-	"Id" : 1
+  "Id": 1,
+  "WormholePortalMaps": [
+    [
+      1,
+      17,
+      65,
+      2,
+      27,
+      58
+    ]
+  ]
 }

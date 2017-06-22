@@ -1,49 +1,24 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using System.Linq;
-using RetroMud.Core.Maps.Coordinates;
 
 namespace RetroMud.Core.Maps.Wormholes
 {
     public class WormholeManager : IWormholeManager
     {
-        //TODO: move this to the map file and read\write accordingly
-        private readonly List<WormholePortalMap> _portalMap = new List<WormholePortalMap>
-        {
-            new WormholePortalMap
-            {
-                From = new WormholePortal
-                {
-                    MapId = 1,
-                    Position = new MapCoordinate(17, 65)
-                },
-                To = new WormholePortal
-                {
-                    MapId = 2,
-                    Position = new MapCoordinate(27, 58)
-                }
-            },
-            new WormholePortalMap
-            {
-                To = new WormholePortal
-                {
-                    MapId = 1,
-                    Position = new MapCoordinate(17, 64)
-                },
-                From = new WormholePortal
-                {
-                    MapId = 2,
-                    Position = new MapCoordinate(27, 57)
-                }
-            }
-        };
-
         public IWormholePortal RouteFrom(IWormholePortal portal)
         {
-            var mapping = _portalMap.FirstOrDefault(x => 
+            var allPortalMaps = Context.ClientContext.Instance.MapManager.GetAllMaps().SelectMany(x => x.WormholePortalMaps);
+
+            var mapping = allPortalMaps.FirstOrDefault(x => 
                 x.From.MapId == portal.MapId 
                 && x.From.Position.Row == portal.Position.Row
                 && x.From.Position.Column == portal.Position.Column
             );
+
+            if (mapping == null)
+            {
+                throw new Exception($"Could not find a wormhold mapping for portal from mapId: {portal.MapId}, row: {portal.Position.Row}, column: {portal.Position.Column}");
+            }
 
             return mapping?.To;
         }

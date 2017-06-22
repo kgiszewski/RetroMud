@@ -106,6 +106,7 @@
     <Compile Include="Maps\Viewports\MapViewport.cs" />
     <Compile Include="Maps\Viewports\ViewportBoundGenerator.cs" />
     <Compile Include="Maps\Viewports\ViewportBounds.cs" />
+    <Compile Include="Maps\Wormholes\IWormholdPortalMap.cs" />
     <Compile Include="Maps\Wormholes\IWormholePortal.cs" />
     <Compile Include="Maps\Wormholes\IWormholeManager.cs" />
     <Compile Include="Maps\Wormholes\WormholeManager.cs" />

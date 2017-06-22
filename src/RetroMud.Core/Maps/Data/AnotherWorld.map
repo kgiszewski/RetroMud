@@ -49,5 +49,15 @@ AnotherWorldAnotherWorldAnotherWorldAnotherWorldAnotherWorldAnotherWorldAnotherW
 AnotherWorldAnotherWorldAnotherWorldAnotherWorldAnotherWorldAnotherWorldAnotherWorldAnotherWorldAnotherWorldAnotherWorldAnotherWorldAnotherWorld
 <!!>
 {
-	"Id" : 2
+  "Id": 2,
+  "WormholePortalMaps": [
+    [
+      2,
+      27,
+      57,
+      1,
+      17,
+      64
+    ]
+  ]
 }

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 using RetroMud.Core.Config;
 using RetroMud.Core.Maps.CharacterColors;
+using RetroMud.Core.Maps.Coordinates;
+using RetroMud.Core.Maps.Wormholes;
 
 namespace RetroMud.Core.Maps.Managers
 {
@@ -56,7 +58,31 @@ namespace RetroMud.Core.Maps.Managers
 
             var characterColors = null ?? defaultCharacterColors;
 
-            return MapFactory.Create(map.Id, characterColors, buffer);
+            return MapFactory.Create(map.Id, characterColors, buffer, _portalMapsFromFile(map.WormholePortalMaps));
+        }
+
+        private IEnumerable<IWormholePortalMap> _portalMapsFromFile(IEnumerable<int[]> portalMaps)
+        {
+            var list = new List<IWormholePortalMap>();
+
+            foreach (var portalMap in portalMaps)
+            {
+                list.Add(new WormholePortalMap
+                {
+                    From = new WormholePortal
+                    {
+                        MapId = portalMap[0],
+                        Position = new MapCoordinate(portalMap[1], portalMap[2])
+                    },
+                    To = new WormholePortal
+                    {
+                        MapId = portalMap[3],
+                        Position = new MapCoordinate(portalMap[4], portalMap[5])
+                    }
+                });
+            }
+
+            return list;
         }
     }
 }
