@@ -10,18 +10,16 @@ namespace RetroMud.Core.Collision.CollisionHandlers
     [CollisionCharacter('▒')]
     public class WormholeHandler : IHandleCharacterCollisions
     {
-        private readonly IWormholeManager _wormholeManager;
         private readonly IStatusMessageManager _statusMessageManager;
 
         public WormholeHandler()
-            :this(new WormholeManager(), new StatusMessageManager())
+            :this(new StatusMessageManager())
         {
             
         }
 
-        public WormholeHandler(IWormholeManager wormholeManager, IStatusMessageManager statusMessageManager)
+        public WormholeHandler(IStatusMessageManager statusMessageManager)
         {
-            _wormholeManager = wormholeManager;
             _statusMessageManager = statusMessageManager;
         }
 
@@ -29,7 +27,7 @@ namespace RetroMud.Core.Collision.CollisionHandlers
         {
             _statusMessageManager.AddStatusMessage("You've entered a wormhole!");
 
-            var destinationPortal = _wormholeManager.RouteFrom(new WormholePortal
+            var destinationPortal = ClientContext.Instance.WormholeManager.RouteFrom(new WormholePortal
             {
                 MapId = eventArgs.Map.Id,
                 Position = new MapCoordinate(eventArgs.Position.Row, eventArgs.Position.Column)

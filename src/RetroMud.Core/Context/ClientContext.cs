@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using RetroMud.Core.Config;
 using RetroMud.Core.Maps.Managers;
+using RetroMud.Core.Maps.Wormholes;
 using RetroMud.Core.Players;
 using RetroMud.Core.Scenes;
 using RetroMud.Core.Status;
@@ -55,5 +56,6 @@ namespace RetroMud.Core.Context
         public IMapManager MapManager { get; set; }
         public IPlayer Player { get; set; }
         public IStatusMessageManager StatusMessageManager { get; set; }
+        public IWormholeManager WormholeManager { get; set; }
     }
 }
