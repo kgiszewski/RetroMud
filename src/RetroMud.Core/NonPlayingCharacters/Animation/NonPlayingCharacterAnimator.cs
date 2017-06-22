@@ -18,8 +18,8 @@ namespace RetroMud.Core.NonPlayingCharacters.Animation
             foreach (var npc in _npcList)
             {
                 var newPosition = npc.AnimationStrategy.GetNewPosition(map, npc.Position, frameNumber);
-                map.UpdateAtPosition(npc.Position, ' ');
-                map.UpdateAtPosition(newPosition, npc.Character);
+                map.UpdateBufferAtPosition(npc.Position, ' ');
+                map.UpdateBufferAtPosition(newPosition, npc.Character);
                 npc.Position = newPosition;
             }
         }

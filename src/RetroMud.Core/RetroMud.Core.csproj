@@ -35,6 +35,10 @@
       <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
@@ -85,7 +89,12 @@
     <Compile Include="Maps\Coordinates\MapCoordinate.cs" />
     <Compile Include="Maps\Helpers\MapHelper.cs" />
     <Compile Include="Maps\IMap.cs" />
+    <Compile Include="Maps\Managers\FileSystemMap.cs" />
+    <Compile Include="Maps\Managers\IMapFileReader.cs" />
+    <Compile Include="Maps\Managers\IMapManager.cs" />
+    <Compile Include="Maps\Managers\MapFileReader.cs" />
     <Compile Include="Maps\MapFactory.cs" />
+    <Compile Include="Maps\Managers\MapManager.cs" />
     <Compile Include="Maps\Viewports\IMapViewport.cs" />
     <Compile Include="Maps\Viewports\IViewportBoundGenerator.cs" />
     <Compile Include="Maps\Viewports\IViewportBounds.cs" />

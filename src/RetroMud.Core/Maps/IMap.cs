@@ -10,8 +10,7 @@ namespace RetroMud.Core.Maps
         int Width { get; }
         int Height { get; }
         string[] Buffer { get; set; }
-        List<CharacterColor> CharacterColors { get; set; }
-        void UpdateAtPosition(IMapCoordinate position, char character);
-        void SaveAsAltered();
+        List<ICharacterColor> CharacterColors { get; set; }
+        void UpdateBufferAtPosition(IMapCoordinate position, char character);
     }
 }
