@@ -1,9 +1,10 @@
-﻿namespace RetroMud.Core.Maps.Wormholes
+﻿using RetroMud.Core.Maps.Coordinates;
+
+namespace RetroMud.Core.Maps.Wormholes
 {
     public interface IWormholePortal
     {
         int MapId { get; set; }
-        int Row { get; set; }
-        int Column { get; set; }
+        IMapCoordinate Position { get; set; }
     }
 }

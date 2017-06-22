@@ -31,8 +31,7 @@ namespace RetroMud.Core.Collision.CollisionHandlers
             var destinationPortal = _wormholeManager.RouteFrom(new WormholePortal
             {
                 MapId = eventArgs.Map.Id,
-                Row = eventArgs.Row,
-                Column = eventArgs.Column
+                Position = eventArgs.Position
             });
 
             if (destinationPortal != null)
@@ -40,8 +39,7 @@ namespace RetroMud.Core.Collision.CollisionHandlers
                 ClientContext.Instance.MapManager.SaveAsAltered(eventArgs.Map);
 
                 ClientContext.Instance.GameSceneManager.ChangeToNextScene(new ExploreMapScene(destinationPortal.MapId));
-                ClientContext.Instance.Player.Position.Column = destinationPortal.Column;
-                ClientContext.Instance.Player.Position.Row = destinationPortal.Row;
+                ClientContext.Instance.Player.Position = destinationPortal.Position;
             }
         }
     }

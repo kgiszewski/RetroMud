@@ -27,7 +27,7 @@ namespace RetroMud.Core.Collision
 
         private void CollisionDetectionEventHandler_OnCollision(object sending, CollisionDetectedEventArgs e)
         {
-            Logger.Debug<CollisionDetectedHandler>($"The player has encountered a: {e.Character} character at position: {e.Column}, {e.Row}");
+            Logger.Debug<CollisionDetectedHandler>($"The player has encountered a: {e.Character} character at position: {e.Position.Column}, {e.Position.Row}");
 
             _collisionDispatcher.Dispatch(e);
         }

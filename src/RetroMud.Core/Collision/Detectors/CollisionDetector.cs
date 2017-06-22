@@ -42,8 +42,7 @@ namespace RetroMud.Core.Collision.Detectors
                 OnCollision?.Invoke(this, new CollisionDetectedEventArgs
                 {
                     Character = charAtPosition,
-                    Column = position.Column,
-                    Row = position.Row,
+                    Position = position,
                     Map = map
                 });
             }

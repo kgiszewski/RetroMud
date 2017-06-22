@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using RetroMud.Core.Maps.Coordinates;
 
 namespace RetroMud.Core.Maps.Wormholes
 {
@@ -12,14 +13,12 @@ namespace RetroMud.Core.Maps.Wormholes
                 From = new WormholePortal
                 {
                     MapId = 1,
-                    Row =  17,
-                    Column = 65
+                    Position = new MapCoordinate(17, 65)
                 },
                 To = new WormholePortal
                 {
                     MapId = 2,
-                    Row = 27,
-                    Column = 58
+                    Position = new MapCoordinate(27, 58)
                 }
             },
             new WormholePortalMap
@@ -27,14 +26,12 @@ namespace RetroMud.Core.Maps.Wormholes
                 To = new WormholePortal
                 {
                     MapId = 1,
-                    Row =  17,
-                    Column = 64
+                    Position = new MapCoordinate(17, 64)
                 },
                 From = new WormholePortal
                 {
                     MapId = 2,
-                    Row = 27,
-                    Column = 57
+                    Position = new MapCoordinate(27, 57)
                 }
             }
         };
@@ -43,8 +40,8 @@ namespace RetroMud.Core.Maps.Wormholes
         {
             var mapping = _portalMap.FirstOrDefault(x => 
                 x.From.MapId == portal.MapId 
-                && x.From.Column == portal.Column
-                && x.From.Row == portal.Row
+                && x.From.Position.Row == portal.Position.Row
+                && x.From.Position.Column == portal.Position.Column
             );
 
             return mapping?.To;
