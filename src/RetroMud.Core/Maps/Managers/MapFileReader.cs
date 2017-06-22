@@ -56,14 +56,38 @@ namespace RetroMud.Core.Maps.Managers
                     new CharacterColor('$', ConsoleColor.Green),
                 };
 
-            var characterColors = _characterColorsFromFile() ?? defaultCharacterColors;
+            var characterColors = _characterColorsFromFile(map.CharacterColors) ?? defaultCharacterColors;
 
             return MapFactory.Create(map.Id, characterColors, buffer, _portalMapsFromFile(map.WormholePortalMaps));
         }
 
-        private List<ICharacterColor> _characterColorsFromFile()
+        private List<ICharacterColor> _characterColorsFromFile(Dictionary<string, string> characterColors)
         {
-            return null;
+            var list = new List<ICharacterColor>();
+
+            foreach (var key in characterColors.Keys)
+            {
+                foreach (var character in characterColors[key].Split(new[] {","}, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    list.Add(new CharacterColor(character.ToCharArray()[0], _getColorFromString(key)));
+                }
+            }
+
+            return list;
+        }
+
+        private ConsoleColor _getColorFromString(string color)
+        {
+            ConsoleColor result;
+
+            var success = Enum.TryParse(color, true, out result);
+
+            if (success)
+            {
+                return result;
+            }
+            
+            return ConsoleColor.Gray;
         }
 
         private IEnumerable<IWormholePortalMap> _portalMapsFromFile(IEnumerable<int[]> portalMaps)
