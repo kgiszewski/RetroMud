@@ -7,5 +7,6 @@ namespace RetroMud.Core.Players
         int Id { get; set; }
         IMapCoordinate Position { get; set; }
         int Gold { get; set; }
+        void MoveTo(IMapCoordinate position);
     }
 }

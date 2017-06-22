@@ -11,7 +11,7 @@ namespace RetroMud.Core.NonPlayingCharacters
 
             return new NonPlayingCharacter
             {
-                Position = new MapCoordinate(position.Row, position.Column),
+                Position = new MapCoordinate(position),
                 AnimationStrategy = movementStrategy,
                 Character = character
             };

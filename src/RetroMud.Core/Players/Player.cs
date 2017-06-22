@@ -7,5 +7,10 @@ namespace RetroMud.Core.Players
         public int Id { get; set; }
         public IMapCoordinate Position { get; set; }
         public int Gold { get; set; }
+        public void MoveTo(IMapCoordinate position)
+        {
+            Position.Row = position.Row;
+            Position.Column = position.Column;
+        }
     }
 }

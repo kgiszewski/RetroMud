@@ -1,6 +1,5 @@
 ﻿using RetroMud.Core.Collision.Dispatching;
 using RetroMud.Core.Context;
-using RetroMud.Core.Maps.Coordinates;
 using RetroMud.Core.Status;
 
 namespace RetroMud.Core.Collision.CollisionHandlers
