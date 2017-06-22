@@ -51,6 +51,7 @@ namespace RetroMud.Core.Maps.Managers
                     new CharacterColor('@', ConsoleColor.Cyan),
                     new CharacterColor('▒', ConsoleColor.Magenta),
                     new CharacterColor('&', ConsoleColor.Red),
+                    new CharacterColor('$', ConsoleColor.Green),
                 };
 
             var characterColors = null ?? defaultCharacterColors;

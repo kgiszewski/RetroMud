@@ -148,8 +148,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Maps\Data\AnotherWorld.txt" />
-    <Content Include="Maps\Data\HelloWorld.txt" />
+    <None Include="Maps\Data\AnotherWorld.map" />
+    <None Include="Maps\Data\HelloWorld.map" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

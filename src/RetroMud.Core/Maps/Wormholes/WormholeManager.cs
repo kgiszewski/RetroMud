@@ -6,7 +6,8 @@ namespace RetroMud.Core.Maps.Wormholes
 {
     public class WormholeManager : IWormholeManager
     {
-        private List<WormholePortalMap> _portalMap = new List<WormholePortalMap>
+        //TODO: move this to the map file and read\write accordingly
+        private readonly List<WormholePortalMap> _portalMap = new List<WormholePortalMap>
         {
             new WormholePortalMap
             {
