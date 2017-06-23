@@ -1,5 +1,4 @@
-﻿using System.Runtime.InteropServices;
-using RetroMud.Core.Maps.Coordinates;
+﻿using RetroMud.Core.Maps.Coordinates;
 using RetroMud.Core.NonPlayingCharacters.Animation;
 using RetroMud.Core.NonPlayingCharacters.Animation.MovementStrategies;
 
@@ -24,7 +23,10 @@ namespace RetroMud.Core.NonPlayingCharacters
             switch (character)
             {
                 case '*':
-                    return new UpAndDownMovementStrategy(9);
+                    return new HomingMovementStrategy(10);
+
+                case '#':
+                    return new UpAndDownMovementStrategy(10);
 
                 default:
                     return new SideToSideMovementStrategy(7);

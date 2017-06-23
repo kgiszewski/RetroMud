@@ -110,6 +110,7 @@
     <Compile Include="Maps\Wormholes\WormholeManager.cs" />
     <Compile Include="Maps\Wormholes\WormholePortal.cs" />
     <Compile Include="Maps\Wormholes\WormholePortalMap.cs" />
+    <Compile Include="NonPlayingCharacters\Animation\MovementStrategies\HomingMovementStrategy.cs" />
     <Compile Include="NonPlayingCharacters\Animation\MovementStrategies\UpAndDownMovementStrategy.cs" />
     <Compile Include="NonPlayingCharacters\INonPlayingCharacter.cs" />
     <Compile Include="NonPlayingCharacters\NonPlayingCharacter.cs" />
