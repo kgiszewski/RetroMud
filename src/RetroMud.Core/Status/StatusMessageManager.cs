@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using RetroMud.Core.Context;
-using RetroMud.Core.Players;
 
 namespace RetroMud.Core.Status
 {

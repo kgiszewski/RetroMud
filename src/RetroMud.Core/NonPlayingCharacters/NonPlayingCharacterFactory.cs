@@ -1,4 +1,6 @@
-﻿using RetroMud.Core.Maps.Coordinates;
+﻿using System.Runtime.InteropServices;
+using RetroMud.Core.Maps.Coordinates;
+using RetroMud.Core.NonPlayingCharacters.Animation;
 using RetroMud.Core.NonPlayingCharacters.Animation.MovementStrategies;
 
 namespace RetroMud.Core.NonPlayingCharacters
@@ -7,14 +9,26 @@ namespace RetroMud.Core.NonPlayingCharacters
     {
         public static INonPlayingCharacter Create(char character, IMapCoordinate position)
         {
-            var movementStrategy = new SideToSideMovementStrategy(7);
+            var movementStrategy = _getMovementStrategy(character);
 
             return new NonPlayingCharacter
             {
                 Position = new MapCoordinate(position),
-                AnimationStrategy = movementStrategy,
+                MovementStrategy = movementStrategy,
                 Character = character
             };
+        }
+
+        private static IMovementStrategy _getMovementStrategy(char character)
+        {
+            switch (character)
+            {
+                case '*':
+                    return new UpAndDownMovementStrategy(9);
+
+                default:
+                    return new SideToSideMovementStrategy(7);
+            }
         }
     }
 }

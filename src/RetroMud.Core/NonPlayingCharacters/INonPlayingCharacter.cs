@@ -7,6 +7,6 @@ namespace RetroMud.Core.NonPlayingCharacters
     {
         char Character { get; set; }
         IMapCoordinate Position { get; set; }
-        IAnimationStrategy AnimationStrategy { get; set; }
+        IMovementStrategy MovementStrategy { get; set; }
     }
 }

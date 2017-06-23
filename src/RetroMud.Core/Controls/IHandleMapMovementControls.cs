@@ -1,5 +1,4 @@
 ﻿using RetroMud.Core.Maps;
-using RetroMud.Core.Players;
 
 namespace RetroMud.Core.Controls
 {

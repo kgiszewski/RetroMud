@@ -63,9 +63,7 @@
     <Compile Include="Collision\Detectors\IHandleCollisionDetection.cs" />
     <Compile Include="Config\ConfigConstants.cs" />
     <Compile Include="Config\InstanceConfiguation.cs" />
-    <Compile Include="Config\GameContextConfiguration.cs" />
     <Compile Include="Config\IInstanceConfiguation.cs" />
-    <Compile Include="Config\IGameContextConfiguration.cs" />
     <Compile Include="Controls\IHandleInventoryControls.cs" />
     <Compile Include="Controls\IHandleMapMovementControls.cs" />
     <Compile Include="Controls\InventoryController.cs" />
@@ -112,6 +110,7 @@
     <Compile Include="Maps\Wormholes\WormholeManager.cs" />
     <Compile Include="Maps\Wormholes\WormholePortal.cs" />
     <Compile Include="Maps\Wormholes\WormholePortalMap.cs" />
+    <Compile Include="NonPlayingCharacters\Animation\MovementStrategies\UpAndDownMovementStrategy.cs" />
     <Compile Include="NonPlayingCharacters\INonPlayingCharacter.cs" />
     <Compile Include="NonPlayingCharacters\NonPlayingCharacter.cs" />
     <Compile Include="NonPlayingCharacters\NonPlayingCharacterFactory.cs" />
@@ -121,7 +120,7 @@
     <Compile Include="Players\Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="NonPlayingCharacters\Animation\IAnimateNonPlayingCharacters.cs" />
-    <Compile Include="NonPlayingCharacters\Animation\IAnimationStrategy.cs" />
+    <Compile Include="NonPlayingCharacters\Animation\IMovementStrategy.cs" />
     <Compile Include="NonPlayingCharacters\Animation\NonPlayingCharacterAnimator.cs" />
     <Compile Include="NonPlayingCharacters\Animation\MovementStrategies\SideToSideMovementStrategy.cs" />
     <Compile Include="Scenes\ExploreMapScene.cs" />

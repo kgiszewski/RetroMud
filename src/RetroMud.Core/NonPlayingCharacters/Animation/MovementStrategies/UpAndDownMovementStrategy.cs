@@ -6,19 +6,19 @@ using RetroMud.Core.Maps.Coordinates;
 
 namespace RetroMud.Core.NonPlayingCharacters.Animation.MovementStrategies
 {
-    public class SideToSideMovementStrategy : IMovementStrategy
+    public class UpAndDownMovementStrategy : IMovementStrategy
     {
         private readonly IHandleCollisionDetection _collisionDetector;
-        private bool _isMovingLeft;
+        private bool _isMovingUp;
         private readonly int _movementRate;
 
-        public SideToSideMovementStrategy(int updateFrequency)
+        public UpAndDownMovementStrategy(int updateFrequency)
             :this(updateFrequency, new NonPlayingCharacterCollisionDetector())
         {
             
         }
 
-        public SideToSideMovementStrategy(int updateFrequency, IHandleCollisionDetection collisionDetector)
+        public UpAndDownMovementStrategy(int updateFrequency, IHandleCollisionDetection collisionDetector)
         {
             if (updateFrequency > ConfigConstants.MaxGameFrameRate || updateFrequency < 1)
             {
@@ -33,28 +33,28 @@ namespace RetroMud.Core.NonPlayingCharacters.Animation.MovementStrategies
         {
             if (frameNumber % _movementRate == 0)
             {
-                if (_isMovingLeft)
+                if (_isMovingUp)
                 {
                     if (_collisionDetector.CanMoveToPosition(map,
-                        new MapCoordinate(mapCoordinate.Row, mapCoordinate.Column - 1)))
+                        new MapCoordinate(mapCoordinate.Row - 1, mapCoordinate.Column)))
                     {
-                        return new MapCoordinate(mapCoordinate.Row, mapCoordinate.Column - 1);
+                        return new MapCoordinate(mapCoordinate.Row - 1, mapCoordinate.Column);
                     }
                     else
                     {
-                        _isMovingLeft = false;
+                        _isMovingUp = false;
                     }
                 }
                 else
                 {
                     if (_collisionDetector.CanMoveToPosition(map,
-                        new MapCoordinate(mapCoordinate.Row, mapCoordinate.Column + 1)))
+                        new MapCoordinate(mapCoordinate.Row + 1, mapCoordinate.Column)))
                     {
-                        return new MapCoordinate(mapCoordinate.Row, mapCoordinate.Column + 1);
+                        return new MapCoordinate(mapCoordinate.Row + 1, mapCoordinate.Column);
                     }
                     else
                     {
-                        _isMovingLeft = true;
+                        _isMovingUp = true;
                     }
                 }
 

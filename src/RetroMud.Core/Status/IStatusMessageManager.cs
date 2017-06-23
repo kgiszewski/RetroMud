@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using RetroMud.Core.Players;
 
 namespace RetroMud.Core.Status
 {

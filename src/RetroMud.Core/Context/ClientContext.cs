@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using RetroMud.Core.Config;
 using RetroMud.Core.Maps.Managers;
 using RetroMud.Core.Maps.Wormholes;
 using RetroMud.Core.Players;
@@ -10,15 +9,6 @@ namespace RetroMud.Core.Context
 {
     public class ClientContext : IClientContext
     {
-        private IGameContextConfiguration _configuration;
-
-        public IGameContextConfiguration Configuration
-        {
-            get { return _configuration ?? (_configuration = new GameContextConfiguration()); }
-
-            set { _configuration = value; }
-        }
-
         //this will hold the internal instance of our singleton
         private static volatile ClientContext _instance;
 

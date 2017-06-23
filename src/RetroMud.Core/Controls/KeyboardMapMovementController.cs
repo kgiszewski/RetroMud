@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Configuration;
-using RetroMud.Core.Collision;
 using RetroMud.Core.Collision.Detectors;
 using RetroMud.Core.Config;
 using RetroMud.Core.Context;

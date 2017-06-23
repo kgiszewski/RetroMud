@@ -3,7 +3,7 @@ using RetroMud.Core.Maps.Coordinates;
 
 namespace RetroMud.Core.NonPlayingCharacters.Animation
 {
-    public interface IAnimationStrategy
+    public interface IMovementStrategy
     {
         IMapCoordinate GetNewPosition(IMap map, IMapCoordinate mapCoordinate, int frameNumber);
     }

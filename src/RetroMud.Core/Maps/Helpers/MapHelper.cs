@@ -37,7 +37,7 @@ namespace RetroMud.Core.Maps.Helpers
 
         private static IEnumerable<char> _getAllPossibleNpcCharacters()
         {
-            return new List<char> {'&'};
+            return new List<char> {'&', '*'};
         }
     }
 }
