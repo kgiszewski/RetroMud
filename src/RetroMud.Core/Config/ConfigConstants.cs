@@ -1,4 +1,7 @@
-﻿namespace RetroMud.Core.Config
+﻿using System;
+using System.Configuration;
+
+namespace RetroMud.Core.Config
 {
     public class ConfigConstants
     {
@@ -11,7 +14,7 @@
         public static readonly string MapInventoryKey = "Map:InventoryKey";
         public static readonly string SavedStatePath = "SavedStatePath";
 
-        public static int MaxGameFrameRate = 10;
+        public static int MaxGameFrameRate = Convert.ToInt32(ConfigurationManager.AppSettings["Tick:MaxGameFrameRate"]);
         public static string MapMetaBoundary = "<!!>";
     }
 }

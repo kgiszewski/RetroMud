@@ -13,13 +13,6 @@ namespace RetroMud.Core.GameTicks
 
         public int GetFrameNumber()
         {
-            _advanceGameTick();
-
-            if (_frameNumber > ConfigConstants.MaxGameFrameRate)
-            {
-                _frameNumber = 1;
-            }
-
             return _frameNumber;
         }
 
@@ -27,8 +20,8 @@ namespace RetroMud.Core.GameTicks
         {
             return _lastTickLengthInMs;
         }
-
-        private void _advanceGameTick()
+        
+        public void AdvanceGameTick()
         {
             _lastTickLengthInMs = _stopwatch.ElapsedMilliseconds;
             _stopwatch.Restart();
@@ -53,6 +46,11 @@ namespace RetroMud.Core.GameTicks
 
                     Thread.Sleep(adjustment);
                 }
+            }
+
+            if (_frameNumber > ConfigConstants.MaxGameFrameRate)
+            {
+                _frameNumber = 1;
             }
         }
     }

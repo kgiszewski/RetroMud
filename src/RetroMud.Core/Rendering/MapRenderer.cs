@@ -39,7 +39,6 @@ namespace RetroMud.Core.Rendering
             _mapViewport = mapViewport;
             _boundGenerator = boundGenerator;
             _nonPlayingCharacterAnimator = nonPlayingCharacterAnimator;
-
         }
 
         public void RenderMap(IMap map, IEnumerable<string> statusMessages)
@@ -50,7 +49,7 @@ namespace RetroMud.Core.Rendering
             Console.CursorVisible = false;
             Console.SetCursorPosition(0, 0);
 
-            _renderFrameRate(false);
+            _renderFrameRate(true);
 
             var player = ClientContext.Instance.Player;
 
@@ -101,6 +100,8 @@ namespace RetroMud.Core.Rendering
             _renderBlankRowsIfNeededAtBottom(map, _mapViewport, bounds);
 
             //Console.WriteLine($"RowWindow: {_mapWindow.RowSize} ColumnWindow: {_mapWindow.ColumnSize}");
+
+            ClientContext.Instance.GameTickManager.AdvanceGameTick();
         }
 
         private string _getStatusRowToRender(string[] statusArray, int statusRowIndex)
@@ -256,11 +257,11 @@ namespace RetroMud.Core.Rendering
             {
                 var elapsedMs = 0M;
 
-                if (_frameNumber == ConfigConstants.MaxGameFrameRate)
+                if (ConfigConstants.MaxGameFrameRate % 2 == 0)
                 {
                     elapsedMs = _stopwatch2.ElapsedMilliseconds;
 
-                    Console.WriteLine($"MS in cycle: {elapsedMs:00000} Frames rendered: {_totalFrames:000000} fps: {_totalFrames / _stopwatch.Elapsed.Seconds:0000} Tick Length: {ClientContext.Instance.GameTickManager.GetFrameNumber():0000}");
+                    Console.WriteLine($"Elapsed Seconds: {_stopwatch.Elapsed.Seconds:00000} Frame Number: {ClientContext.Instance.GameTickManager.GetFrameNumber():00} Frames rendered: {_totalFrames:000000} fps: {_totalFrames / _stopwatch.Elapsed.Seconds:0000} Tick Length: {ClientContext.Instance.GameTickManager.GetFrameNumber():0000}");
 
                     _stopwatch2.Restart();
                 }

@@ -4,5 +4,6 @@
     {
         int GetFrameNumber();
         long GetLastTickLength();
+        void AdvanceGameTick();
     }
 }
