@@ -43,13 +43,14 @@ namespace RetroMud.Core.Rendering
 
         public void RenderMap(IMap map, IEnumerable<string> statusMessages)
         {
+            ClientContext.Instance.GameTickManager.BeginFrame();
             _frameNumber = ClientContext.Instance.GameTickManager.GetFrameNumber();
             _totalFrames++;
 
             Console.CursorVisible = false;
             Console.SetCursorPosition(0, 0);
 
-            _renderFrameRate(true);
+            _renderFrameRate(ConfigConstants.DebugEnabled);
 
             var player = ClientContext.Instance.Player;
 
@@ -72,8 +73,11 @@ namespace RetroMud.Core.Rendering
 
             _nonPlayingCharacterAnimator.Animate(map);
 
-            //Console.WriteLine($"Current Position: {player.CurrentRow.ToString("000")}, {player.CurrentColumn.ToString("000")} UpperLimit: {bounds.UpperLimit.ToString("000")} LowerLimit: {bounds.LowerLimit.ToString("000")} LeftLimit: {bounds.LeftLimit.ToString("000")} RightLimit: {bounds.RightLimit.ToString("000")}");
-            //Console.WriteLine($"Map size {map.Height.ToString("000")}, {map.Width.ToString("000")}");
+            if (ConfigConstants.DebugEnabled)
+            {
+                Console.WriteLine($"Current Position: {player.Position.Row:000}, {player.Position.Row:000} UpperLimit: {bounds.UpperLimit:000} LowerLimit: {bounds.LowerLimit:000} LeftLimit: {bounds.LeftLimit:000} RightLimit: {bounds.RightLimit:000}");
+                Console.WriteLine($"Map size {map.Height:000}, {map.Width:000}");
+            }
 
             var statusRowIndex = 0;
             
@@ -99,9 +103,12 @@ namespace RetroMud.Core.Rendering
 
             _renderBlankRowsIfNeededAtBottom(map, _mapViewport, bounds);
 
-            //Console.WriteLine($"RowWindow: {_mapWindow.RowSize} ColumnWindow: {_mapWindow.ColumnSize}");
+            if (ConfigConstants.DebugEnabled)
+            {
+                Console.WriteLine($"RowWindow: {_mapViewport.RowSize} ColumnWindow: {_mapViewport.ColumnSize}");
+            }
 
-            ClientContext.Instance.GameTickManager.AdvanceGameTick();
+            ClientContext.Instance.GameTickManager.EndFrame();
         }
 
         private string _getStatusRowToRender(string[] statusArray, int statusRowIndex)

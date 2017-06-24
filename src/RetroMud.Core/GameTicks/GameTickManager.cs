@@ -7,9 +7,19 @@ namespace RetroMud.Core.GameTicks
     public class GameTickManager : IHandleGameTicks
     {
         private int _frameNumber = 1;
-        private readonly Stopwatch _stopwatch = Stopwatch.StartNew();
+        private readonly Stopwatch _frameStopwatch = Stopwatch.StartNew();
         private readonly Stopwatch _cycleStopwatch = Stopwatch.StartNew();
-        private long _lastTickLengthInMs = 0;
+        private long _lastFrameLengthInMs = 0;
+
+        public void BeginFrame()
+        {
+            _frameStopwatch.Restart();
+
+            if (_frameNumber == 1)
+            {
+                _cycleStopwatch.Restart();
+            }
+        }
 
         public int GetFrameNumber()
         {
@@ -18,19 +28,18 @@ namespace RetroMud.Core.GameTicks
 
         public long GetLastTickLength()
         {
-            return _lastTickLengthInMs;
+            return _lastFrameLengthInMs;
         }
         
-        public void AdvanceGameTick()
+        public void EndFrame()
         {
-            _lastTickLengthInMs = _stopwatch.ElapsedMilliseconds;
-            _stopwatch.Restart();
+            _lastFrameLengthInMs = _frameStopwatch.ElapsedMilliseconds;
 
             var minTickTime = 1000 / ConfigConstants.MaxGameFrameRate;
 
-            if (_lastTickLengthInMs < minTickTime)
+            if (_lastFrameLengthInMs < minTickTime)
             {
-                Thread.Sleep(minTickTime - (int)_lastTickLengthInMs);
+                Thread.Sleep(minTickTime - (int)_lastFrameLengthInMs);
             }
 
             _frameNumber++;
@@ -38,11 +47,10 @@ namespace RetroMud.Core.GameTicks
             if (_frameNumber == ConfigConstants.MaxGameFrameRate)
             {
                 var cycleTimeInMs = _cycleStopwatch.ElapsedMilliseconds;
-                _cycleStopwatch.Restart();
 
                 if (cycleTimeInMs < 1000)
                 {
-                    var adjustment = 1000 - (int) cycleTimeInMs;
+                    var adjustment = 1000 - (int)cycleTimeInMs;
 
                     Thread.Sleep(adjustment);
                 }

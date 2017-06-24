@@ -16,5 +16,7 @@ namespace RetroMud.Core.Config
 
         public static int MaxGameFrameRate = Convert.ToInt32(ConfigurationManager.AppSettings["Tick:MaxGameFrameRate"]);
         public static string MapMetaBoundary = "<!!>";
+
+        public static bool DebugEnabled = Convert.ToBoolean(ConfigurationManager.AppSettings["Debug"]);
     }
 }

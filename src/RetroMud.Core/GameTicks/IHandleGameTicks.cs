@@ -2,8 +2,9 @@
 {
     public interface IHandleGameTicks
     {
+        void BeginFrame();
         int GetFrameNumber();
         long GetLastTickLength();
-        void AdvanceGameTick();
+        void EndFrame();
     }
 }
