@@ -5,7 +5,6 @@ using System.Linq;
 using System.Text;
 using RetroMud.Core.Config;
 using RetroMud.Core.Context;
-using RetroMud.Core.GameTicks;
 using RetroMud.Core.Maps;
 using RetroMud.Core.Maps.Viewports;
 using RetroMud.Core.NonPlayingCharacters.Animation;
@@ -208,9 +207,27 @@ namespace RetroMud.Core.Rendering
                 column = player.Position.Column;
             }
 
+            var characterToDisplay = '@';
+
+            if (player.IsAttacking)
+            {
+                switch (player.Facing)
+                {
+                    case Direction.East:
+                    case Direction.North:
+                        characterToDisplay = '/';
+                        break;
+
+                    case Direction.West:
+                    case Direction.South:
+                        characterToDisplay = '\\';
+                        break;
+                }
+            }
+
             var sb = new StringBuilder();
 
-            sb = new StringBuilder(rowToRender) { [column] = '@' };
+            sb = new StringBuilder(rowToRender) { [column] = characterToDisplay };
             rowToRender = sb.ToString();
 
             _renderRow(rowToRender, map);

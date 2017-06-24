@@ -43,11 +43,22 @@ namespace RetroMud.Core.Scenes
         public void Render()
         {                
             var statusMessageManager = ClientContext.Instance.StatusMessageManager;
+            var player = ClientContext.Instance.Player;
 
             while (IsSceneActive)
             {
                 var statusMessages = statusMessageManager.GetMessages(30);
 
+                if (player.IsAttacking)
+                {
+                    var currentFrame = ClientContext.Instance.GameTickManager.GetFrameNumber();
+
+                    if (currentFrame - player.BeginAttackFrame > 5 || player.BeginAttackFrame - currentFrame < 5)
+                    {
+                        player.IsAttacking = false;
+                    }
+                }
+                    
                 _mapMovementControls.HandleInput(_map);
                 _collisionDetector.Update(_map, ClientContext.Instance.Player.Position);
                 _mapRenderer.RenderMap(_map, statusMessages.Select(x => x.Message));

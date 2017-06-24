@@ -16,9 +16,9 @@ namespace RetroMud.Core.Controls
         private readonly ConsoleKey _moveDownKey = (ConsoleKey)Convert.ToInt32(ConfigurationManager.AppSettings[ConfigConstants.MapMoveDownKey]);
         private readonly ConsoleKey _moveLeftKey = (ConsoleKey)Convert.ToInt32(ConfigurationManager.AppSettings[ConfigConstants.MapMoveLeftKey]);
         private readonly ConsoleKey _moveRightKey = (ConsoleKey)Convert.ToInt32(ConfigurationManager.AppSettings[ConfigConstants.MapMoveRightKey]);
+        private readonly ConsoleKey _attackKey = (ConsoleKey)Convert.ToInt32(ConfigurationManager.AppSettings[ConfigConstants.MapAttackKey]);
 
-        private readonly ConsoleKey _inventoryKey =
-            (ConsoleKey) Convert.ToInt32(ConfigurationManager.AppSettings[ConfigConstants.MapInventoryKey]);
+        private readonly ConsoleKey _inventoryKey = (ConsoleKey) Convert.ToInt32(ConfigurationManager.AppSettings[ConfigConstants.MapInventoryKey]);
 
         public KeyboardMapMovementController()
             :this(CollisionDetector.Instance)
@@ -42,21 +42,25 @@ namespace RetroMud.Core.Controls
                     _collisionDetector.CanMoveToPosition(map, new MapCoordinate(player.Position.Row, player.Position.Column - 1)))
                 {
                     player.Position.Column--;
+                    player.Facing = Direction.West;
                 }
                 else if (input.Key == _moveUpKey && player.Position.Row > 0 &&
                     _collisionDetector.CanMoveToPosition(map, new MapCoordinate(player.Position.Row - 1, player.Position.Column)))
                 {
                     player.Position.Row--;
+                    player.Facing = Direction.North;
                 }
                 else if (input.Key == _moveRightKey && player.Position.Column < map.Width - 1 &&
                          _collisionDetector.CanMoveToPosition(map, new MapCoordinate(player.Position.Row, player.Position.Column + 1)))
                 {
                     player.Position.Column++;
+                    player.Facing = Direction.East;
                 }
                 else if (input.Key == _moveDownKey && player.Position.Row < map.Height - 1 &&
                          _collisionDetector.CanMoveToPosition(map, new MapCoordinate(player.Position.Row + 1, player.Position.Column)))
                 {
                     player.Position.Row++;
+                    player.Facing = Direction.South;
                 }
                 else if (input.Key == _inventoryKey)
                 {
@@ -65,6 +69,11 @@ namespace RetroMud.Core.Controls
                 else if (input.Key == ConsoleKey.Escape)
                 {
                     ClientContext.Instance.GameSceneManager.OpenModalScene(new OptionsScene());
+                }
+                else if (input.Key == _attackKey)
+                {
+                    player.IsAttacking = true;
+                    player.BeginAttackFrame = ClientContext.Instance.GameTickManager.GetFrameNumber();
                 }
             }
         }

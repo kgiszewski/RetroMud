@@ -62,6 +62,7 @@
     <Compile Include="Collision\Dispatching\IHandleCharacterCollisions.cs" />
     <Compile Include="Collision\Detectors\IHandleCollisionDetection.cs" />
     <Compile Include="Config\ConfigConstants.cs" />
+    <Compile Include="Config\Direction.cs" />
     <Compile Include="Config\InstanceConfiguation.cs" />
     <Compile Include="Config\IInstanceConfiguation.cs" />
     <Compile Include="Controls\IHandleInventoryControls.cs" />

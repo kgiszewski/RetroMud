@@ -1,4 +1,5 @@
-﻿using RetroMud.Core.Maps.Coordinates;
+﻿using RetroMud.Core.Config;
+using RetroMud.Core.Maps.Coordinates;
 
 namespace RetroMud.Core.Players
 {
@@ -12,5 +13,8 @@ namespace RetroMud.Core.Players
             Position.Row = position.Row;
             Position.Column = position.Column;
         }
+        public bool IsAttacking { get; set; }
+        public Direction Facing { get; set; }
+        public int BeginAttackFrame { get; set; }
     }
 }
