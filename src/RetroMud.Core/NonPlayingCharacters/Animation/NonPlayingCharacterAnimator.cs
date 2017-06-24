@@ -8,7 +8,7 @@ namespace RetroMud.Core.NonPlayingCharacters.Animation
     {
         private List<INonPlayingCharacter> _npcList;
 
-        public void Animate(IMap map, int frameNumber)
+        public void Animate(IMap map)
         {
             if(_npcList == null)
             {
@@ -17,7 +17,7 @@ namespace RetroMud.Core.NonPlayingCharacters.Animation
 
             foreach (var npc in _npcList)
             {
-                var newPosition = npc.MovementStrategy.GetNewPosition(map, npc.Position, frameNumber);
+                var newPosition = npc.MovementStrategy.GetNewPosition(map, npc.Position);
                 map.UpdateBufferAtPosition(npc.Position, ' ');
                 map.UpdateBufferAtPosition(newPosition, npc.Character);
                 npc.Position = newPosition;

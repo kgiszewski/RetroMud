@@ -11,7 +11,7 @@
         public static readonly string MapInventoryKey = "Map:InventoryKey";
         public static readonly string SavedStatePath = "SavedStatePath";
 
-        public static int MaxGameFrameRate = 30;
+        public static int MaxGameFrameRate = 10;
         public static string MapMetaBoundary = "<!!>";
     }
 }

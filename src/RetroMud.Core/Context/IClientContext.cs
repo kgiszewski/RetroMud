@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using RetroMud.Core.GameTicks;
 using RetroMud.Core.Maps.Managers;
 using RetroMud.Core.Maps.Wormholes;
 using RetroMud.Core.Players;
@@ -15,5 +16,6 @@ namespace RetroMud.Core.Context
         IStatusMessageManager StatusMessageManager { get; set; }
         List<IStatusMessage> StatusMessages { get; set; }
         IWormholeManager WormholeManager { get; set; }
+        IHandleGameTicks GameTickManager { get; set; }
     }
 }

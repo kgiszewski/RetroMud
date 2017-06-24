@@ -1,6 +1,7 @@
 ﻿using System;
 using RetroMud.Core.Collision.Detectors;
 using RetroMud.Core.Config;
+using RetroMud.Core.Context;
 using RetroMud.Core.Maps;
 using RetroMud.Core.Maps.Coordinates;
 
@@ -29,9 +30,9 @@ namespace RetroMud.Core.NonPlayingCharacters.Animation.MovementStrategies
             _collisionDetector = collisionDetector;
         }
 
-        public IMapCoordinate GetNewPosition(IMap map, IMapCoordinate mapCoordinate, int frameNumber)
+        public IMapCoordinate GetNewPosition(IMap map, IMapCoordinate mapCoordinate)
         {
-            if (frameNumber % _movementRate == 0)
+            if (ClientContext.Instance.GameTickManager.GetFrameNumber() % _movementRate == 0)
             {
                 if (_isMovingLeft)
                 {

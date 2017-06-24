@@ -29,11 +29,11 @@ namespace RetroMud.Core.NonPlayingCharacters.Animation.MovementStrategies
             _collisionDetector = collisionDetector;
         }
 
-        public IMapCoordinate GetNewPosition(IMap map, IMapCoordinate mapCoordinate, int frameNumber)
+        public IMapCoordinate GetNewPosition(IMap map, IMapCoordinate mapCoordinate)
         {
             var playerPosition = ClientContext.Instance.Player.Position;
 
-            if (frameNumber % _movementRate == 0)
+            if (ClientContext.Instance.GameTickManager.GetFrameNumber() % _movementRate == 0)
             {
                 //if is not on same row, try to move to the same row
                 if (!_isOnSameRow(mapCoordinate, playerPosition))

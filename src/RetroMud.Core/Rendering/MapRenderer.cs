@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using RetroMud.Core.Config;
 using RetroMud.Core.Context;
+using RetroMud.Core.GameTicks;
 using RetroMud.Core.Maps;
 using RetroMud.Core.Maps.Viewports;
 using RetroMud.Core.NonPlayingCharacters.Animation;
@@ -17,10 +18,11 @@ namespace RetroMud.Core.Rendering
         private readonly IViewportBoundGenerator _boundGenerator;
         private readonly IAnimateNonPlayingCharacters _nonPlayingCharacterAnimator;
         private List<char> _colorCharacters;
-        private int _frameNumber = 1;
-        private int _totalFrames;
-        private Stopwatch _stopwatch;
+        private readonly Stopwatch _stopwatch = Stopwatch.StartNew();
+        private readonly Stopwatch _stopwatch2 = Stopwatch.StartNew();
         private string[] _statusArray;
+        private int _totalFrames;
+        private int _frameNumber;
 
         public MapRenderer()
             :this(new MapViewport(), new ViewportBoundGenerator(), new NonPlayingCharacterAnimator())
@@ -37,22 +39,18 @@ namespace RetroMud.Core.Rendering
             _mapViewport = mapViewport;
             _boundGenerator = boundGenerator;
             _nonPlayingCharacterAnimator = nonPlayingCharacterAnimator;
+
         }
 
         public void RenderMap(IMap map, IEnumerable<string> statusMessages)
         {
-            _frameNumber++;
+            _frameNumber = ClientContext.Instance.GameTickManager.GetFrameNumber();
             _totalFrames++;
-
-            if (_frameNumber == ConfigConstants.MaxGameFrameRate)
-            {
-                _frameNumber = 1;
-            }
 
             Console.CursorVisible = false;
             Console.SetCursorPosition(0, 0);
 
-            _renderFrameRate(true);
+            _renderFrameRate(false);
 
             var player = ClientContext.Instance.Player;
 
@@ -68,12 +66,12 @@ namespace RetroMud.Core.Rendering
                 _statusArray = _getStatusAsArray(statusMessages);
             }
 
-            if (_frameNumber % 20 == 0)
+            if (_frameNumber == ConfigConstants.MaxGameFrameRate)
             {
                 _statusArray = _getStatusAsArray(statusMessages);
             }
 
-            _nonPlayingCharacterAnimator.Animate(map, _frameNumber);
+            _nonPlayingCharacterAnimator.Animate(map);
 
             //Console.WriteLine($"Current Position: {player.CurrentRow.ToString("000")}, {player.CurrentColumn.ToString("000")} UpperLimit: {bounds.UpperLimit.ToString("000")} LowerLimit: {bounds.LowerLimit.ToString("000")} LeftLimit: {bounds.LeftLimit.ToString("000")} RightLimit: {bounds.RightLimit.ToString("000")}");
             //Console.WriteLine($"Map size {map.Height.ToString("000")}, {map.Width.ToString("000")}");
@@ -254,11 +252,22 @@ namespace RetroMud.Core.Rendering
                 return;
             }
 
-            _stopwatch = Stopwatch.StartNew();
-
             if (_stopwatch.Elapsed.Seconds > 0)
             {
-                Console.WriteLine($"Frames rendered: {_totalFrames:000000} fps: {_totalFrames / _stopwatch.Elapsed.Seconds:00}");
+                var elapsedMs = 0M;
+
+                if (_frameNumber == ConfigConstants.MaxGameFrameRate)
+                {
+                    elapsedMs = _stopwatch2.ElapsedMilliseconds;
+
+                    Console.WriteLine($"MS in cycle: {elapsedMs:00000} Frames rendered: {_totalFrames:000000} fps: {_totalFrames / _stopwatch.Elapsed.Seconds:0000} Tick Length: {ClientContext.Instance.GameTickManager.GetFrameNumber():0000}");
+
+                    _stopwatch2.Restart();
+                }
+                else
+                {
+                    Console.WriteLine();
+                }
             }
             else
             {

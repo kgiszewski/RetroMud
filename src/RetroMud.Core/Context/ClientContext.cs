@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using RetroMud.Core.GameTicks;
 using RetroMud.Core.Maps.Managers;
 using RetroMud.Core.Maps.Wormholes;
 using RetroMud.Core.Players;
@@ -47,5 +48,6 @@ namespace RetroMud.Core.Context
         public IPlayer Player { get; set; }
         public IStatusMessageManager StatusMessageManager { get; set; }
         public IWormholeManager WormholeManager { get; set; }
+        public IHandleGameTicks GameTickManager { get; set; }
     }
 }

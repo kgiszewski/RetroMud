@@ -78,6 +78,8 @@
     <Compile Include="Events\Helpers\IRegisterServerEvents.cs" />
     <Compile Include="Context\ClientContext.cs" />
     <Compile Include="Context\IClientContext.cs" />
+    <Compile Include="GameTicks\GameTickManager.cs" />
+    <Compile Include="GameTicks\IHandleGameTicks.cs" />
     <Compile Include="Healthchecks\MessageHandlers\CurrentClientVersionHandler.cs" />
     <Compile Include="Healthchecks\Messages\CurrentClientVersionRequest.cs" />
     <Compile Include="Logging\Logger.cs" />

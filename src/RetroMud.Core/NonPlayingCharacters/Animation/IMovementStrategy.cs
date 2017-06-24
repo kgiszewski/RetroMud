@@ -5,6 +5,6 @@ namespace RetroMud.Core.NonPlayingCharacters.Animation
 {
     public interface IMovementStrategy
     {
-        IMapCoordinate GetNewPosition(IMap map, IMapCoordinate mapCoordinate, int frameNumber);
+        IMapCoordinate GetNewPosition(IMap map, IMapCoordinate mapCoordinate);
     }
 }
